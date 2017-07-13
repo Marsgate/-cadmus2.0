@@ -1,2 +1,2 @@
-#define driveL 2
-#define driveR 9
+#define driveL 9
+#define driveR 2
