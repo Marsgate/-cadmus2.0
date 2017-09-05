@@ -1,1 +1,1 @@
-void lift(int vel);
+void lift();

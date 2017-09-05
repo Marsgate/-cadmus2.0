@@ -3,15 +3,29 @@
 
 void scoop(){
 
-  if(joystickGetDigital(1, 5, JOY_UP)){
-    motorSet(scoop1, 127);
-    motorSet(scoop2, 127);
-  }else if(joystickGetDigital(1, 5, JOY_DOWN)){
-    motorSet(scoop1, -127);
-    motorSet(scoop2, -127);
+  if(joystickGetDigital(1, 8, JOY_DOWN)){
+    motorSet(SCOOP1, 127);
+    motorSet(SCOOP2, 127);
+  }else if(joystickGetDigital(1, 8, JOY_UP)){
+    motorSet(SCOOP1, -127);
+    motorSet(SCOOP2, -127);
   }else{
-    motorStop(scoop1);
-    motorStop(scoop2);
+    motorStop(SCOOP1);
+    motorStop(SCOOP2);
   }
-
 }
+  void pclaw(){
+    if(joystickGetDigital(1, 8, JOY_LEFT)){
+      motorSet(PCLAW, 127);
+    }else if(joystickGetDigital(1, 8, JOY_RIGHT)){
+      motorSet(PCLAW, -127);
+    }else{
+      motorStop(PCLAW);
+    }
+
+
+
+
+
+
+  }
