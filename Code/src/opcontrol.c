@@ -20,12 +20,11 @@ void operatorControl() {
 		expTest();
 		armTest();
 		arcade();
-		liftOpcontrol();
 		scoop();
 		grab();
 		arm(joystickGetAnalog(1, 2));
 		pclaw();
-		//autoStack();
+		autoStack();
 		delay(20);
 
 		printf("%d\n", encoderGet(armEnc));

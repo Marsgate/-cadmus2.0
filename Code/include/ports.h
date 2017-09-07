@@ -11,7 +11,7 @@
 #define PCLAW 6
 
 //sensors
-#define LIFTPOT 7
+#define LIFTPOT 1
 #define LED 10
 #define EXPANDER 2
 #define D_ENC_R1 1

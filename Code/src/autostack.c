@@ -5,36 +5,25 @@
 #include "ports.h"
 
 #define ENCTARGET 180
-#define POTTARGET 2400 //change to actual
+#define POTTARGETLOW 630 //change to actual
 
 int timer = 0;
 
 void lowStack(){
   arm(127);
   lift(127);
-
-  while(true){
-
-    int i = 0;
-
     if(encoderGet(armEnc) > ENCTARGET){
       arm(0);
-      i++;
     }
 
-    if(analogRead(LIFTPOT) > POTTARGET){
+    if(analogRead(LIFTPOT) > POTTARGETLOW){
       lift(0);
-      i++;
     }
-
-    timer += 20;
-    if(i == 2 || timer > 3000){break;};
-  }
 
 }
 
 void autoStack(){
-  if(joystickGetDigital(1, 8, JOY_DOWN)){
+  if(joystickGetDigital(1, 5, JOY_DOWN)){
     lowStack();
   }
 }
