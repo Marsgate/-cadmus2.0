@@ -1,2 +1,2 @@
 void grab();
-void arm();
+void arm(int vel);

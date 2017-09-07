@@ -23,9 +23,4 @@ void scoop(){
       motorStop(PCLAW);
     }
 
-
-
-
-
-
-  }
+}

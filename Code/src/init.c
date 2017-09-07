@@ -37,4 +37,5 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+  armEnc = encoderInit(5, 6, false);
 }

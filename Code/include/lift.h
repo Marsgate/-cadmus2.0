@@ -1,1 +1,2 @@
-void lift();
+void lift(int vel);
+void liftOpcontrol();

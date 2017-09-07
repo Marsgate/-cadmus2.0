@@ -16,7 +16,7 @@ void ptest(int port){
 void operatorControl() {
 	while (1) {
 		arcade();
-		lift();
+		liftOpcontrol();
 		scoop();
 		grab();
 		arm(joystickGetAnalog(1, 2));
