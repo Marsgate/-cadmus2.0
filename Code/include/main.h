@@ -116,7 +116,8 @@ void operatorControl();
 
 
 Encoder armEnc;
-
+Encoder driveEncLeft;
+Encoder driveEncRight;
 
 // End C++ export structure
 #ifdef __cplusplus

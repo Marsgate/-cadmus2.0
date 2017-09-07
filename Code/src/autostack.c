@@ -7,35 +7,34 @@
 #define ENCTARGET 180
 #define POTTARGET 2400 //change to actual
 
+int timer = 0;
 
-void autoStack(){
-  unsigned char button;
-
-  if(joystickGetDigital(1, 7, JOY_DOWN)){
-    //first stack
-    button = JOY_DOWN;
-  }else if(joystickGetDigital(1, 7, JOY_LEFT)){
-    //low stack
-    button = JOY_LEFT;
-  }else if(joystickGetDigital(1, 7, JOY_UP)){
-    //high stack
-    button = JOY_UP;
-  }
-
+void lowStack(){
   arm(127);
   lift(127);
+
   while(true){
-    if(encoderGet(armEnc) > 0){
-      arm(127);
-    }else{
+
+    int i = 0;
+
+    if(encoderGet(armEnc) > ENCTARGET){
       arm(0);
+      i++;
     }
 
-    if(analogRead(LIFTPOT)){
-      
+    if(analogRead(LIFTPOT) > POTTARGET){
+      lift(0);
+      i++;
     }
 
-
+    timer += 20;
+    if(i == 2 || timer > 3000){break;};
   }
 
+}
+
+void autoStack(){
+  if(joystickGetDigital(1, 8, JOY_DOWN)){
+    lowStack();
+  }
 }

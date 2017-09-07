@@ -5,6 +5,8 @@
 #include "scoop.h"
 #include "claw.h"
 #include "ports.h"
+#include "autostack.h"
+#include "background.h"
 
 void ptest(int port){
 	motorSet(port, 127);
@@ -15,13 +17,18 @@ void ptest(int port){
 
 void operatorControl() {
 	while (1) {
+		expTest();
+		armTest();
 		arcade();
 		liftOpcontrol();
 		scoop();
 		grab();
 		arm(joystickGetAnalog(1, 2));
 		pclaw();
+		//autoStack();
 		delay(20);
+
+		printf("%d\n", encoderGet(armEnc));
 	}
 }
 

@@ -11,7 +11,7 @@
  */
 
 #include "main.h"
-
+#include "ports.h"
 /*
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
  * VEX Cortex is starting up. As the scheduler is still paused, most API functions will fail.
@@ -21,6 +21,7 @@
  * configure a UART port (usartOpen()) but cannot set up an LCD (lcdInit()).
  */
 void initializeIO() {
+  pinMode(LED, OUTPUT_OD);
 }
 
 /*
@@ -37,5 +38,7 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-  armEnc = encoderInit(5, 6, false);
+  armEnc = encoderInit(3, 4, false);
+  driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
+  driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
 }

@@ -12,3 +12,12 @@
 
 //sensors
 #define LIFTPOT 7
+#define LED 10
+#define EXPANDER 2
+#define D_ENC_R1 1
+#define D_ENC_R2 2
+#define D_ENC_L1 11
+#define D_ENC_L2 12
+#define ARM_LIMIT 5
+#define ARM_ENC1 3
+#define ARM_ENC2 4
