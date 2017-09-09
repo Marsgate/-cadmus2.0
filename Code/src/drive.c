@@ -10,3 +10,13 @@ void arcade(){
   motorSet(DRIVEL2, power + turn); // set left wheels
   motorSet(DRIVER1, power + turn); // set right
 }
+
+void tank(){
+  int left;
+  int right;
+  left = joystickGetAnalog(1, 3);
+  right = joystickGetAnalog(1, 2);
+  motorSet(DRIVEL1, left);
+  motorSet(DRIVEL2, left);
+  motorSet(DRIVER1, right);
+}
