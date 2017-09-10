@@ -57,7 +57,7 @@ void autoStack(){
     lowStack();
   }else if(joystickGetDigital(1, 5, JOY_UP)){
     highStack();
-  }else if(joystickGetDigital(1, 6, JOY_UP)){
-    retract();
+  }else{
+    //retract();
   }
 }

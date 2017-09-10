@@ -26,7 +26,7 @@ void operatorControl() {
 		autoStack();
 		delay(20);
 
-		printf("%d\n", encoderGet(armEnc));
+		lcdPrint(uart1, 1, "Potentiometer %d", analogRead(LIFTPOT));
 	}
 }
 

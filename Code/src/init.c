@@ -16,6 +16,7 @@ void initialize() {
   //lcd
   lcdInit(uart1);
   lcdClear(uart1);
+  lcdSetBacklight(uart1, true);
 
   //expander light check
 	while(analogRead(EXPANDER) < 500){
