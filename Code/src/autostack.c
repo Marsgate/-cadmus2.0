@@ -6,9 +6,9 @@
 #include "ports.h"
 
 #define ENCTARGET 180
-#define POTTARGETLOW 630
+#define POTTARGETLOW 700
 #define POTTARGETHIGH 2100
-#define POTTARGETBOTTOM 400
+#define POTTARGETBOTTOM 350
 
 int timer = 0;
 

@@ -26,7 +26,7 @@ void operatorControl() {
 		autoStack();
 		delay(20);
 
-		lcdPrint(uart1, 1, "Potentiometer %d", analogRead(LIFTPOT));
+		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
 	}
 }
 
