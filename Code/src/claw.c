@@ -18,7 +18,3 @@ void grab(){
     }
   }
 }
-
-void arm(int vel){
-  motorSet(ARM, vel);
-}
