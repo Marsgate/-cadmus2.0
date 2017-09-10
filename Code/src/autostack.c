@@ -2,6 +2,7 @@
 #include "lift.h"
 #include "claw.h"
 #include "main.h"
+#include "arm.h"
 #include "ports.h"
 
 #define ENCTARGET 180

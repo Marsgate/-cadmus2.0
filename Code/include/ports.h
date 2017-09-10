@@ -1,3 +1,7 @@
+#ifndef _PORTS_H_
+#define _PORTS_H_
+
+
 //motors
 #define SCOOP1 1
 #define DRIVEL1 2
@@ -21,3 +25,5 @@
 #define ARM_LIMIT 5
 #define ARM_ENC1 3
 #define ARM_ENC2 4
+
+#endif
