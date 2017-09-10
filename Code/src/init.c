@@ -41,4 +41,12 @@ void initialize() {
   armEnc = encoderInit(3, 4, false);
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
+
+	while(analogRead(EXPANDER) < 500){
+		digitalWrite(LED, LOW);
+		delay(500);
+		digitalWrite(LED, HIGH);
+		delay(500);
+	}
+
 }

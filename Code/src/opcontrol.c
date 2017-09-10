@@ -17,7 +17,6 @@ void ptest(int port){
 
 void operatorControl() {
 	while (1) {
-		expTest();
 		armTest();
 		arcade();
 		scoop();
