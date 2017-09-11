@@ -2,6 +2,6 @@
 #define _LIFT_H_
 
 void lift(int vel);
-void liftOpcontrol();
+void liftOp();
 
 #endif

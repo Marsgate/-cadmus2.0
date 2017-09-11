@@ -6,7 +6,7 @@ void lift(int vel){
   motorSet(LIFT2, vel);
 }
 
-void liftOpcontrol(){
+void liftOp(){
   if (joystickGetDigital(1,5,JOY_UP)){
     lift(127);
   }else if (joystickGetDigital(1, 5, JOY_DOWN)){

@@ -10,14 +10,13 @@
 #define POTTARGETHIGH 2100
 #define POTTARGETBOTTOM 350
 
-int timer = 0;
-
 void lowStack(){
   arm(127);
   lift(127);
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
+    claw(-127);
   }
 
   if(analogRead(LIFTPOT) > POTTARGETLOW){
@@ -25,18 +24,21 @@ void lowStack(){
   }
 }
 
+
 void highStack(){
   arm(127);
   lift(127);
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
+    claw(-127);
   }
 
   if(analogRead(LIFTPOT) > POTTARGETHIGH){
     lift(0);
   }
 }
+
 
 void retract(){
   arm(-127);

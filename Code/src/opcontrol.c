@@ -20,9 +20,8 @@ void operatorControl() {
 		armTest();
 		tank();
 		scoop();
-		grab();
+		clawOp();
 		arm(joystickGetAnalog(1, 2));
-		pclaw();
 		autoStack();
 		delay(20);
 

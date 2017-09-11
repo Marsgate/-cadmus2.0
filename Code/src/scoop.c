@@ -14,13 +14,3 @@ void scoop(){
     motorStop(SCOOP2);
   }
 }
-  void pclaw(){
-    if(joystickGetDigital(1, 8, JOY_LEFT)){
-      motorSet(PCLAW, 127);
-    }else if(joystickGetDigital(1, 8, JOY_RIGHT)){
-      motorSet(PCLAW, -127);
-    }else{
-      motorStop(PCLAW);
-    }
-
-}
