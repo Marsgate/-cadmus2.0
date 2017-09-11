@@ -2,5 +2,6 @@
 #define _DRIVE_H_
 
 void arcade();
+void tank();
 
 #endif

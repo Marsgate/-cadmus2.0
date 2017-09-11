@@ -40,24 +40,26 @@ void highStack(){
 
 void retract(){
   arm(-127);
-  lift(-127);
+  lift(-59);
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0);
   }
 
-  if(analogRead(LIFTPOT) > POTTARGETBOTTOM){
+  if(analogRead(LIFTPOT) < POTTARGETBOTTOM){
     lift(0);
   }
 }
 
 
 void autoStack(){
+  arm(0);
+  lift(0);
   if(joystickGetDigital(1, 5, JOY_DOWN)){
     lowStack();
   }else if(joystickGetDigital(1, 5, JOY_UP)){
     highStack();
   }else{
-    //retract();
+    retract();
   }
 }

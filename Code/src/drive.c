@@ -14,8 +14,8 @@ void arcade(){
 void tank(){
   int left;
   int right;
-  left = joystickGetAnalog(1, 3);
-  right = joystickGetAnalog(1, 2);
+  left = -joystickGetAnalog(1, 3);
+  right = -joystickGetAnalog(1, 2);
   motorSet(DRIVEL1, left);
   motorSet(DRIVEL2, left);
   motorSet(DRIVER1, right);
