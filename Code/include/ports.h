@@ -10,7 +10,7 @@
 #define LIFT1 5
 #define DRIVER1 7
 #define LIFT2 8
-#define DRIVEL2 9
+#define DRIVER2 9
 #define SCOOP2 10
 #define PCLAW 6
 

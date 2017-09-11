@@ -26,6 +26,7 @@ void operatorControl() {
 		delay(20);
 
 		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
+		lcdPrint(uart1, 2, "Enc: %d", encoderGet(armEnc));
 	}
 }
 

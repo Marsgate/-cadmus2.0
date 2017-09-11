@@ -7,8 +7,8 @@ void arcade(){
   power = -joystickGetAnalog(1, 3); // vertical axis on left joystick
   turn  = joystickGetAnalog(1, 4); // horizontal axis on left joystick
   motorSet(DRIVEL1, power - turn); // set left wheels
-  motorSet(DRIVEL2, power + turn); // set left wheels
-  motorSet(DRIVER1, power + turn); // set right
+  motorSet(DRIVER1, power + turn); // set right wheels
+  motorSet(DRIVER2, power + turn); // set right
 }
 
 void tank(){
@@ -17,6 +17,6 @@ void tank(){
   left = -joystickGetAnalog(1, 3);
   right = -joystickGetAnalog(1, 2);
   motorSet(DRIVEL1, left);
-  motorSet(DRIVEL2, left);
+  motorSet(DRIVER2, right);
   motorSet(DRIVER1, right);
 }
