@@ -6,8 +6,8 @@
 #include "ports.h"
 
 #define ENCTARGET 180
-#define POTTARGETLOW 700
-#define POTTARGETMID 1450
+#define POTTARGETLOW 850
+#define POTTARGETMID 1100
 #define POTTARGETBOTTOM 350
 #define POTTARGETHIGH 1900
 #define ENCMID 100
@@ -18,6 +18,8 @@ void lowStack(){
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
+  }else if(encoderGet(armEnc) > ENCMID){
+    arm(20);
   }
 
   if(analogRead(LIFTPOT) > POTTARGETLOW){
@@ -58,6 +60,7 @@ void highStack(){
 
 void retract(){
   arm(-127);
+  lift(-60);
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0);
