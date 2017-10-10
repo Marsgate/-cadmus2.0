@@ -60,7 +60,6 @@ void highStack(){
 
 void retract(){
   arm(-127);
-  lift(-60);
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0);
@@ -74,6 +73,10 @@ void retract(){
 
   if(analogRead(LIFTPOT) < POTTARGETBOTTOM){
     lift(0);
+  }
+
+  if(digitalRead(ARM_LIMIT) == LOW && analogRead(LIFTPOT) > POTTARGETBOTTOM){
+    lift(-60);
   }
 }
 
