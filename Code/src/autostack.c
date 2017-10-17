@@ -7,9 +7,9 @@
 
 #define ENCTARGET 180
 #define POTTARGETLOW 850
-#define POTTARGETMID 1100
+#define POTTARGETMID 1250
 #define POTTARGETBOTTOM 350
-#define POTTARGETHIGH 1900
+#define POTTARGETHIGH 1500
 #define ENCMID 100
 
 void lowStack(){
@@ -59,24 +59,20 @@ void highStack(){
 
 
 void retract(){
-  arm(-127);
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0);
-  }else if(encoderGet(armEnc) < ENCMID){
-    arm(-20);
-    lift(-59);
   }else{
+    arm(-127);
     claw(-127);
     hold = false;
   }
 
-  if(analogRead(LIFTPOT) < POTTARGETBOTTOM){
-    lift(0);
-  }
-
   if(digitalRead(ARM_LIMIT) == LOW && analogRead(LIFTPOT) > POTTARGETBOTTOM){
     lift(-60);
+  }
+  if(analogRead(LIFTPOT) < POTTARGETBOTTOM){
+    lift(0);
   }
 }
 
