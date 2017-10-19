@@ -2,6 +2,9 @@
 #define _DRIVE_H_
 
 void arcade();
-void tank();
+void tankHPC();
+void tankLPC();
+void tankSigHPC();
+void tankSigLPC();
 
 #endif

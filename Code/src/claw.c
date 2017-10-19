@@ -16,7 +16,7 @@ void clawOp(){
     hold = false;
   }else{
     if(hold == true){
-      claw(30);
+      claw(40);
     }else{
       motorStop(CLAW);
     }

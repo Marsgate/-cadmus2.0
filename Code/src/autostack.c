@@ -6,10 +6,10 @@
 #include "ports.h"
 
 #define ENCTARGET 180
-#define POTTARGETLOW 850
-#define POTTARGETMID 1250
+#define POTTARGETLOW 780
+#define POTTARGETMID 1350
 #define POTTARGETBOTTOM 350
-#define POTTARGETHIGH 1500
+#define POTTARGETHIGH 1800
 #define ENCMID 100
 
 void lowStack(){
