@@ -15,18 +15,19 @@ void ptest(int port){
 	delay(100);
 }
 
+
 void operatorControl() {
 	while (1) {
-		armTest();
 		tankHPC();
 		scoop();
 		clawOp();
-		arm(joystickGetAnalog(1, 2));
-		autoStack();
-		delay(20);
+		//autoStack();
 
 		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
-		lcdPrint(uart1, 2, "Enc: %d", encoderGet(armEnc));
+		//lcdPrint(uart1, 2, "Int: %d", integral);
+		//lcdPrint(uart1, 2, "Enc: %d", encoderGet(armEnc));
+
+		delay(20);
 	}
 }
 

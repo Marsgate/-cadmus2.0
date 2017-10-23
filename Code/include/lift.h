@@ -3,5 +3,8 @@
 
 void lift(int vel);
 void liftOp();
+void liftPID(int sp);
+
+int integral;
 
 #endif

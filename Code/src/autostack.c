@@ -6,15 +6,15 @@
 #include "ports.h"
 
 #define ENCTARGET 180
-#define POTTARGETLOW 780
-#define POTTARGETMID 1350
+#define POTTARGETLOW 810
+#define POTTARGETMID 1450
 #define POTTARGETBOTTOM 350
-#define POTTARGETHIGH 1800
+#define POTTARGETHIGH 1850
 #define ENCMID 100
 
 void lowStack(){
   arm(127);
-  lift(127);
+  liftPID(POTTARGETLOW);
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
@@ -22,29 +22,22 @@ void lowStack(){
     arm(20);
   }
 
-  if(analogRead(LIFTPOT) > POTTARGETLOW){
-    lift(0);
-  }
 }
 
 void midStack(){
   arm(127);
-  lift(127);
+  liftPID(POTTARGETMID);
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
   }else if(encoderGet(armEnc) > ENCMID){
     arm(60);
-  }
-
-  if(analogRead(LIFTPOT) > POTTARGETMID){
-    lift(0);
   }
 }
 
 void highStack(){
   arm(127);
-  lift(127);
+  liftPID(POTTARGETHIGH);
 
   if(encoderGet(armEnc) > ENCTARGET){
     arm(0);
@@ -52,9 +45,6 @@ void highStack(){
     arm(60);
   }
 
-  if(analogRead(LIFTPOT) > POTTARGETHIGH){
-    lift(0);
-  }
 }
 
 
