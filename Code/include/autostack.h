@@ -3,4 +3,8 @@
 
 void autoStack();
 
+// globalizing for debugging
+int stackHeight;
+int PH;
+
 #endif
