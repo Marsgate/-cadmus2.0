@@ -4,6 +4,7 @@
 
 void arm(int vel);
 void armTest();
+void armPID(int sv);
 
 int a_int;
 
