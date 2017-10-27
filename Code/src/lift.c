@@ -1,6 +1,9 @@
 #include "API.h"
 #include "ports.h"
 
+//PID variables
+static int integral = 0;
+static int prevErr = 0;
 
 void lift(int vel){
   motorSet(LIFT1, vel);
@@ -27,8 +30,6 @@ void liftPID(int sp){
   // define local variables
   int speed; // speed
   int derivative; // derivative
-  int integral = 0;
-  int prevErr = 0;
 
   int sv = analogRead(LIFTPOT); // get sensor value
   int error = sp - sv; // find error

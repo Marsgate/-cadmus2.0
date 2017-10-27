@@ -1,6 +1,9 @@
 #include "main.h"
 #include "ports.h"
 
+//PID variables
+static int integral = 0;
+static int prevErr = 0;
 
 
 //reset the encoder if the arm bottoms out
@@ -18,15 +21,13 @@ void arm(int vel){
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
   //define coefficients
-  double kp = 5;
-  double ki = 0.2;
-  double kd = 3;
+  double kp = 3.7;
+  double ki = 0.1;
+  double kd = 6;
 
   // define local variables
   int speed; // speed
   int derivative; // derivative
-  int integral = 0;
-  int prevErr = 0;
 
   int sv = encoderGet(armEnc); // get sensor value
   int error = sp - sv; // find error
