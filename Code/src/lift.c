@@ -2,17 +2,14 @@
 #include "ports.h"
 
 //define coefficients
-double kp = 0.17;
-double ki = 0.003;
-double kd = .8;
-
+double l_kp = 0.17;
+double l_ki = 0.003;
+double l_kd = .8;
 
 //define global variables
-int integral = 0;
-int derivative = 0;
-int prevError = 0;
+int l_int = 0;
+int l_pre = 0;
 
-#define I_LIM 5000 // integral limit
 
 void lift(int vel){
   motorSet(LIFT1, vel);
@@ -31,19 +28,22 @@ void liftOp(){
 
 //lift PID control
 void liftPID(int sp){
-  int speed; // define for later
+  // define local variables
+  int spd; // speed
+  int der; // derivative
+  int i_lim = 5000; // integral limit
 
   int sv = analogRead(LIFTPOT); // get sensor value
-  int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
+  int err = sp - sv; // find error
+  l_int = l_int + err; // calculate integral
 
-  if(integral > I_LIM){integral = I_LIM;} // limit the integral
-  if(integral < -I_LIM){integral = -I_LIM;} // limit the integral
+  if(l_int > i_lim){l_int = i_lim;} // limit the integral
+  if(l_int < -i_lim){l_int = -i_lim;} // limit the integral
 
-  derivative = error - prevError; // calculate the derivative
-  prevError = error; // set current error to equal previous error
+  der = err - l_pre; // calculate the derivative
+  l_pre = err; // set current error to equal previous error
 
-  speed = error*kp + integral*ki + derivative*kd;; // add the values to get the motor speed
+  spd = err*l_kp + l_int*l_ki + der*l_kd;; // add the values to get the motor speed
 
-  lift(speed); // set the lift to the speed
+  lift(spd); // set the lift to the speed
 }

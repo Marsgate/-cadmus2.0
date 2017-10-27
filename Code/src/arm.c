@@ -2,17 +2,14 @@
 #include "ports.h"
 
 //define coefficients
-double kp = 0;
-double ki = 0;
-double kd = 0;
+double a_kp = 0;
+double a_ki = 03;
+double a_kd = 0;
 
 
 //define global variables
-int integral = 0;
-int derivative = 0;
-int prevError = 0;
-
-#define I_LIM 12000 // integral limit
+int a_int = 0;
+int a_pre = 0;
 
 //reset the encoder if the arm bottoms out
 void armTest(){
@@ -28,20 +25,22 @@ void arm(int vel){
 
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
-  int speed; // define for later
+  // define local variables
+  int spd; // speed
+  int der; // derivative
+  int i_lim = 5000; // integral limit
 
   int sv = analogRead(LIFTPOT); // get sensor value
-  int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
+  int err = sp - sv; // find error
+  a_int = a_int + err; // calculate integral
 
-  //if(integral > I_LIM){integral = I_LIM;} // limit the integral
-  //if(integral < -I_LIM){integral = -I_LIM;} // limit the integral
+  if(a_int > i_lim){a_int = i_lim;} // limit the integral
+  if(a_int < -i_lim){a_int = -i_lim;} // limit the integral
 
-  derivative = error - prevError; // calculate the derivative
-  prevError = error; // set current error to equal previous error
+  der = err - a_pre; // calculate the derivative
+  a_pre = err; // set current error to equal previous error
 
-  speed = error*kp + integral*ki + derivative*kd;; // add the values to get the motor speed
+  spd = err*a_kp + a_int*a_ki + der*a_kd;; // add the values to get the motor speed
 
-  arm(speed); // set the lift to the speed
-
+  arm(spd); // set the lift to the speed
 }

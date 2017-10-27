@@ -5,4 +5,6 @@
 void arm(int vel);
 void armTest();
 
+int a_int;
+
 #endif
