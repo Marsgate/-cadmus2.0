@@ -25,7 +25,7 @@ void operatorControl() {
 			clawOp();
 			autoStack();
 		}else{
-			armPID(50);
+			armPID(100);
 		}
 
 
