@@ -16,25 +16,24 @@ void ptest(int port){
 }
 
 void operatorControl() {
+	autonomous(); // run dat auto
 	while (1) {
-
+		/*
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
 			tankHPC();
-			scoop();
+			scoopOp();
 			clawOp();
 			autoStack();
-
-			if(isOnline() == false && joystickGetDigital(2, 8, JOY_RIGHT)){
-				autonomous(); // start the auton if not in a match.
-			}
 		}
+
 
 		armTest(); // arm limit switch reset
 
 		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
 		lcdPrint(uart1, 2, "SH: %d", stackHeight);
 		//lcdPrint(uart1, 2, "Enc: %d", encoderGet(armEnc));
+		*/
 
 		delay(20);
 	}

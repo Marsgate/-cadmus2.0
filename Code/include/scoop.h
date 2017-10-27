@@ -1,7 +1,8 @@
 #ifndef _SCOOP_H_
 #define _SCOOP_H_
 
-void scoop();
+void scoop(int vel);
+void scoopOp();
 void pclaw();
 
 #endif

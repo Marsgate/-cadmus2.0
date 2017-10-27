@@ -51,7 +51,7 @@ void stack(int vel){
 
 
 void retract(){
-  integral = 0;
+  liftIntegralReset();
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out

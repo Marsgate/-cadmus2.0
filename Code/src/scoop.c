@@ -1,16 +1,18 @@
 #include "ports.h"
 #include "API.h"
 
-void scoop(){
+void scoop(int vel){
+  motorSet(SCOOP1, vel);
+  motorSet(SCOOP2, vel);
+}
+
+void scoopOp(){
 
   if(joystickGetDigital(1, 8, JOY_DOWN)){
-    motorSet(SCOOP1, 127);
-    motorSet(SCOOP2, 127);
+    scoop(127);
   }else if(joystickGetDigital(1, 8, JOY_UP)){
-    motorSet(SCOOP1, -127);
-    motorSet(SCOOP2, -127);
+    scoop(-127);
   }else{
-    motorStop(SCOOP1);
-    motorStop(SCOOP2);
+    scoop(0);
   }
 }

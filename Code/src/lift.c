@@ -2,10 +2,6 @@
 #include "ports.h"
 
 //define coefficients
-
-
-
-
 double kp = 0.17;
 double ki = 0.003;
 double kd = .8;
@@ -15,6 +11,8 @@ double kd = .8;
 int integral = 0;
 int derivative = 0;
 int prevError = 0;
+
+#define I_LIM 5000 // integral limit
 
 void lift(int vel){
   motorSet(LIFT1, vel);
@@ -39,20 +37,13 @@ void liftPID(int sp){
   int error = sp - sv; // find error
   integral = integral + error; // calculate integral
 
-  if(integral > 5000){integral = 5000;} // limit the integral
-  if(integral < -5000){integral = -5000;} // limit the integral
+  if(integral > I_LIM){integral = I_LIM;} // limit the integral
+  if(integral < -I_LIM){integral = -I_LIM;} // limit the integral
 
   derivative = error - prevError; // calculate the derivative
   prevError = error; // set current error to equal previous error
 
-  //calculate the variables
-  double p = error*kp;
-  double i = integral*ki;
-  double d = derivative*kd;
-
-  //eliminate the integral on the way down
-  speed = p + i + d; // add the values to get the motor speed
+  speed = error*kp + integral*ki + derivative*kd;; // add the values to get the motor speed
 
   lift(speed); // set the lift to the speed
-
 }
