@@ -1,17 +1,22 @@
-#include "API.h"
+#include "main.h"
 #include "ports.h"
 #include "math.h"
 
-void arcade(){
-  int power;
-  int turn;
-  power = -joystickGetAnalog(1, 3); // vertical axis on left joystick
-  turn  = joystickGetAnalog(1, 4); // horizontal axis on left joystick
-  motorSet(DRIVEL1, power - turn); // set left wheels
-  motorSet(DRIVER1, power + turn); // set right wheels
-  motorSet(DRIVER2, power + turn); // set right
+//generic drive functions =============================================
+void leftD(int vel){
+  motorSet(DRIVEL1, vel);
+}
+void rightD(int vel){
+  motorSet(DRIVER2, vel);
+  motorSet(DRIVER1, vel);
+}
+void drive(int vel){
+  motorSet(DRIVEL1, vel);
+  motorSet(DRIVER2, vel);
+  motorSet(DRIVER1, vel);
 }
 
+// power curves =============================================
 void tankHPC(){
   int left;
   int right;
@@ -31,80 +36,25 @@ void tankHPC(){
     right = (-1 * (rJoy*rJoy)/127)+(2*rJoy);
     right = -right;
   }
-  motorSet(DRIVEL1, left);
-  motorSet(DRIVER2, right);
-  motorSet(DRIVER1, right);
-}
 
-void tankLPC(){
-  //get Joystick values
-  int left;
-  int right;
-  int lJoy = -joystickGetAnalog(1, 3);
-  int rJoy = -joystickGetAnalog(1, 2);
-  int deadzone = 5;
-  int boost = 19;
-
-  if(lJoy > deadzone){
-    left = pow(127-boost, lJoy/127)+boost;
-  }else if(lJoy < deadzone){
-    left = -(pow(127-boost, lJoy/127)+boost);
-  }else{
-    left = 0;
-  }
-
-  if(lJoy > deadzone){
-    right = pow(127-boost, rJoy/127)+boost;
-  }else if(lJoy < deadzone){
-    rJoy = abs(rJoy);
-    right = -(pow(127-boost, rJoy/127)+boost);
-  }else{
-    right = 0;
-  }
-
-  motorSet(DRIVEL1, left);
-  motorSet(DRIVER2, right);
-  motorSet(DRIVER1, right);
-}
-
-/*
-void tankSigHPC(){
-  int left;
-  int right;
-  int lJoy = -joystickGetAnalog(1, 3);
-  int rJoy = -joystickGetAnalog(1, 2);
-  int deadzone = 5;
-
-  if(abs(lJoy) > deadzone){
-    left = (127/(1 + pow(2.72,-.05*lJoy)))*2-127;
-  }else{
-    left = 0;
-  }
-  if(abs(rJoy) > deadzone){
-    right = (127/(1 + pow(2.72,-.05*rJoy)))*2-127;
-  }else{
-    right = 0;
-  }
-
-  motorSet(DRIVEL1, left);
-  motorSet(DRIVER2, right);
-  motorSet(DRIVER1, right);
+  leftD(left);
+  rightD(right);
 }
 
 void tankSigLPC(){
-  int left;
-  int right;
-  int lJoy = -joystickGetAnalog(1, 3);
-  int rJoy = -joystickGetAnalog(1, 2);
+  double left;
+  double right;
+  double lJoy = -joystickGetAnalog(1, 3);
+  double rJoy = -joystickGetAnalog(1, 2);
   int deadzone = 5;
 
   if(abs(lJoy) > deadzone){
-    left = log((256/lJoy+128)-1)/-0.02;
+    left = log(256/(lJoy+128)-1)/(-.025);
   }else{
     left = 0;
   }
   if(abs(rJoy) > deadzone){
-    right = log((256/rJoy+128)-1)/-0.02;
+    right = log(256/(rJoy+128)-1)/(-.025);
   }else{
     right = 0;
   }
@@ -113,4 +63,51 @@ void tankSigLPC(){
   motorSet(DRIVER2, right);
   motorSet(DRIVER1, right);
 }
-*/
+
+
+// autonomous drive functions =============================================
+
+
+// forward and backward
+void autoDrive(int distance){
+  int encAvg = 0;
+  encoderReset(driveEncLeft);
+  encoderReset(driveEncRight);
+  if(distance > encAvg){
+    while(distance > encAvg){
+      encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
+      drive(127);
+      printf("EA: %d distance to go:%d\n ", encAvg, (abs(distance) - abs(encAvg)));
+      delay(20);
+    }
+  }else{
+    while(distance < encAvg){
+      encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
+      drive(-127);
+      delay(20);
+    }
+  }
+  drive(0);
+}
+
+//turning
+void autoTurn(int distance, int speed){
+  int encAvg = 0;
+  int deadzone = 3;
+  encoderReset(driveEncLeft);
+  encoderReset(driveEncRight);
+  while(distance > encAvg + deadzone || distance < encAvg - deadzone){
+    encAvg = (-encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
+    if(distance > encAvg){
+      leftD(speed);
+      rightD(-speed);
+      printf("EA: %d distance to go:%d\n ", encAvg, (abs(distance) - abs(encAvg)));
+      delay(20);
+    }
+    if(distance < encAvg){
+      leftD(-speed);
+      rightD(speed);
+      delay(20);
+    }
+  }
+}

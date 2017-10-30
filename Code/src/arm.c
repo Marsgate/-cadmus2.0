@@ -38,7 +38,7 @@ void armPID(int sp){
 
   if(error > 10){integral = 0;} // only modify integral if close to target
 
-  speed = error*kp + integral*ki + derivative*kd;; // add the values to get the motor speed
+  speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
 
   arm(speed); // set the lift to the speed
 }

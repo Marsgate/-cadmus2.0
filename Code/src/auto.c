@@ -2,9 +2,10 @@
 #include "lift.h"
 #include "arm.h"
 #include "scoop.h"
-
+#include "drive.h"
 
 void autonomous() {
+
   //match autonomous
 
   /*pseudo code
@@ -20,6 +21,8 @@ void autonomous() {
   lower pylon grabber
   drive forward
   */
+
+  /*
   int timer = 0;
   while(timer < 700){
     liftPID(1000);
@@ -32,6 +35,8 @@ void autonomous() {
   timer = 0;
   scoop(-127);
   delay(700);
+  */
+  autoTurn(-300, 80);
   motorStopAll();
   while(1);
 }

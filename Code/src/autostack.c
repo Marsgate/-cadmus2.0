@@ -7,9 +7,9 @@
 
 //lift potentiometer stack target constants
 #define PT_LOW 700
-#define PT_LMID 1500
-#define PT_HMID 1850
-#define PT_HIGH 2100
+#define PT_LMID 1350
+#define PT_HMID 1700
+#define PT_HIGH 1980
 #define PT_BOTTOM 350
 
 //chainbar encoder constants
@@ -21,6 +21,7 @@
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
+int liftPos = PT_BOTTOM;
 
 void stack(int vel){
   arm(vel); // start arm moving at the set velocity
@@ -28,18 +29,19 @@ void stack(int vel){
   //lift control
   switch(stackHeight){
     case 0:
-      liftPID(PT_LOW);
+      liftPos = PT_LOW;
       break;
     case 1:
-      liftPID(PT_LMID);
+      liftPos = PT_LMID;
       break;
     case 2:
-      liftPID(PT_HMID);
+      liftPos = PT_HMID;
       break;
     case 3:
-      liftPID(PT_HIGH);
+      liftPos = PT_HIGH;
       arm(80); //slower velocity for highstack
   }
+  liftPID(liftPos); // sets the lift target for PID
 
   //slow the arm to prevent damage
   if(encoderGet(armEnc) > ET_HIGH){
@@ -51,6 +53,7 @@ void stack(int vel){
 
 
 void retract(){
+  liftPID(liftPos+200); // hold the lift in place
 
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
@@ -60,12 +63,15 @@ void retract(){
       lift(-60);
     }
   }else{
-    if(encoderGet(armEnc) < ET_LOW){
-      arm(-(encoderGet(armEnc)));
+    if(encoderGet(armEnc) > ET_LOW){
+      if(encoderGet(armEnc) < 100){
+        arm(-60);
+      }else{
+        arm(-127);
+      }
     }else{
-      arm(-127);
+      arm(0);
     }
-
     //open the claw
     claw(-127);
     hold = false;

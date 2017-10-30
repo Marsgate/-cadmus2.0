@@ -1,10 +1,10 @@
 #ifndef _DRIVE_H_
 #define _DRIVE_H_
 
-void arcade();
 void tankHPC();
 void tankLPC();
-void tankSigHPC();
 void tankSigLPC();
+void autoDrive(int distance);
+void autoTurn(int distance, int speed);
 
 #endif

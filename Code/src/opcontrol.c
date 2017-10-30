@@ -20,12 +20,12 @@ void operatorControl() {
 	while (1) {
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
-			tankHPC();
+			tankSigLPC();
 			scoopOp();
 			clawOp();
 			autoStack();
 		}else{
-			armPID(100);
+			//debug
 		}
 
 
@@ -33,8 +33,8 @@ void operatorControl() {
 
 		//lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
-		lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
-		lcdPrint(uart1, 2, "Motor: %d", motorGet(ARM));
+		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
+		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 
 
 		delay(20);
