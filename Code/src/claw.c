@@ -9,14 +9,14 @@ void claw(int vel){
 
 void clawOp(){
   if(joystickGetDigital(1, 6, JOY_UP)){
-    claw(50);
+    claw(127);
     hold = true;
   }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    claw(-50);
+    claw(-60);
     hold = false;
   }else{
     if(hold == true){
-      claw(40);
+      claw(25);
     }else{
       motorStop(CLAW);
     }

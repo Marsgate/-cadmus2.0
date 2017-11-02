@@ -6,7 +6,7 @@
 #include "ports.h"
 
 //lift potentiometer stack target constants
-#define PT_LOW 700
+#define PT_LOW 720
 #define PT_LMID 1350
 #define PT_HMID 1700
 #define PT_HIGH 1980
@@ -25,6 +25,7 @@ int liftPos = PT_BOTTOM;
 
 void stack(int vel){
   arm(vel); // start arm moving at the set velocity
+  claw(127); //squeeze
 
   //lift control
   switch(stackHeight){
@@ -54,7 +55,6 @@ void stack(int vel){
 
 void retract(){
   liftPID(liftPos+200); // hold the lift in place
-
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
     if(analogRead(LIFTPOT) < PT_BOTTOM){
@@ -63,18 +63,20 @@ void retract(){
       lift(-60);
     }
   }else{
+    //open the claw
+    claw(-127);
+    hold = false;
+
     if(encoderGet(armEnc) > ET_LOW){
       if(encoderGet(armEnc) < 100){
         arm(-60);
+        claw(-10);
       }else{
         arm(-127);
       }
     }else{
       arm(0);
     }
-    //open the claw
-    claw(-127);
-    hold = false;
   }
 
 }

@@ -16,31 +16,8 @@ void drive(int vel){
   motorSet(DRIVER1, vel);
 }
 
-// power curves =============================================
-void tankHPC(){
-  int left;
-  int right;
-  int lJoy;
-  int rJoy;
-  lJoy = -joystickGetAnalog(1, 3);
-  rJoy = -joystickGetAnalog(1, 2);
-  left = (-1 * (lJoy*lJoy)/127)+(2*lJoy);
-  right = (-1 * (rJoy*rJoy)/127)+(2*rJoy);
-  if(lJoy < 0){
-    lJoy = abs(lJoy);
-    left = (-1 * (lJoy*lJoy)/127)+(2*lJoy);
-    left = -left;
-  }
-  if(rJoy < 0){
-    rJoy = abs(rJoy);
-    right = (-1 * (rJoy*rJoy)/127)+(2*rJoy);
-    right = -right;
-  }
 
-  leftD(left);
-  rightD(right);
-}
-
+// power curve =============================================
 void tankSigLPC(){
   double left;
   double right;
@@ -65,8 +42,8 @@ void tankSigLPC(){
 }
 
 
-// autonomous drive functions =============================================
 
+// autonomous drive functions =============================================
 
 // forward and backward
 void autoDrive(int distance){
