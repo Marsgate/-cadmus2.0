@@ -4,10 +4,14 @@
 void initializeIO() {
   //led port
   pinMode(LED, OUTPUT_OD);
+  void watchdogInit();
 }
 
 
 void initialize() {
+
+  setTeamName("574C Centurion");
+
   //sensors
   armEnc = encoderInit(3, 4, false);
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);

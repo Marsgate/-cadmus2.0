@@ -17,11 +17,12 @@
 #define ET_MID 100
 #define ET_LOW 60
 
-#define controller 1 // defines the number of plugged in controllers
+#define CP 17 // pause to allow the claw to open
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
 int liftPos = PT_BOTTOM;
+int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
   arm(vel); // start arm moving at the set velocity
@@ -54,7 +55,7 @@ void stack(int vel){
 
 
 void retract(){
-  liftPID(liftPos+200); // hold the lift in place
+  liftPID(liftPos + 100);
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
     if(analogRead(LIFTPOT) < PT_BOTTOM){
@@ -67,15 +68,24 @@ void retract(){
     claw(-127);
     hold = false;
 
-    if(encoderGet(armEnc) > ET_LOW){
-      if(encoderGet(armEnc) < 100){
-        arm(-60);
-        claw(-10);
+    //if claw is open
+    if(stacking == false){
+      if(encoderGet(armEnc) > ET_LOW){
+        if(encoderGet(armEnc) < 100){
+          arm(-60);
+          claw(-10);
+        }else{
+          arm(-127);
+        }
       }else{
-        arm(-127);
+        arm(0);
       }
     }else{
-      arm(0);
+      clawTimer++;
+      if(clawTimer >= CP){
+        clawTimer = 0;
+        stacking = false;
+      }
     }
   }
 
@@ -83,13 +93,24 @@ void retract(){
 
 void shSelector(){
   //stack height moves clock wise from the left button
-  if(joystickGetDigital(controller, 7, JOY_LEFT)){
+  if(joystickGetDigital(1, 7, JOY_LEFT)){
     stackHeight = 0; // low
-  }else if(joystickGetDigital(controller, 7, JOY_DOWN)){
+  }else if(joystickGetDigital(1, 7, JOY_DOWN)){
     stackHeight = 1; // low mid
-  }else if(joystickGetDigital(controller, 7, JOY_RIGHT)){
+  }else if(joystickGetDigital(1, 7, JOY_RIGHT)){
     stackHeight = 2; // high mid
-  }else if(joystickGetDigital(controller, 7, JOY_UP)){
+  }else if(joystickGetDigital(1, 7, JOY_UP)){
+    stackHeight = 3; // high
+  }
+
+  //alternate controller
+  if(joystickGetDigital(2, 7, JOY_LEFT)){
+    stackHeight = 0; // low
+  }else if(joystickGetDigital(2, 7, JOY_DOWN)){
+    stackHeight = 1; // low mid
+  }else if(joystickGetDigital(2, 7, JOY_RIGHT)){
+    stackHeight = 2; // high mid
+  }else if(joystickGetDigital(2, 7, JOY_UP)){
     stackHeight = 3; // high
   }
 }
@@ -103,6 +124,7 @@ void autoStack(){
 
   if(joystickGetDigital(1, 5, JOY_DOWN)){
     stack(127); // start the auto stacker if left trigger is pressed
+    stacking = true;
   }else{
     retract(); // retract the lift if no button is pressed
   }
