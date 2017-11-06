@@ -9,7 +9,7 @@
 #define PT_LOW 720
 #define PT_LMID 1350
 #define PT_HMID 1700
-#define PT_HIGH 1980
+#define PT_HIGH 1960
 #define PT_BOTTOM 350
 
 //chainbar encoder constants
@@ -17,7 +17,7 @@
 #define ET_MID 100
 #define ET_LOW 60
 
-#define CP 17 // pause to allow the claw to open
+#define CP 14 // pause to allow the claw to open
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
@@ -55,7 +55,11 @@ void stack(int vel){
 
 
 void retract(){
-  liftPID(liftPos + 100);
+  if(liftPos > PT_LOW){
+    liftPID(liftPos + 150); // hold the lift in place
+  }else{
+    liftPID(liftPos - 100); // dont raise for first stack setting
+  }
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
     if(analogRead(LIFTPOT) < PT_BOTTOM){

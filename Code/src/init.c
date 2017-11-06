@@ -4,13 +4,12 @@
 void initializeIO() {
   //led port
   pinMode(LED, OUTPUT_OD);
-  void watchdogInit();
 }
 
 
 void initialize() {
 
-  setTeamName("574C Centurion");
+  //setTeamName("574C Centurion");
 
   //sensors
   armEnc = encoderInit(3, 4, false);
