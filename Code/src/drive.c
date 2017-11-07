@@ -47,6 +47,8 @@ void tankSigLPC(){
 
 // forward and backward
 void autoDrive(int distance){
+  encoderReset(driveEncLeft);
+  encoderReset(driveEncRight);
   int encAvg = 0;
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
@@ -69,6 +71,8 @@ void autoDrive(int distance){
 
 //turning
 void autoTurn(int distance, int speed){
+  encoderReset(driveEncLeft);
+  encoderReset(driveEncRight);
   int encAvg = 0;
   int deadzone = 3;
   encoderReset(driveEncLeft);

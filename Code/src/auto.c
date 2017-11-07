@@ -3,6 +3,23 @@
 #include "arm.h"
 #include "scoop.h"
 #include "drive.h"
+#include "claw.h"
+
+void ltLow(){
+  liftPID(400);
+}
+
+void lt350(){
+  liftPID(350);
+}
+
+void ati60(){
+  armPID(-60);
+}
+
+void at0(){
+  armPID(0);
+}
 
 void autonomous() {
 
@@ -22,21 +39,31 @@ void autonomous() {
   drive forward
   */
 
-  /*
-  int timer = 0;
-  while(timer < 700){
-    liftPID(1000);
-    delay(20);
-    arm(-127);
-    timer += 20;
-  }
+  //start lift and arm PID
+  TaskHandle lHandle = taskRunLoop(ltLow, 20);
+  TaskHandle aHandle = taskRunLoop(ati60, 20);
 
-  arm(0);
-  timer = 0;
-  scoop(-127);
+  claw(30);
+
   delay(700);
-  */
-  autoTurn(-300, 80);
+
+  scoop(-127);
+  delay(1400);
+  scoop(0);
+
+  autoDrive(1200); //rough estimate to drive to pylon
+
+  scoop(127);
+  delay(1400);
+  aHandle = taskRunLoop(at0, 20);
+  delay(600);
+
+  claw(-127);
+  delay(400);
+
+  claw(0);
+
   motorStopAll();
-  while(1);
+  taskDelete(lHandle);
+  taskDelete(aHandle);
 }

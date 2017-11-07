@@ -16,14 +16,16 @@ void ptest(int port){
 }
 
 void operatorControl() {
-	//autonomous(); // run dat auto
 	while (1) {
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
-			tankSigLPC();
+			/*tankSigLPC();
 			scoopOp();
 			clawOp();
-			autoStack();
+			autoStack();*/
+			if(joystickGetDigital(2, 8, JOY_RIGHT)){
+				autonomous();
+			}
 		}else{
 			//debug
 		}
