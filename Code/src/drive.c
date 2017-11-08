@@ -23,7 +23,7 @@ void tankSigLPC(){
   double right;
   double lJoy = -joystickGetAnalog(1, 3);
   double rJoy = -joystickGetAnalog(1, 2);
-  int deadzone = 5;
+  int deadzone = 8;
 
   if(abs(lJoy) > deadzone){
     left = log(256/(lJoy+128)-1)/(-.025);

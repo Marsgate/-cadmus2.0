@@ -119,6 +119,8 @@ Encoder armEnc;
 Encoder driveEncLeft;
 Encoder driveEncRight;
 
+int mode;
+
 // End C++ export structure
 #ifdef __cplusplus
 }

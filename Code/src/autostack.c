@@ -7,15 +7,16 @@
 
 //lift potentiometer stack target constants
 #define PT_LOW 720
-#define PT_LMID 1350
-#define PT_HMID 1700
-#define PT_HIGH 1960
+#define PT_LMID 1300
+#define PT_HMID 1620
+#define PT_HIGH 1880
 #define PT_BOTTOM 350
+#define PT_ML 600
 
 //chainbar encoder constants
-#define ET_HIGH 160
-#define ET_MID 100
-#define ET_LOW 60
+#define ET_HIGH 100
+#define ET_MID 95
+#define ET_LOW 90
 
 #define CP 14 // pause to allow the claw to open
 
@@ -26,7 +27,7 @@ int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
   arm(vel); // start arm moving at the set velocity
-  claw(127); //squeeze
+  claw(60); //squeeze
 
   //lift control
   switch(stackHeight){
@@ -55,17 +56,21 @@ void stack(int vel){
 
 
 void retract(){
-  if(liftPos > PT_LOW){
+  /*if(liftPos > PT_LOW){
     liftPID(liftPos + 150); // hold the lift in place
   }else{
     liftPID(liftPos - 100); // dont raise for first stack setting
-  }
+  }*/
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
-    if(analogRead(LIFTPOT) < PT_BOTTOM){
-      lift(0);
+    if(mode == 0){
+      if(analogRead(LIFTPOT) < PT_BOTTOM){
+        lift(0);
+      }else{
+        lift(-60);
+      }
     }else{
-      lift(-60);
+      liftPID(PT_LMID);
     }
   }else{
     //open the claw
@@ -75,7 +80,7 @@ void retract(){
     //if claw is open
     if(stacking == false){
       if(encoderGet(armEnc) > ET_LOW){
-        if(encoderGet(armEnc) < 100){
+        if(encoderGet(armEnc) < ET_MID){
           arm(-60);
           claw(-10);
         }else{

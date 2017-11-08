@@ -4,20 +4,11 @@
 //PID variables
 static int integral = 0;
 static int prevErr = 0;
+static int liftOpTarget = 700;
 
 void lift(int vel){
   motorSet(LIFT1, vel);
   motorSet(LIFT2, vel);
-}
-
-void liftOp(){
-  if (joystickGetDigital(1,5,JOY_UP)){
-    lift(127);
-  }else if (joystickGetDigital(1, 5, JOY_DOWN)){
-    lift(-127);
-  }else{
-    lift(0);
-  }
 }
 
 //lift PID control
@@ -49,4 +40,16 @@ void liftPID(int sp){
   speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
 
   lift(speed); // set the lift to the speed
+}
+
+void liftOp(){
+  if (joystickGetDigital(1,5,JOY_UP)){
+    lift(127);
+    liftOpTarget = analogRead(LIFTPOT);
+  }else if (joystickGetDigital(1, 5, JOY_DOWN)){
+    lift(-127);
+    liftOpTarget = analogRead(LIFTPOT);
+  }else{
+    liftPID(liftOpTarget);
+  }
 }
