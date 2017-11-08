@@ -16,6 +16,10 @@ void drive(int vel){
   motorSet(DRIVER1, vel);
 }
 
+void drivePID(){
+  
+}
+
 
 // power curve =============================================
 void tankSigLPC(){

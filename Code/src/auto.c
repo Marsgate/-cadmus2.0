@@ -4,24 +4,23 @@
 #include "scoop.h"
 #include "drive.h"
 #include "claw.h"
+#include "ports.h"
 
-void ltLow(){
-  liftPID(400);
+//PID targets
+static int liftTarget = 0;
+static int armTarget = 0;
+
+//PID tasks
+void liftTask(){
+  liftPID(liftTarget);
+}
+void armTask(){
+  armPID(armTarget);
 }
 
-void lt350(){
-  liftPID(350);
-}
 
-void ati60(){
-  armPID(-60);
-}
-
-void at0(){
-  armPID(0);
-}
-
-void autonomous() {
+// program 1 ===============================================================
+void pylonLeft() {
 
   //match autonomous
 
@@ -40,30 +39,51 @@ void autonomous() {
   */
 
   //start lift and arm PID
-  TaskHandle lHandle = taskRunLoop(ltLow, 20);
-  TaskHandle aHandle = taskRunLoop(ati60, 20);
 
-  claw(30);
+  liftTarget = 400;
+  armTarget = -60;
+
+  TaskHandle lHandle = taskRunLoop(liftTask, 20);
+  TaskHandle aHandle = taskRunLoop(armTask, 20);
+
+  claw(20);
 
   delay(700);
 
   scoop(-127);
-  delay(1400);
+  // delay until scoop bottoms out
+  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
+    delay(20); //delay to make room for the other tasks to run
+  }
   scoop(0);
 
-  autoDrive(1200); //rough estimate to drive to pylon
+  autoDrive(1000); //rough estimate to drive to pylon
 
+  autoTurn(100, 60);
+  /*
   scoop(127);
   delay(1400);
-  aHandle = taskRunLoop(at0, 20);
+  armTarget = 0;
   delay(600);
+  */
 
-  claw(-127);
-  delay(400);
-
-  claw(0);
-
-  motorStopAll();
   taskDelete(lHandle);
   taskDelete(aHandle);
+  motorStopAll();
+  while(1);
+}
+
+void driveTest(){
+  autoDrive(1000);
+}
+
+// control center ===============================================================
+void autonomous() {
+  switch(auton){
+    case 0:
+      break; //dont run auton
+    case 1:
+      driveTest();
+      break;
+  }
 }

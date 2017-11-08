@@ -120,6 +120,7 @@ Encoder driveEncLeft;
 Encoder driveEncRight;
 
 int mode;
+int auton;
 
 // End C++ export structure
 #ifdef __cplusplus

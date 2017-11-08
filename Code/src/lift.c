@@ -13,16 +13,15 @@ void lift(int vel){
 
 //lift PID control
 void liftPID(int sp){
-  /* old coeffecients
-  double kp = .17;
-  double ki = .003;
-  double kd = .8;
-  */
-
-  //define coefficients
+  /*define coefficients
   double kp = .27;
   double ki = 0.02;
   double kd = 0.2;
+  */
+
+  double kp = .13;
+  double ki = .01;
+  double kd = .4;
 
   // define local  variables
   int speed; // speed

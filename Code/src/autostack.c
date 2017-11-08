@@ -63,7 +63,7 @@ void retract(){
   }*/
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
-    if(mode == 0){
+    if(mode != 1){
       if(analogRead(LIFTPOT) < PT_BOTTOM){
         lift(0);
       }else{

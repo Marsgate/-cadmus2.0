@@ -25,5 +25,7 @@
 #define ARM_LIMIT 5
 #define ARM_ENC1 3
 #define ARM_ENC2 4
+#define SCOOP_LIM_TOP 6
+#define SCOOP_LIM_BOT 7
 
 #endif

@@ -17,6 +17,21 @@ void ptest(int port){
 }
 
 void operatorControl() {
+	// only run mode selector if not in competition
+	while(isOnline() == false){
+		lcdSetText(uart1, 1, "1:Op 3:Auto");
+
+		int but = lcdReadButtons(uart1);
+
+		if(but == 1){
+			mode = 0;
+			break;
+		}else if(but == 4){
+			mode = 3;
+			break;
+		}
+		delay(50); //space for lcd to update
+	}
 	while (1) {
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
@@ -32,10 +47,10 @@ void operatorControl() {
 
 			tankSigLPC();
 			clawOp();
+			scoopOp();
 			switch(mode){
 				case 0:
 					autoStack();
-					scoopOp();
 					break;
 				case 1:
 					autoStack();
@@ -43,6 +58,14 @@ void operatorControl() {
 				case 2:
 					armPID(75);
 					liftOp();
+					break;
+				case 3:
+					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
+						delay(20);
+					}
+					auton = 1;
+					autonomous();
+					mode = 0;
 					break;
 			}
 		}else{
@@ -52,11 +75,11 @@ void operatorControl() {
 
 		armTest(); // arm limit switch reset
 
-		//lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
+		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
+		lcdPrint(uart1, 2, "Mode: %d", mode);
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
-		lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
+		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
-
 
 		delay(20);
 	}
