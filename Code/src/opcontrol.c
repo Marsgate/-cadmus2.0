@@ -69,7 +69,9 @@ void operatorControl() {
 					break;
 			}
 		}else{
-
+			//autoDrive(1000);
+			lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
+		  lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 		}
 
 
@@ -81,7 +83,7 @@ void operatorControl() {
 		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 
-		delay(20000);
+		delay(20);
 	}
 }
 

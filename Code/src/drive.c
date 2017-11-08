@@ -24,9 +24,9 @@ void drivePID(int vel){
   int er = abs(encoderGet(driveEncRight));
 
   //constants
-  double kp = 1.3;
-  double ki = 0.02;
-  double kd = 2;
+  double kp = 0;
+  double ki = 0;
+  double kd = 0;
 
   // define local variables
   int speed; // speed
@@ -35,7 +35,7 @@ void drivePID(int vel){
   int error;
 
   //full speed to the slower moter
-  if(el > er){
+  if(el < er){
     rightD(vel);
     error = el - er;
   }else{

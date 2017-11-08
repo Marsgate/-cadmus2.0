@@ -48,7 +48,7 @@ void pylonLeft() {
 
   claw(20);
 
-  delay(700);
+  delay(200); // wait for lift to raise
 
   scoop(-127);
   // delay until scoop bottoms out
@@ -57,7 +57,7 @@ void pylonLeft() {
   }
   scoop(0);
 
-  autoDrive(1000); //rough estimate to drive to pylon
+  autoDrive(1100); //rough estimate to drive to pylon
 
   autoTurn(100, 60);
   /*
