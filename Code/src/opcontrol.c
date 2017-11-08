@@ -65,23 +65,23 @@ void operatorControl() {
 					}
 					auton = 1;
 					autonomous();
-					mode = 0;
+					//mode = 1;
 					break;
 			}
 		}else{
-			//debug
+
 		}
 
 
 		armTest(); // arm limit switch reset
 
-		lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
-		lcdPrint(uart1, 2, "Mode: %d", mode);
+		//lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
+		//lcdPrint(uart1, 2, "Mode: %d", mode);
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
 		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 
-		delay(20);
+		delay(20000);
 	}
 }
 

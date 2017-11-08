@@ -2,6 +2,9 @@
 #include "ports.h"
 #include "math.h"
 
+static int integral = 0;
+static int prevErr = 0;
+
 //generic drive functions =============================================
 void leftD(int vel){
   motorSet(DRIVEL1, vel);
@@ -16,8 +19,42 @@ void drive(int vel){
   motorSet(DRIVER1, vel);
 }
 
-void drivePID(){
-  
+void drivePID(int vel){
+  int el = abs(encoderGet(driveEncLeft));
+  int er = abs(encoderGet(driveEncRight));
+
+  //constants
+  double kp = 1.3;
+  double ki = 0.02;
+  double kd = 2;
+
+  // define local variables
+  int speed; // speed
+  int derivative; // derivative
+
+  int error;
+
+  //full speed to the slower moter
+  if(el > er){
+    rightD(vel);
+    error = el - er;
+  }else{
+    leftD(vel);
+    error = er - el;
+  }
+
+  integral = integral + error; // calculate integral
+
+  derivative = error - prevErr; // calculate the derivative
+  prevErr = error; // set current error to equal previous error
+
+  speed = 127 - abs(error*kp + integral*ki + derivative*kd); // add the values to get the motor speed
+
+  if(el < er){
+    leftD(speed);
+  }else{
+    rightD(speed);
+  }
 }
 
 
@@ -51,22 +88,20 @@ void tankSigLPC(){
 
 // forward and backward
 void autoDrive(int distance){
-  encoderReset(driveEncLeft);
-  encoderReset(driveEncRight);
   int encAvg = 0;
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
   if(distance > encAvg){
     while(distance > encAvg){
       encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
-      drive(127);
+      drivePID(127);
       printf("EA: %d distance to go:%d\n ", encAvg, (abs(distance) - abs(encAvg)));
       delay(20);
     }
   }else{
     while(distance < encAvg){
       encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
-      drive(-127);
+      drivePID(-127);
       delay(20);
     }
   }
@@ -75,8 +110,6 @@ void autoDrive(int distance){
 
 //turning
 void autoTurn(int distance, int speed){
-  encoderReset(driveEncLeft);
-  encoderReset(driveEncRight);
   int encAvg = 0;
   int deadzone = 3;
   encoderReset(driveEncLeft);

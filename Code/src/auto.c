@@ -74,7 +74,9 @@ void pylonLeft() {
 }
 
 void driveTest(){
-  autoDrive(1000);
+  autoDrive(1300);
+  lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
+  lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 }
 
 // control center ===============================================================
