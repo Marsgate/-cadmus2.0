@@ -9,14 +9,14 @@
 #define PT_LOW 720
 #define PT_LMID 1300
 #define PT_HMID 1620
-#define PT_HIGH 1880
+#define PT_HIGH 2050
 #define PT_BOTTOM 350
 #define PT_ML 600
 
 //chainbar encoder constants
-#define ET_HIGH 100
+#define ET_HIGH 115
 #define ET_MID 95
-#define ET_LOW 90
+#define ET_LOW 100
 
 #define CP 14 // pause to allow the claw to open
 
@@ -80,7 +80,7 @@ void retract(){
     //if claw is open
     if(stacking == false){
       if(encoderGet(armEnc) > ET_LOW){
-        if(encoderGet(armEnc) < ET_MID){
+        if(encoderGet(armEnc) < ET_HIGH){
           arm(-60);
           claw(-10);
         }else{
