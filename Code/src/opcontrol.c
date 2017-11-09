@@ -71,7 +71,7 @@ void operatorControl() {
 		}else{
 			//autoDrive(1000);
 			lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
-		  lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
+		  lcdPrint(uart1, 2, "l%d r%d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 		}
 
 

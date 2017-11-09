@@ -20,59 +20,101 @@ void armTask(){
 
 
 // program 1 ===============================================================
-void pylonLeft() {
+void leftPylon() {
+  encoderReset(armEnc);
 
-  //match autonomous
+  //drive out from wall
+  autoDrive(285);
+  delay(200);
 
-  /*pseudo code
-  raise the chainbar + lift a little
-  lower the pylon grabber
-  reverse to the first pylon
-  raise pylon grabber
-  stack the preload
-  drive forward
-  slant to center
-  spin to face the zone
-  reverse
-  lower pylon grabber
-  drive forward
-  */
+  //turn to face pylon
+  autoTurn(110, 60);
+  delay(200);
 
-  //start lift and arm PID
+  liftTarget = 600;
 
-  liftTarget = 400;
   armTarget = -60;
 
   TaskHandle lHandle = taskRunLoop(liftTask, 20);
   TaskHandle aHandle = taskRunLoop(armTask, 20);
 
-  claw(20);
+  //hold preload
+  claw(30);
 
   delay(200); // wait for lift to raise
 
-  scoop(-127);
+  scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
+  delay(300);
   scoop(0);
 
-  autoDrive(1100); //rough estimate to drive to pylon
+  //drive to pylon
+  autoDrive(1000);
+  delay(200);
 
+  //reverse after pushing cones
+  autoDrive(-230);
+  delay(200);
+
+  //turn to face pylon
   autoTurn(100, 60);
-  /*
-  scoop(127);
-  delay(1400);
+  delay(200);
+
+  //drive into pylon
+  autoDrive(370);
+
+
+  scoop(127); //raise scoop
+  while(digitalRead(SCOOP_LIM_TOP) == HIGH){
+    delay(20);
+  }
+  scoop(0);
+
+  //drop arm to score cone
   armTarget = 0;
-  delay(600);
-  */
+  delay(200);
+
+  autoTurn(-40, 60); //turn to face zone
+  delay(200);
+
+  autoDrive(-1200); //reverse to zone
+
+  //face the zone
+  autoTurn(100, 60);
+  autoDrive(-150);
+  autoTurn(370, 60);
+
+  //drive into the zone
+  //autoDrive(200);
+
+  //release the cone
+  claw(-127);
+  delay(300);
+  claw(-30);
+  armTarget = -60;
+
+  scoop(-127); //drop pylon scoop
+  // delay until scoop bottoms out
+  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
+    delay(20); //delay to make room for the other tasks to run
+  }
+  delay(300);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-500);
+
+
 
   taskDelete(lHandle);
   taskDelete(aHandle);
   motorStopAll();
-  while(1);
 }
 
+// testing PID ===============================================================
 void driveTest(){
   autoDrive(1300);
   lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
@@ -85,7 +127,7 @@ void autonomous() {
     case 0:
       break; //dont run auton
     case 1:
-      driveTest();
+      leftPylon();
       break;
   }
 }

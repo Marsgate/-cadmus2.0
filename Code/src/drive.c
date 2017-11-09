@@ -24,9 +24,9 @@ void drivePID(int vel){
   int er = abs(encoderGet(driveEncRight));
 
   //constants
-  double kp = 0;
-  double ki = 0;
-  double kd = 0;
+  double kp = 3;
+  double ki = 0.1;
+  double kd = 1.4;
 
   // define local variables
   int speed; // speed
@@ -48,10 +48,14 @@ void drivePID(int vel){
   derivative = error - prevErr; // calculate the derivative
   prevErr = error; // set current error to equal previous error
 
-  speed = 127 - abs(error*kp + integral*ki + derivative*kd); // add the values to get the motor speed
+  speed = abs(vel) - abs(error*kp + integral*ki + derivative*kd); // add the values to get the motor speed
+
+  if(vel < 0){
+    speed = -speed;
+  }
 
   if(el < er){
-    leftD(speed);
+    leftD(speed - 10);
   }else{
     rightD(speed);
   }
@@ -88,6 +92,7 @@ void tankSigLPC(){
 
 // forward and backward
 void autoDrive(int distance){
+  integral = 0;
   int encAvg = 0;
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
@@ -128,4 +133,5 @@ void autoTurn(int distance, int speed){
       delay(20);
     }
   }
+  drive(0);
 }
