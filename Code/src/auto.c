@@ -28,7 +28,7 @@ void leftPylon() {
   delay(200);
 
   //turn to face pylon
-  autoTurn(110, 60);
+  autoTurn(160, 60);
   delay(200);
 
   liftTarget = 600;
@@ -60,7 +60,7 @@ void leftPylon() {
   delay(200);
 
   //turn to face pylon
-  autoTurn(100, 60);
+  autoTurn(60, 60);
   delay(200);
 
   //drive into pylon

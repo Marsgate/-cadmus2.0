@@ -48,6 +48,7 @@ void operatorControl() {
 			tankSigLPC();
 			clawOp();
 			scoopOp();
+
 			switch(mode){
 				case 0:
 					autoStack();

@@ -55,10 +55,11 @@ void drivePID(int vel){
   }
 
   if(el < er){
-    leftD(speed - 10);
+    leftD(speed);
   }else{
     rightD(speed);
   }
+
 }
 
 

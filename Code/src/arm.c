@@ -42,3 +42,11 @@ void armPID(int sp){
 
   arm(speed); // set the lift to the speed
 }
+
+void armOp(){
+  if(joystickGetDigital(2, 6, JOY_UP)){
+    arm(127);
+  }else if(joystickGetDigital(2, 6, JOY_DOWN)){
+    arm(-127);
+  }
+}

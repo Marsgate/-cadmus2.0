@@ -56,11 +56,6 @@ void stack(int vel){
 
 
 void retract(){
-  /*if(liftPos > PT_LOW){
-    liftPID(liftPos + 150); // hold the lift in place
-  }else{
-    liftPID(liftPos - 100); // dont raise for first stack setting
-  }*/
   if(digitalRead(ARM_LIMIT) == LOW){
     arm(0); // stop the arm when it bottoms out
     if(mode != 1){
@@ -86,8 +81,10 @@ void retract(){
         }else{
           arm(-127);
         }
-      }else{
+      }else if(encoderGet(armEnc) > 10){
         arm(0);
+      }else{
+        arm(-127);
       }
     }else{
       clawTimer++;
