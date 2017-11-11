@@ -5,6 +5,10 @@ void tankHPC();
 void tankLPC();
 void tankSigLPC();
 void autoDrive(int distance);
-void autoTurn(int distance, int speed);
+void autoTurn(int distance);
+void drivePIDTest(int distance);
+
+void leftD(int vel);
+void rightD(int vel);
 
 #endif

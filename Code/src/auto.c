@@ -24,48 +24,50 @@ void leftPylon() {
   encoderReset(armEnc);
 
   //drive out from wall
-  autoDrive(285);
+  autoDrive(300);
   delay(200);
 
   //turn to face pylon
-  autoTurn(160, 60);
+  autoTurn(37);
   delay(200);
 
-  liftTarget = 600;
 
   armTarget = -60;
 
-  TaskHandle lHandle = taskRunLoop(liftTask, 20);
   TaskHandle aHandle = taskRunLoop(armTask, 20);
 
   //hold preload
   claw(30);
 
-  delay(200); // wait for lift to raise
 
   scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
-  delay(300);
+  delay(150);
   scoop(0);
 
+  delay(600);
+
   //drive to pylon
-  autoDrive(1000);
-  delay(200);
+  autoDrive(1200);
 
   //reverse after pushing cones
-  autoDrive(-230);
-  delay(200);
+  autoDrive(-300);
 
   //turn to face pylon
-  autoTurn(60, 60);
-  delay(200);
+  gyroReset(gyro);
+  while(gyroGet(gyro) < 20){
+    leftD(60);
+    rightD(-60);
+  }
 
   //drive into pylon
-  autoDrive(370);
+  autoDrive(320);
 
+  liftTarget = 400;
+  TaskHandle lHandle = taskRunLoop(liftTask, 20); //start the lift
 
   scoop(127); //raise scoop
   while(digitalRead(SCOOP_LIM_TOP) == HIGH){
@@ -74,18 +76,20 @@ void leftPylon() {
   scoop(0);
 
   //drop arm to score cone
-  armTarget = 0;
-  delay(200);
+  taskDelete(aHandle);
 
-  autoTurn(-40, 60); //turn to face zone
-  delay(200);
+  //manual turn
+  gyroReset(gyro);
+  while(gyroGet(gyro) > -10){
+    leftD(-60);
+    rightD(60);
+  }
 
-  autoDrive(-1200); //reverse to zone
+  autoDrive(-1100); //reverse to zone
 
   //face the zone
-  autoTurn(100, 60);
-  autoDrive(-150);
-  autoTurn(370, 60);
+  autoTurn(170);
+
 
   //drive into the zone
   //autoDrive(200);
@@ -94,20 +98,19 @@ void leftPylon() {
   claw(-127);
   delay(300);
   claw(-30);
-  armTarget = -60;
+  armTarget = -80;
+  aHandle = taskRunLoop(armTask, 20);
+  delay(300);
 
   scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
-  delay(300);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-500);
-
-
+  autoDrive(-300);
 
   taskDelete(lHandle);
   taskDelete(aHandle);
@@ -116,7 +119,7 @@ void leftPylon() {
 
 // testing PID ===============================================================
 void driveTest(){
-  autoDrive(1300);
+  autoTurn(300);
   lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
   lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 }
@@ -129,5 +132,7 @@ void autonomous() {
     case 1:
       leftPylon();
       break;
+    case 2:
+      driveTest();
   }
 }

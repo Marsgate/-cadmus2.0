@@ -3,6 +3,7 @@
 
 void scoop(int vel);
 void scoopOp();
+void scoopSkills();
 void pclaw();
 
 #endif

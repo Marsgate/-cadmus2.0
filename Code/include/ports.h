@@ -27,5 +27,6 @@
 #define ARM_ENC2 4
 #define SCOOP_LIM_TOP 6
 #define SCOOP_LIM_BOT 7
+#define GYRO 3
 
 #endif

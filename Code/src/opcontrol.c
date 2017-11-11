@@ -16,7 +16,16 @@ void ptest(int port){
 	delay(100);
 }
 
+void gyTest(){
+	if(powerLevelMain() < 100){
+		gyroShutdown(gyro);
+	}
+}
+
 void operatorControl() {
+
+	TaskHandle gyHandle = taskRunLoop(gyTest, 20);
+
 	// only run mode selector if not in competition
 	while(isOnline() == false){
 		lcdSetText(uart1, 1, "1:Op 3:Auto");
@@ -43,22 +52,30 @@ void operatorControl() {
 				mode = 1;
 			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
 				mode = 2;
+			}else if (joystickGetDigital(2, 8, JOY_UP)){
+				mode = 4;
 			}
 
-			tankSigLPC();
-			clawOp();
-			scoopOp();
 
 			switch(mode){
 				case 0:
 					autoStack();
+					tankSigLPC();
+					clawOp();
+					scoopOp();
 					break;
 				case 1:
 					autoStack();
+					tankSigLPC();
+					clawOp();
+					scoopOp();
 					break;
 				case 2:
 					armPID(75);
 					liftOp();
+					tankSigLPC();
+					clawOp();
+					scoopOp();
 					break;
 				case 3:
 					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
@@ -68,11 +85,19 @@ void operatorControl() {
 					autonomous();
 					//mode = 1;
 					break;
+				case 4:
+					armPID(75);
+					scoopSkills();
+					tankSigLPC();
 			}
 		}else{
-			//autoDrive(1000);
-			lcdPrint(uart1, 1, "dif: %d", abs(encoderGet(driveEncLeft) - encoderGet(driveEncRight)));
-		  lcdPrint(uart1, 2, "l%d r%d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
+			drivePIDTest(-30);
+			if(lcdReadButtons(uart1) == 1){
+				gyroReset(gyro);
+				encoderReset(driveEncLeft);
+				encoderReset(driveEncRight);
+			}
+
 		}
 
 
@@ -83,9 +108,13 @@ void operatorControl() {
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
 		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
+		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
+		lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 
 		delay(20);
 	}
+	taskDelete(gyHandle); // litterally just deals with a warning message
 }
 
 /* precautionary measures
