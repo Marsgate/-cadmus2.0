@@ -24,7 +24,7 @@ void leftPylon() {
   encoderReset(armEnc);
 
   //drive out from wall
-  autoDrive(300);
+  autoDrive(325);
   delay(200);
 
   //turn to face pylon
@@ -32,12 +32,12 @@ void leftPylon() {
   delay(200);
 
 
-  armTarget = -60;
+  armTarget = -70;
 
   TaskHandle aHandle = taskRunLoop(armTask, 20);
 
   //hold preload
-  claw(30);
+  claw(40);
 
 
   scoop(-127); //drop pylon scoop
@@ -48,7 +48,7 @@ void leftPylon() {
   delay(150);
   scoop(0);
 
-  delay(600);
+  delay(700);
 
   //drive to pylon
   autoDrive(1200);
@@ -58,15 +58,15 @@ void leftPylon() {
 
   //turn to face pylon
   gyroReset(gyro);
-  while(gyroGet(gyro) < 20){
+  while(gyroGet(gyro) < 8){
     leftD(60);
     rightD(-60);
   }
 
   //drive into pylon
-  autoDrive(320);
+  autoDrive(340);
 
-  liftTarget = 400;
+  liftTarget = 500;
   TaskHandle lHandle = taskRunLoop(liftTask, 20); //start the lift
 
   scoop(127); //raise scoop
@@ -76,7 +76,7 @@ void leftPylon() {
   scoop(0);
 
   //drop arm to score cone
-  taskDelete(aHandle);
+  armTarget = 0;
 
   //manual turn
   gyroReset(gyro);
@@ -99,7 +99,6 @@ void leftPylon() {
   delay(300);
   claw(-30);
   armTarget = -80;
-  aHandle = taskRunLoop(armTask, 20);
   delay(300);
 
   scoop(-127); //drop pylon scoop
@@ -107,6 +106,7 @@ void leftPylon() {
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
+  delay(300);
   scoop(0);
 
   //reverse out of zone

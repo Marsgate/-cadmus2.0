@@ -47,7 +47,7 @@ void turnPID(int sp){
   static int prevErr = 0;
 
   double kp = 2.5;
-  double ki = 0.04;
+  double ki = 0.05;
   double kd = 5;
 
   // define local  variables
@@ -77,8 +77,9 @@ void tankSigLPC(){
   int deadzone = 8;
 
   if(mode == 4){
-    lJoy = -lJoy;
-    rJoy = -rJoy;
+    int lnew = -lJoy;
+    lJoy = -rJoy;
+    rJoy = lnew;
   }
 
   if(abs(lJoy) > deadzone){
@@ -96,8 +97,6 @@ void tankSigLPC(){
   motorSet(DRIVER2, right);
   motorSet(DRIVER1, right);
 }
-
-
 
 // autonomous drive functions =============================================
 

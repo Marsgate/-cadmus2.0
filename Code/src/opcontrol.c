@@ -59,16 +59,16 @@ void operatorControl() {
 
 			switch(mode){
 				case 0:
-					autoStack();
 					tankSigLPC();
 					clawOp();
 					scoopOp();
+					autoStack();
 					break;
 				case 1:
-					autoStack();
 					tankSigLPC();
 					clawOp();
 					scoopOp();
+					autoStack();
 					break;
 				case 2:
 					armPID(75);
@@ -86,7 +86,6 @@ void operatorControl() {
 					//mode = 1;
 					break;
 				case 4:
-					armPID(75);
 					scoopSkills();
 					tankSigLPC();
 			}

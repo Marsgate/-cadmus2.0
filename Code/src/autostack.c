@@ -70,6 +70,7 @@ void retract(){
   }else{
     //open the claw
     claw(-127);
+    lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
     hold = false;
 
     //if claw is open
