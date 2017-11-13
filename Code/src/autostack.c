@@ -6,23 +6,22 @@
 #include "ports.h"
 
 //lift potentiometer stack target constants
-#define PT_LOW 720
-#define PT_LMID 1300
-#define PT_HMID 1620
-#define PT_HIGH 2050
-#define PT_BOTTOM 350
-#define PT_ML 600
+#define LP_LOW 720
+#define LP_LMID 1300
+#define LP_HMID 1620
+#define LP_HIGH 2050
+#define LP_ML 600
+#define LP_BOT 350
 
-//chainbar encoder constants
-#define ET_HIGH 115
-#define ET_MID 95
-#define ET_LOW 100
+#define AP_BOT 4000
+#define AP_MID 1800
+#define AP_FRONT 100
 
 #define CP 14 // pause to allow the claw to open
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
-int liftPos = PT_BOTTOM;
+int liftPos = LP_BOT;
 int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
@@ -32,40 +31,34 @@ void stack(int vel){
   //lift control
   switch(stackHeight){
     case 0:
-      liftPos = PT_LOW;
+      liftPos = LP_LOW;
       break;
     case 1:
-      liftPos = PT_LMID;
+      liftPos = LP_LMID;
       break;
     case 2:
-      liftPos = PT_HMID;
+      liftPos = LP_HMID;
       break;
     case 3:
-      liftPos = PT_HIGH;
+      liftPos = LP_HIGH;
       arm(80); //slower velocity for highstack
   }
   liftPID(liftPos); // sets the lift target for PID
 
-  //slow the arm to prevent damage
-  if(encoderGet(armEnc) > ET_HIGH){
-    arm(0); // stop arm when stack is complete
-  }else if(encoderGet(armEnc) > ET_MID){
-    arm(20); // slow arm on descent
-  }
 }
 
 
 void retract(){
-  if(digitalRead(ARM_LIMIT) == LOW){
+  if(analogRead(ARMPOT) > AP_BOT){
     arm(0); // stop the arm when it bottoms out
     if(mode != 1){
-      if(analogRead(LIFTPOT) < PT_BOTTOM){
+      if(analogRead(LIFTPOT) < LP_BOT){
         lift(0);
       }else{
         lift(-60);
       }
     }else{
-      liftPID(PT_LMID);
+      liftPID(LP_LMID);
     }
   }else{
     //open the claw
@@ -74,18 +67,7 @@ void retract(){
 
     //if claw is open
     if(stacking == false){
-      if(encoderGet(armEnc) > ET_LOW){
-        if(encoderGet(armEnc) < ET_HIGH){
-          arm(-60);
-          claw(-10);
-        }else{
-          arm(-127);
-        }
-      }else if(encoderGet(armEnc) > 10){
-        arm(0);
-      }else{
-        arm(-127);
-      }
+      arm(-127);
     }else{
       clawTimer++;
       if(clawTimer >= CP){

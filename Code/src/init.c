@@ -9,10 +9,8 @@ void initializeIO() {
 
 void initialize() {
 
-  //setTeamName("574C Centurion");
+  setTeamName("574C Centurion");
 
-  //sensors
-  armEnc = encoderInit(3, 4, false);
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
   gyro = gyroInit(GYRO, 0);
