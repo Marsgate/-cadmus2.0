@@ -21,7 +21,6 @@ void armTask(){
 
 // program 1 ===============================================================
 void leftPylon() {
-  encoderReset(armEnc);
 
   //drive out from wall
   autoDrive(325);
@@ -32,7 +31,7 @@ void leftPylon() {
   delay(200);
 
 
-  armTarget = -70;
+  armTarget = 0;
 
   TaskHandle aHandle = taskRunLoop(armTask, 20);
 

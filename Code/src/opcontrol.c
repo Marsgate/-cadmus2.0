@@ -90,7 +90,7 @@ void operatorControl() {
 					tankSigLPC();
 			}
 		}else{
-			drivePIDTest(-30);
+			//drivePIDTest(-30);
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
 				encoderReset(driveEncLeft);
@@ -99,17 +99,14 @@ void operatorControl() {
 
 		}
 
-
-		armTest(); // arm limit switch reset
-
 		//lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 2, "Mode: %d", mode);
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
-		//lcdPrint(uart1, 1, "Enc: %d", encoderGet(armEnc));
+		lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
-		lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
-		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 
 		delay(20);
 	}

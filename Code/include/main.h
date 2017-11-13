@@ -114,8 +114,6 @@ void initialize();
  */
 void operatorControl();
 
-
-Encoder armEnc;
 Encoder driveEncLeft;
 Encoder driveEncRight;
 

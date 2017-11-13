@@ -5,14 +5,6 @@
 static int integral = 0;
 static int prevErr = 0;
 
-
-//reset the encoder if the arm bottoms out
-void armTest(){
-  if(digitalRead(ARM_LIMIT) == LOW){
-    encoderReset(armEnc);
-  }
-}
-
 // motion control for the arm
 void arm(int vel){
   motorSet(ARM, vel);
@@ -29,7 +21,7 @@ void armPID(int sp){
   int speed; // speed
   int derivative; // derivative
 
-  int sv = encoderGet(armEnc); // get sensor value
+  int sv = analogRead(ARMPOT); // get sensor value
   int error = sp - sv; // find error
   integral = integral + error; // calculate integral
 
