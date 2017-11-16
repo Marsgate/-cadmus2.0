@@ -14,9 +14,9 @@ void lift(int vel){
 //lift PID control
 void liftPID(int sp){
 
-  double kp = .13;
-  double ki = .01;
-  double kd = .4;
+  double kp = .15;
+  double ki = .007;
+  double kd = .16 ;
 
   // define local  variables
   int speed; // speed
@@ -29,7 +29,7 @@ void liftPID(int sp){
   derivative = error - prevErr; // calculate the derivative
   prevErr = error; // set current error to equal previous error
 
-  if(error > 200){integral = 0;} // only modify integral if close to target
+  if(error > 100){integral = 0;} // only modify integral if close to target
 
   speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
 

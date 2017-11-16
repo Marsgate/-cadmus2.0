@@ -6,18 +6,18 @@
 #include "ports.h"
 
 //lift potentiometer stack target constants
-#define LP_LOW 720
-#define LP_LMID 1300
-#define LP_HMID 1620
-#define LP_HIGH 2050
-#define LP_ML 600
-#define LP_BOT 350
+#define LP_LOW 2200
+#define LP_LMID 1800
+#define LP_HMID 3330
+#define LP_HIGH 3600
+#define LP_ML 3000
+#define LP_BOT 1830
 
-#define AP_BOT 4000
+#define AP_BOT 3900
 #define AP_MID 1800
 #define AP_FRONT 100
 
-#define CP 14 // pause to allow the claw to open
+#define CP 12 // pause to allow the claw to open
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
@@ -25,7 +25,13 @@ int liftPos = LP_BOT;
 int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
-  arm(vel); // start arm moving at the set velocity
+  if(analogRead(ARMPOT) < AP_MID){
+    arm(5);
+    claw(-10);
+  }else{
+    arm(vel);
+  }
+
   claw(60); //squeeze
 
   //lift control
@@ -44,6 +50,7 @@ void stack(int vel){
       arm(80); //slower velocity for highstack
   }
   liftPID(liftPos); // sets the lift target for PID
+
 
 }
 
@@ -68,7 +75,12 @@ void retract(){
 
     //if claw is open
     if(stacking == false){
-      arm(-127);
+      if(analogRead(ARMPOT) > AP_MID){
+        arm(-20);
+        claw(-10);
+      }else{
+        arm(-127);
+      }
     }else{
       clawTimer++;
       if(clawTimer >= CP){

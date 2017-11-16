@@ -90,7 +90,8 @@ void operatorControl() {
 					tankSigLPC();
 			}
 		}else{
-			//drivePIDTest(-30);
+
+			//liftPID(3000);
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
 				encoderReset(driveEncLeft);
@@ -99,10 +100,11 @@ void operatorControl() {
 
 		}
 
-		//lcdPrint(uart1, 1, "Pot: %d", analogRead(LIFTPOT));
+		//look at all those debugging print outs
+		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 2, "Mode: %d", mode);
 		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
-		lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
+		lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
@@ -114,7 +116,7 @@ void operatorControl() {
 }
 
 /* precautionary measures
-while(574C_Members > 0){
+while(574C_Members > 0){se
 	int distance = findNearestTallObject();
 	if(distance == walkable){
 		walk();
