@@ -19,25 +19,14 @@ void armTask(){
 }
 
 
-// program 1 ===============================================================
-void leftPylon() {
-
-  //drive out from wall
-  autoDrive(325);
+//drive to pylon program =======================================
+void leftPyDrive(){
+  autoDrive(325); // drive out from wall
   delay(200);
-
-  //turn to face pylon
-  autoTurn(37);
+  autoTurn(37); // turn to face pylon
   delay(200);
-
-
-  armTarget = 0;
-
-  TaskHandle aHandle = taskRunLoop(armTask, 20);
-
-  //hold preload
-  claw(40);
-
+  armTarget = 2000; // raise arm
+  claw(40); //hold preload
 
   scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
@@ -46,14 +35,9 @@ void leftPylon() {
   }
   delay(150);
   scoop(0);
-
-  delay(700);
-
-  //drive to pylon
-  autoDrive(1200);
-
-  //reverse after pushing cones
-  autoDrive(-300);
+  delay(700); // wait for other tasks to reach their end point
+  autoDrive(1200); // drive to pylon
+  autoDrive(-300); // reverse after pushing cones
 
   //turn to face pylon
   gyroReset(gyro);
@@ -62,11 +46,8 @@ void leftPylon() {
     rightD(-60);
   }
 
-  //drive into pylon
-  autoDrive(340);
-
-  liftTarget = 500;
-  TaskHandle lHandle = taskRunLoop(liftTask, 20); //start the lift
+  autoDrive(340); //drive into pylon
+  liftTarget = 500; // lower lift
 
   scoop(127); //raise scoop
   while(digitalRead(SCOOP_LIM_TOP) == HIGH){
@@ -74,30 +55,30 @@ void leftPylon() {
   }
   scoop(0);
 
-  //drop arm to score cone
-  armTarget = 0;
+  armTarget = 15; // drop arm to score cone
 
-  //manual turn
+  //face the robot toward the scoring zone
   gyroReset(gyro);
   while(gyroGet(gyro) > -10){
     leftD(-60);
     rightD(60);
   }
 
+}
+
+
+// program 1 ===============================================================
+void leftPylon5() {
+
+  leftPyDrive(); //drive to pylon
   autoDrive(-1100); //reverse to zone
-
-  //face the zone
-  autoTurn(170);
-
-
-  //drive into the zone
-  //autoDrive(200);
+  autoTurn(170);//face the zone
 
   //release the cone
   claw(-127);
   delay(300);
   claw(-30);
-  armTarget = -80;
+  armTarget = 2000;
   delay(300);
 
   scoop(-127); //drop pylon scoop
@@ -110,11 +91,34 @@ void leftPylon() {
 
   //reverse out of zone
   autoDrive(-300);
-
-  taskDelete(lHandle);
-  taskDelete(aHandle);
-  motorStopAll();
 }
+
+
+// program 2 ===============================================================
+void leftPylon20(){
+  leftPyDrive(); //drive to pylon
+  autoDrive(-1100); //reverse to zone
+  autoTurn(40);// parallel to the zone
+  autoDrive(-300); // center the robot
+  autoTurn(90); // face the zone
+  autoDrive(300); // drive in to the zone
+
+
+  //release the cone
+  claw(-127);
+  delay(300);
+  claw(-30);
+  armTarget = 2000;
+  delay(300);
+
+  scoop(-60); //drop pylon scoop
+  delay(2000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-300);
+}
+
 
 // testing PID ===============================================================
 void driveTest(){
@@ -123,15 +127,26 @@ void driveTest(){
   lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 }
 
+
 // control center ===============================================================
 void autonomous() {
+
+  //start all tasks
+  TaskHandle aHandle = taskRunLoop(armTask, 20); //start arm
+  TaskHandle lHandle = taskRunLoop(liftTask, 20); //start lift
+
   switch(auton){
     case 0:
       break; //dont run auton
     case 1:
-      leftPylon();
+      leftPylon5();
       break;
     case 2:
-      driveTest();
+      leftPylon20();
   }
+
+  //stop all tasks
+  taskDelete(lHandle);
+  taskDelete(aHandle);
+  motorStopAll();
 }

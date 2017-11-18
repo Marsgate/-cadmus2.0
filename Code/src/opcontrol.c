@@ -91,7 +91,7 @@ void operatorControl() {
 			}
 		}else{
 
-			//liftPID(3000);
+			//armPID(2000);
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
 				encoderReset(driveEncLeft);

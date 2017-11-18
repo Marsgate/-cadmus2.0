@@ -13,9 +13,9 @@ void arm(int vel){
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
   //define coefficients
-  double kp = 3.7;
-  double ki = 0.1;
-  double kd = 6;
+  double kp = 0.1;
+  double ki = 0;
+  double kd = 0;
 
   // define local variables
   int speed; // speed
@@ -32,7 +32,7 @@ void armPID(int sp){
 
   speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
 
-  arm(speed); // set the lift to the speed
+  arm(-speed); // set the lift to the speed
 }
 
 void armOp(){

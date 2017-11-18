@@ -7,8 +7,8 @@
 
 //lift potentiometer stack target constants
 #define LP_LOW 2200
-#define LP_LMID 1800
-#define LP_HMID 3330
+#define LP_LMID 3300
+#define LP_HMID 3480
 #define LP_HIGH 3600
 #define LP_ML 3000
 #define LP_BOT 1830
@@ -56,6 +56,10 @@ void stack(int vel){
 
 
 void retract(){
+  if(stackHeight > 0){
+    liftPID(liftPos+200); // hold the lift in place
+  }
+
   if(analogRead(ARMPOT) > AP_BOT){
     arm(0); // stop the arm when it bottoms out
     if(mode != 1){
