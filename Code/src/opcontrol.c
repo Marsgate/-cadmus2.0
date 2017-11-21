@@ -86,6 +86,9 @@ void operatorControl() {
 					//mode = 1;
 					break;
 				case 4:
+					if(analogRead(ARMPOT) < 4000){
+						armPID(4000);
+					}
 					scoopSkills();
 					tankSigLPC();
 			}

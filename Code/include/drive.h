@@ -10,5 +10,6 @@ void drivePIDTest(int distance);
 
 void leftD(int vel);
 void rightD(int vel);
+void drive(int vel);
 
 #endif

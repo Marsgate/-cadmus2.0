@@ -23,8 +23,7 @@ void armTask(){
 void leftPyDrive(){
   autoDrive(325); // drive out from wall
   delay(200);
-  autoTurn(37); // turn to face pylon
-  delay(200);
+  autoTurn(39); // turn to face pylon
   armTarget = 2000; // raise arm
   claw(40); //hold preload
 
@@ -35,19 +34,19 @@ void leftPyDrive(){
   }
   delay(150);
   scoop(0);
-  delay(700); // wait for other tasks to reach their end point
+  delay(400); // wait for other tasks to reach their end point
   autoDrive(1200); // drive to pylon
   autoDrive(-300); // reverse after pushing cones
 
   //turn to face pylon
   gyroReset(gyro);
-  while(gyroGet(gyro) < 8){
+  while(gyroGet(gyro) < 10){
     leftD(60);
     rightD(-60);
   }
 
   autoDrive(340); //drive into pylon
-  liftTarget = 500; // lower lift
+  liftTarget = 2200; // move lift to scoring height
 
   scoop(127); //raise scoop
   while(digitalRead(SCOOP_LIM_TOP) == HIGH){
@@ -59,7 +58,7 @@ void leftPyDrive(){
 
   //face the robot toward the scoring zone
   gyroReset(gyro);
-  while(gyroGet(gyro) > -10){
+  while(gyroGet(gyro) > -7){
     leftD(-60);
     rightD(60);
   }
@@ -97,11 +96,13 @@ void leftPylon5() {
 // program 2 ===============================================================
 void leftPylon20(){
   leftPyDrive(); //drive to pylon
-  autoDrive(-1100); //reverse to zone
+  autoDrive(-1200); //reverse to zone
   autoTurn(40);// parallel to the zone
-  autoDrive(-300); // center the robot
+  autoDrive(-600); // center the robot
   autoTurn(90); // face the zone
-  autoDrive(300); // drive in to the zone
+  autoDrive(550); // drive in to the zone
+  drive(60);
+  delay(300);
 
 
   //release the cone
@@ -111,12 +112,12 @@ void leftPylon20(){
   armTarget = 2000;
   delay(300);
 
-  scoop(-60); //drop pylon scoop
-  delay(2000);
+  scoop(-127); //drop pylon scoop
+  delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-300);
+  autoDrive(-800);
 }
 
 
@@ -130,6 +131,8 @@ void driveTest(){
 
 // control center ===============================================================
 void autonomous() {
+  liftTarget = analogRead(LIFTPOT); // calibrate the PID starting values
+  armTarget = analogRead(ARMPOT);
 
   //start all tasks
   TaskHandle aHandle = taskRunLoop(armTask, 20); //start arm

@@ -34,21 +34,27 @@ void initialize() {
 
   //mode selector from LCD
   bool selected = false;
+  bool buttonDown = false;
   while(selected == false){
     lcdSetText(uart1, 1, "Autonomous");
 
     int but = lcdReadButtons(uart1); // get the lcd button
-    switch(but){
-      case 1:
-        auton--;
-        break;
-      case 2:
-        selected = true;
-        lcdSetText(uart1, 1, "Selected");
-        break;
-      case 4:
-        auton++;
-        break;
+    if(but == 0){
+      buttonDown = false;
+    }else if(buttonDown == false){
+      buttonDown = true;
+      switch(but){
+        case 1:
+          auton--;
+          break;
+        case 2:
+          selected = true;
+          lcdSetText(uart1, 1, "Selected");
+          break;
+        case 4:
+          auton++;
+          break;
+      }
     }
 
     switch(auton){
@@ -60,6 +66,7 @@ void initialize() {
         break;
       case 2:
         lcdSetText(uart1, 2, "Left 20pt");
+        break;
     }
 
     delay(20); //space for lcd to update

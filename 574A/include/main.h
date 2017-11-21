@@ -108,10 +108,12 @@ void operatorControl();
 //drive
 #define DRIVE1 3
 #define DRIVE2 5
-#define DRIVE3 7
 #define DRIVE4 9
 
 //claw
 #define CLAW 10
+
+//pylon
+#define PYLON1 7
 
 #endif
