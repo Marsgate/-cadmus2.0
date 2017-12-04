@@ -6,10 +6,10 @@
 #include "ports.h"
 
 //lift potentiometer stack target constants
-#define LP_LOW 2200
-#define LP_LMID 3300
-#define LP_HMID 3480
-#define LP_HIGH 3600
+#define LP_LOW 2600
+#define LP_LMID 3500
+#define LP_HMID 3680
+#define LP_HIGH 3800
 #define LP_ML 3000
 #define LP_BOT 1830
 
@@ -61,7 +61,7 @@ void retract(){
   }
 
   if(analogRead(ARMPOT) > AP_BOT){
-    arm(0); // stop the arm when it bottoms out
+    arm(-10); // hold arm down against the tension
     if(mode != 1){
       if(analogRead(LIFTPOT) < LP_BOT){
         lift(0);
