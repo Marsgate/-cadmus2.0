@@ -57,7 +57,11 @@ void initialize() {
       }
     }
 
+    //display current selection
     switch(auton){
+      case -1:
+        lcdSetText(uart1, 2, "Driver Skills");
+        break;
       case 0:
         lcdSetText(uart1, 2, "None");
         break;
@@ -67,6 +71,8 @@ void initialize() {
       case 2:
         lcdSetText(uart1, 2, "Left 20pt");
         break;
+      default:
+        auton = 0;
     }
 
     delay(20); //space for lcd to update
