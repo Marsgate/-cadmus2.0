@@ -6,15 +6,15 @@
 #include "ports.h"
 
 //lift potentiometer stack target constants
-#define LP_LOW 2200
-#define LP_LMID 3300
+#define LP_LOW 2280
+#define LP_LMID 3200
 #define LP_HMID 3480
-#define LP_HIGH 3600
+#define LP_HIGH 3800
 #define LP_ML 3000
 #define LP_BOT 1830
 
 #define AP_BOT 3900
-#define AP_MID 1800
+#define AP_MID 3200
 #define AP_FRONT 100
 
 #define CP 12 // pause to allow the claw to open
@@ -69,7 +69,7 @@ void retract(){
         lift(-60);
       }
     }else{
-      liftPID(LP_LMID);
+      lift(-127);
     }
   }else{
     //open the claw
@@ -80,7 +80,7 @@ void retract(){
     //if claw is open
     if(stacking == false){
       if(analogRead(ARMPOT) > AP_MID){
-        arm(-20);
+        arm(0);
         claw(-10);
       }else{
         arm(-127);

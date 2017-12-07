@@ -7,7 +7,8 @@ static int prevErr = 0;
 
 // motion control for the arm
 void arm(int vel){
-  motorSet(ARM, vel);
+  motorSet(ARM1, vel);
+  motorSet(ARM2, vel);
 }
 
 //arm PID control (basically copy pasted from liftPID)
