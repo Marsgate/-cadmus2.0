@@ -37,9 +37,9 @@ void armPID(int sp){
 }
 
 void armOp(){
-  if(joystickGetDigital(2, 6, JOY_UP)){
+  if(joystickGetDigital(1, 6, JOY_UP)){
     arm(127);
-  }else if(joystickGetDigital(2, 6, JOY_DOWN)){
+  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
     arm(-127);
   }
 }

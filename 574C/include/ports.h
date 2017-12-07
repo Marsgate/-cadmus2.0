@@ -9,6 +9,7 @@
 #define ARM2 4
 #define CLAW 6
 #define LIFT1 5
+#define CLAW 6
 #define DRIVER1 7
 #define LIFT2 8
 #define DRIVER2 9

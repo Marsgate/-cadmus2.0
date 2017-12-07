@@ -61,7 +61,7 @@ void retract(){
   }
 
   if(analogRead(ARMPOT) > AP_BOT){
-    arm(0); // stop the arm when it bottoms out
+    arm(-10); // hold arm down against the tension
     if(mode != 1){
       if(analogRead(LIFTPOT) < LP_BOT){
         lift(0);

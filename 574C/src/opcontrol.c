@@ -94,13 +94,13 @@ void operatorControl() {
 			}
 		}else{
 
-			//armPID(2000);
+			armPID(2000);
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
 				encoderReset(driveEncLeft);
 				encoderReset(driveEncRight);
 			}
-
+			//motorSet(ARM, 50);
 		}
 
 		//look at all those debugging print outs
