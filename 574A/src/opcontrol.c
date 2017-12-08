@@ -3,6 +3,7 @@
 #include "lift.h"
 #include "claw.h"
 #include "pylon.h"
+#include "antitip.h"
 
 void operatorControl() {
 	while (1) {
@@ -10,6 +11,7 @@ void operatorControl() {
 		liftOp();
 		clawOp();
 		pylonOp();
+		antitipOp();
 		delay(20);
 	}
 }

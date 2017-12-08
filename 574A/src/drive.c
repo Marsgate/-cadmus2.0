@@ -1,10 +1,11 @@
 #include "main.h"
 
-void right(int vel){
-  motorSet(DRIVE1, vel);
-}
 void left(int vel){
   motorSet(DRIVE2, vel);
+  motorSet(DRIVE3, vel);
+}
+void right(int vel){
+  motorSet(DRIVE1, vel);
   motorSet(DRIVE4, vel);
 }
 
