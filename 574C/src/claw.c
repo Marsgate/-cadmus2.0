@@ -12,13 +12,13 @@ void clawOp(){
     claw(127);
     hold = true;
   }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    claw(-60);
+    claw(-127);
     hold = false;
   }else{
     if(hold == true){
-      claw(20);
+      claw(10);
     }else{
-      claw(-20);
+      claw(-10);
     }
   }
 }

@@ -7,7 +7,8 @@ static int prevErr = 0;
 
 // motion control for the arm
 void arm(int vel){
-  motorSet(ARM, vel);
+  motorSet(ARM1, vel);
+  motorSet(ARM2, vel);
 }
 
 //arm PID control (basically copy pasted from liftPID)
@@ -36,9 +37,9 @@ void armPID(int sp){
 }
 
 void armOp(){
-  if(joystickGetDigital(2, 6, JOY_UP)){
+  if(joystickGetDigital(1, 6, JOY_UP)){
     arm(127);
-  }else if(joystickGetDigital(2, 6, JOY_DOWN)){
+  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
     arm(-127);
   }
 }
