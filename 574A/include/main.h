@@ -118,4 +118,5 @@ void operatorControl();
 #define PYLON2 6
 //anti-tip
 #define ANTITIP 10
+int auton;
 #endif

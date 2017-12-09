@@ -5,7 +5,7 @@
 #include "pylon.h"
 #include "antitip.h"
 
-void autonomous() {
+void leftPylon20() {
   lift(127); //lift rises for 2.5 seconds then stop
   drive(127);
   antitip(127);
@@ -50,4 +50,15 @@ void autonomous() {
   drive(-127);
   delay(1450);
   motorStopAll();
+}
+
+
+void autonomous() {
+  switch(auton){
+    case 0:
+      break; //dont run auto
+    case 1:
+      leftPylon20();
+      break;
+  }
 }
