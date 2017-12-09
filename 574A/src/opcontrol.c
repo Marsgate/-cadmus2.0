@@ -9,11 +9,9 @@
 void operatorControl() {
 	while (1) {
 		driveOp();
-		liftOp();
-		clawOp();
 		pylonOp();
 		antitipOp();
-		chainbarOp();
+		
 		delay(20);
 	}
 }
