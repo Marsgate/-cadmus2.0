@@ -49,8 +49,15 @@ void initialize() {
         lcdSetText(uart1, 2, "Left 20pt");
         break;
         case 2:
-        lcdSetText(uart1, 2, "Center Stack");
+        lcdSetText(uart1, 2, "CSL");
         break;
+        case 3:
+        lcdSetText(uart1, 2, "CSR");
+        break;
+        case 4:
+        lcdSetText(uart1, 2, "Right  20pt");
+        break;
+
       default:
         auton = 0;
     }
