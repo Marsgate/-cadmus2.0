@@ -5,5 +5,5 @@ void claw(int vel){
 }
 
 void clawOp(){
-  claw(joystickGetAnalog(1, 2));
+  claw(joystickGetAnalog(1, 3));
 }

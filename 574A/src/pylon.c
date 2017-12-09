@@ -6,9 +6,9 @@ void pylon(int vel){
 }
 
 void pylonOp(){
-  if(joystickGetDigital(1, 6, JOY_UP)){
+  if(joystickGetDigital(1, 8, JOY_UP)){
     pylon(127);
-  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
+  }else if(joystickGetDigital(1, 8, JOY_DOWN)){
     pylon(-127);
   }else{
     pylon(0);

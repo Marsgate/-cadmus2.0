@@ -4,6 +4,7 @@
 #include "claw.h"
 #include "pylon.h"
 #include "antitip.h"
+#include "chainbar.h"
 
 void rightPylon20(){
   lift(127); //lift rises for 2.5 seconds then stop

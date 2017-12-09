@@ -101,7 +101,7 @@ void operatorControl();
 
 //lift
 #define LIFT1 4
-#define LIFT2 7
+#define CHAINBAR1 7
 
 
 //drive
