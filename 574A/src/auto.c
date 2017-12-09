@@ -52,6 +52,35 @@ void leftPylon20() {
   motorStopAll();
 }
 
+void CenterStack(){
+  lift(127);
+  delay(2000);
+  lift(0);
+  delay(100);
+  drive(127);
+  delay(400);
+  drive(0);
+  left(127);
+  right(-127);
+  delay(250);
+  drive(0);
+  delay(100);
+  drive(127);
+  antitip(127);
+  delay(1000);
+  antitip(0);
+  delay(500);
+  drive(0);
+  lift(-127);
+  delay(750);
+  lift(0);
+  claw(-127);
+  delay(250);
+  claw(0);
+  drive(-127);
+  delay(500);
+  drive(0);
+}
 
 void autonomous() {
   switch(auton){
@@ -59,6 +88,9 @@ void autonomous() {
       break; //dont run auto
     case 1:
       leftPylon20();
+      break;
+    case 2:
+      CenterStack();
       break;
   }
 }

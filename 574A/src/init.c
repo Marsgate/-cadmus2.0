@@ -48,6 +48,9 @@ void initialize() {
       case 1:
         lcdSetText(uart1, 2, "Left 20pt");
         break;
+        case 2:
+        lcdSetText(uart1, 2, "Center Stack");
+        break;
       default:
         auton = 0;
     }
