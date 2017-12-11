@@ -100,20 +100,23 @@ void operatorControl();
 #endif
 
 //lift
-#define LIFT1 1
-#define LIFT2 4
-#define LIFT3 6
-#define LIFT4 8
+#define LIFT1 4
+#define CHAINBAR1 7
+
 
 //drive
-#define DRIVE1 3
-#define DRIVE2 5
+#define DRIVE1 2
+#define DRIVE2 3
+#define DRIVE3 8
 #define DRIVE4 9
 
 //claw
-#define CLAW 10
+#define CLAW 1
 
 //pylon
-#define PYLON1 7
-
+#define PYLON1 5
+#define PYLON2 6
+//anti-tip
+#define ANTITIP 10
+int auton;
 #endif
