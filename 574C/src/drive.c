@@ -2,6 +2,8 @@
 #include "ports.h"
 #include "math.h"
 
+static int dir;
+
 //generic drive functions =============================================
 void leftD(int vel){
   motorSet(DRIVEL1, vel);
@@ -23,7 +25,7 @@ void drivePID(int sp){
   static int prevErr = 0;
 
   double kp = 1;
-  double ki = 0;
+  double ki = 0.1;
   double kd = 3;
 
   // define local  variables
@@ -33,6 +35,10 @@ void drivePID(int sp){
   int sv = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
   int error = sp - sv; // find error
   integral = integral + error; // calculate integral
+
+  if(abs(error) > 100){
+    integral = 0;
+  }
 
   derivative = error - prevErr; // calculate the derivative
   prevErr = error; // set current error to equal previous error
@@ -119,13 +125,47 @@ void autoDrive(int distance){
 void autoTurn(int distance){
   int gy = gyroGet(gyro);
   int deadzone = 3;
-  gyroReset(gyro);
   while(distance > gy + deadzone || distance < gy - deadzone){
     gy = gyroGet(gyro);
     turnPID(distance);
     delay(20);
   }
   drive(0);
+}
+
+void gyTurn(int distance){
+
+  int deadzone = 1;
+  gyroReset(gyro);
+  int ts = 60; // defualt turn speed
+
+  if(autoRight == true){
+    distance = -distance; // inverted turn speed for right auton
+  }
+
+  while(1){
+    int gy = gyroGet(gyro);
+    if(gy < distance - deadzone){
+      leftD(ts);
+      rightD(-ts);
+      dir = 0;
+    }else if(gy > distance + deadzone){
+      leftD(-ts);
+      rightD(ts);
+      dir = 1;
+    }else{
+      if(dir == 0){
+        leftD(-5);
+        rightD(5);
+      }else{
+        leftD(5);
+        rightD(-5);
+      }
+      delay(150);
+      drive(0);
+      break;
+    }
+  }
 }
 
 void drivePIDTest(int distance){

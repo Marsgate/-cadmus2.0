@@ -7,6 +7,7 @@ void tankSigLPC();
 void autoDrive(int distance);
 void autoTurn(int distance);
 void drivePIDTest(int distance);
+void gyTurn(int distance);
 
 void leftD(int vel);
 void rightD(int vel);

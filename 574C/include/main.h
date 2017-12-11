@@ -121,6 +121,7 @@ Gyro gyro;
 
 int mode;
 int auton;
+bool autoRight;
 
 // End C++ export structure
 #ifdef __cplusplus

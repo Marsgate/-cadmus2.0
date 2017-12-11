@@ -16,7 +16,7 @@ void clawOp(){
     hold = false;
   }else{
     if(hold == true){
-      claw(10);
+      claw(20);
     }else{
       claw(-10);
     }

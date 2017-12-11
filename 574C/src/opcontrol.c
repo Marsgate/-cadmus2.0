@@ -81,7 +81,6 @@ void operatorControl() {
 					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
 						delay(20);
 					}
-					auton = 1;
 					autonomous();
 					//mode = 1;
 					break;
@@ -91,16 +90,17 @@ void operatorControl() {
 					}
 					scoopSkills();
 					tankSigLPC();
+					break;
 			}
 		}else{
+			//armPID(1900);
+			//gyTurn(90);
 
-			armPID(2000);
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
 				encoderReset(driveEncLeft);
 				encoderReset(driveEncRight);
 			}
-			//motorSet(ARM, 50);
 		}
 
 		//look at all those debugging print outs

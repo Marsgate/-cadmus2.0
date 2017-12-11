@@ -33,6 +33,7 @@ void initialize() {
   delay(200);
 
   //mode selector from LCD
+  autoRight = false;
   bool selected = false;
   bool buttonDown = false;
   while(selected == false){
@@ -61,6 +62,7 @@ void initialize() {
     switch(auton){
       case -1:
         lcdSetText(uart1, 2, "Driver Skills");
+        mode = 4;
         break;
       case 0:
         lcdSetText(uart1, 2, "None");
@@ -70,6 +72,12 @@ void initialize() {
         break;
       case 2:
         lcdSetText(uart1, 2, "Left 20pt");
+        break;
+      case 3:
+        lcdSetText(uart1, 2, "Right 5pt");
+        break;
+      case 4:
+        lcdSetText(uart1, 2, "Right 20pt");
         break;
       default:
         auton = 0;

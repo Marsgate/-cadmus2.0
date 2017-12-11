@@ -4,20 +4,9 @@
 #include "main.h"
 #include "arm.h"
 #include "ports.h"
+#include "sensorTargets.h"
 
-//lift potentiometer stack target constants
-#define LP_LOW 2280
-#define LP_LMID 3200
-#define LP_HMID 3480
-#define LP_HIGH 3800
-#define LP_ML 3000
-#define LP_BOT 1830
-
-#define AP_BOT 3900
-#define AP_MID 3200
-#define AP_FRONT 100
-
-#define CP 12 // pause to allow the claw to open
+#define CP 15 // pause to allow the claw to open
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
@@ -25,14 +14,13 @@ int liftPos = LP_BOT;
 int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
-  if(analogRead(ARMPOT) < AP_MID){
-    arm(5);
-    claw(-10);
+  if(analogRead(ARMPOT) < AP_STACK){
+    arm(0);
   }else{
     arm(vel);
   }
 
-  claw(60); //squeeze
+  claw(30); //squeeze
 
   //lift control
   switch(stackHeight){
@@ -72,24 +60,22 @@ void retract(){
       lift(-127);
     }
   }else{
-    //open the claw
-    claw(-127);
-    lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
     hold = false;
 
-    //if claw is open
-    if(stacking == false){
-      if(analogRead(ARMPOT) > AP_MID){
-        arm(0);
-        claw(-10);
+    if(stacking == false){ //if claw is open
+      if(analogRead(ARMPOT) > AP_MID){ // slow retraction after arm midpoint
+        arm(0); // cut power prevents slamming
       }else{
         arm(-127);
       }
     }else{
+      //pause to allow the claw to open
+      claw(-127);
       clawTimer++;
       if(clawTimer >= CP){
+        claw(-10);
         clawTimer = 0;
-        stacking = false;
+        stacking = false; // finish opening claw
       }
     }
   }
