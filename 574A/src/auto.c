@@ -7,12 +7,14 @@
 #include "chainbar.h"
 
 void rightPylon20(){
-
+  lift(127); //lift rises for 2.5 seconds then stop
   drive(127);
   antitip(127);
   delay(1000);
   antitip(0);
-  delay(1500);
+  delay(1000);
+  lift(0);
+  delay(500);
   drive(0);
   delay(100);
   pylon(127);
@@ -51,11 +53,14 @@ void rightPylon20(){
   motorStopAll();
 }
 void leftPylon20() {
+  lift(127); //lift rises for 2.5 seconds then stop
   drive(127);
   antitip(127);
   delay(1000);
   antitip(0);
-  delay(1500);
+  delay(1000);
+  lift(0);
+  delay(500);
   drive(0);
   delay(100);
   pylon(127);
