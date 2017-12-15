@@ -7,6 +7,7 @@
 #include "ports.h"
 #include "autostack.h"
 #include "arm.h"
+#include "sensorTargets.h"
 
 
 void ptest(int port){
@@ -28,7 +29,7 @@ void operatorControl() {
 
 	// only run mode selector if not in competition
 	while(isOnline() == false){
-		lcdSetText(uart1, 1, "1:Op 3:Auto");
+		lcdSetText(uart1, 1, "1:Op 3:Debug");
 
 		int but = lcdReadButtons(uart1);
 
@@ -45,15 +46,22 @@ void operatorControl() {
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
 
-			//get the mode
+			//get the mode from 2nd joy
 			if(joystickGetDigital(2, 8, JOY_LEFT)){
 				mode = 0;
 			}else if(joystickGetDigital(2, 8, JOY_DOWN)){
 				mode = 1;
 			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
-				mode = 2;
+				//mode = 2;
 			}else if (joystickGetDigital(2, 8, JOY_UP)){
 				mode = 4;
+			}
+
+			//get the mode from 1st joy
+			if(joystickGetDigital(1, 8, JOY_LEFT)){
+				mode = 0;
+			}else if(joystickGetDigital(1, 8, JOY_RIGHT)){
+				mode = 1;
 			}
 
 
@@ -78,7 +86,10 @@ void operatorControl() {
 					scoopOp();
 					break;
 				case 3:
+					liftPID(LP_ML);
 					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
+						//debug stuff here
+
 						delay(20);
 					}
 					autonomous();

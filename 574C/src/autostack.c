@@ -44,31 +44,38 @@ void stack(int vel){
 
 
 void retract(){
-  if(stackHeight > 0){
-    liftPID(liftPos+200); // hold the lift in place
-  }
 
   if(analogRead(ARMPOT) > AP_BOT){
-    arm(-10); // hold arm down against the tension
-    if(mode != 1){
+    arm(0); //stop arm
+
+    if(mode == 0){
       if(analogRead(LIFTPOT) < LP_BOT){
         lift(0);
       }else{
         lift(-60);
       }
     }else{
-      lift(-127);
+      liftPID(LP_ML);
     }
   }else{
     hold = false;
 
+    if(mode == 1){
+      liftPID(LP_HIGH);
+    }
+    if(stackHeight > 0){
+      liftPID(liftPos+200); // hold the lift in place
+    }
+
     if(stacking == false){ //if claw is open
+      liftPID(LP_HIGH);
       if(analogRead(ARMPOT) > AP_MID){ // slow retraction after arm midpoint
         arm(0); // cut power prevents slamming
       }else{
         arm(-127);
       }
     }else{
+
       //pause to allow the claw to open
       claw(-127);
       clawTimer++;
@@ -114,8 +121,8 @@ void autoStack(){
   shSelector(); // find out current stack height from second controller
 
   if(joystickGetDigital(1, 5, JOY_DOWN)){
-    stack(127); // start the auto stacker if left trigger is pressed
     stacking = true;
+    stack(127); // start the auto stacker if left trigger is pressed
   }else{
     retract(); // retract the lift if no button is pressed
   }
