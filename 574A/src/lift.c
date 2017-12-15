@@ -2,9 +2,10 @@
 
 void lift(int vel){
   motorSet(LIFT1, vel);
-
+  motorSet(LIFT2, vel);
+  
 }
 
 void liftOp(){
-  lift(joystickGetAnalog(1, 2));
+  lift(joystickGetAnalog(1, 3));
 }

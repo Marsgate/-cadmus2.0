@@ -52,7 +52,7 @@ void initialize() {
         lcdSetText(uart1, 2, "CSL");
         break;
         case 3:
-        lcdSetText(uart1, 2, "CSR06+");
+        lcdSetText(uart1, 2, "CSR");
         break;
         case 4:
         lcdSetText(uart1, 2, "Right  20pt");

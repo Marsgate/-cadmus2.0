@@ -4,7 +4,6 @@
 #include "claw.h"
 #include "pylon.h"
 #include "antitip.h"
-#include "chainbar.h"
 
 void operatorControl() {
 	while (1) {
@@ -13,7 +12,6 @@ void operatorControl() {
 		clawOp();
 		pylonOp();
 		antitipOp();
-		chainbarOp();
 		delay(20);
 	}
 }
