@@ -119,6 +119,4 @@ void operatorControl();
 //anti-tip
 #define ANTITIP 10
 int auton;
-int button1;
-int button2;
 #endif
