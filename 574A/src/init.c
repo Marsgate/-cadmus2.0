@@ -52,8 +52,6 @@ void initialize() {
         lcdSetText(uart1, 2, "Center Stack");
         break;
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         case 3:
         lcdSetText(uart1, 2, "CSR06+");
         break;
@@ -61,10 +59,6 @@ void initialize() {
         lcdSetText(uart1, 2, "Right  20pt");
         break;
 
-=======
->>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
-=======
->>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
 =======
 >>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
       default:
