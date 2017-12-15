@@ -37,9 +37,6 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-<<<<<<< HEAD
-=======
-
   //lcd init
   lcdInit(uart1);
   lcdClear(uart1);
@@ -88,5 +85,5 @@ void initialize() {
 
     delay(20); //space for lcd to update
   }
->>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
+
 }
