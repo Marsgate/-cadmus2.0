@@ -7,6 +7,8 @@
 #include "chainbar.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 void rightPylon20(){
 
   drive(127);
@@ -51,6 +53,10 @@ void rightPylon20(){
   delay(1450);
   motorStopAll();
 }
+=======
+>>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
+=======
+>>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
 =======
 >>>>>>> parent of 1611f92... Autonomous Both sides, Phase 2.5 code
 void leftPylon20() {
