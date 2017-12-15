@@ -99,23 +99,4 @@ void operatorControl();
 }
 #endif
 
-//lift
-#define LIFT1 4
-#define LIFT2 5
-#define LIFT3 6
-#define LIFT4 7
-
-//drive
-#define DRIVE1 2
-#define DRIVE2 8
-#define DRIVE3 3
-#define DRIVE4 9
-
-//claw
-#define CLAW 10
-
-//pylon
-#define PYLON1 1
-#define PYLON2 2
-
 #endif
