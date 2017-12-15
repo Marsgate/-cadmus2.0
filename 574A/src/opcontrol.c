@@ -5,13 +5,18 @@
 #include "pylon.h"
 #include "antitip.h"
 #include "chainbar.h"
+#include "antitipz.h"
+#include "pylonz.h"
+#include "drivez.h"
 
 void operatorControl() {
-	while (1) {
-		driveOp();
-		pylonOp();
-		antitipOp();
-		
-		delay(20);
-	}
+
+				while(1){
+					drivezOp();
+					pylonzOp();
+					
+					delay(20);
+
+
+}
 }
