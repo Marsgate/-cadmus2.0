@@ -18,5 +18,6 @@ void bar(int vel){
   motorSet(LIFT2, vel);
 }
 void barOp(){
-  joystickGetAnalog(1,3);
+  bar(joystickGetAnalog(1,3));
+
 }
