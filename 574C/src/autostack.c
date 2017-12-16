@@ -68,7 +68,6 @@ void retract(){
     }
 
     if(stacking == false){ //if claw is open
-      liftPID(LP_HIGH);
       if(analogRead(ARMPOT) > AP_MID){ // slow retraction after arm midpoint
         arm(0); // cut power prevents slamming
       }else{

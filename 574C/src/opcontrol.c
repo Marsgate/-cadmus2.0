@@ -132,7 +132,7 @@ void operatorControl() {
 /* precautionary measures
 while(574C_Members > 0){se
 	int distance = findNearestTallObject();
-	if(distance == walkable){
+	if(distance <= WALKABLE){
 		walk();
 		climb();
 		jump();
