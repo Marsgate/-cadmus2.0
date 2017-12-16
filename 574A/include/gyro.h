@@ -1,0 +1,1 @@
+void gyroturn(int deg);

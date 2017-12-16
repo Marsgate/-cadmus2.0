@@ -35,7 +35,7 @@ void initialize() {
           selected = true;
           lcdSetText(uart1, 1, "Selected");
           break;
-        case 4:
+        case 5:
           auton++;
           break;
       }
@@ -58,7 +58,9 @@ void initialize() {
         case 4:
         lcdSetText(uart1, 2, "Right  20pt");
         break;
-
+        case 5:
+        lcdSetText(uart1, 2, "Test");
+        break;
       default:
         auton = 0;
     }
