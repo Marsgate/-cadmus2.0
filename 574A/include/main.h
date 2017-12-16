@@ -93,30 +93,31 @@ void initialize();
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl();
-
+Gyro gyro;
 // End C++ export structure
 #ifdef __cplusplus
 }
 #endif
 
 //lift
-#define LIFT1 4
-#define LIFT2 7
+#define LIFT1 4 //vert lift
+#define LIFT2 7 //chainbar
 
 
 //drive
-#define DRIVE1 2
-#define DRIVE2 3
-#define DRIVE3 8
-#define DRIVE4 9
+#define DRIVE1 2 // right front
+#define DRIVE2 3 // left back
+#define DRIVE3 8 // left front
+#define DRIVE4 9 // right back
 
 //claw
-#define CLAW 1
+#define CLAW 1 // claw
 
 //pylon
-#define PYLON1 5
-#define PYLON2 6
+#define PYLON1 5 // right
+#define PYLON2 6 // left
 //anti-tip
-#define ANTITIP 10
+#define ANTITIP 10 // antitip
 int auton;
+#define GYRO 1
 #endif

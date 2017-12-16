@@ -8,7 +8,8 @@ void initializeIO() {
 
 
 void initialize() {
-
+  gyro = gyroInit(GYRO, 0);
+  gyroReset(gyro);
   //lcd init
   lcdInit(uart1);
   lcdClear(uart1);
