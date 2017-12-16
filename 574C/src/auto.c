@@ -21,30 +21,22 @@ void armTask(){
 
 
 //drive to pylon program =======================================
-void conePush(){
-  autoDrive(550); // drive out from wall
-  delay(100);
-  gyTurn(33); // turn to face pylon
+void conePushStraight(){
+  claw(35); //hold preload
   armTarget = AP_MID; // raise arm
-  claw(25); //hold preload
-  delay(350);
   scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
-  delay(100);
   scoop(0);
-  delay(300); // wait for other tasks to reach their end point
-  autoDrive(1500); // drive to pylon
+  autoDrive(2300); // drive to pylon
 
-  delay(100);
   autoDrive(-400);
-  delay(100);
-  gyTurn(10);
-  autoDrive(480); // drive into pylon
+  gyTurn(11);
+  autoDrive(490); // drive into pylon
 
-  liftTarget = 2200; // move lift to scoring height
+  liftTarget = 2100; // move lift to scoring height
 
   scoop(127); //raise scoop
   while(digitalRead(SCOOP_LIM_TOP) == HIGH){
@@ -54,28 +46,28 @@ void conePush(){
 
   armTarget = AP_FRONT; // drop arm to score cone
 
-  gyTurn(-16);
+  gyTurn(-18);
 }
 
 //drive to pylon program =======================================
-void PyDrive(){
-  autoDrive(400); // drive out from wall
-  delay(200);
-  gyTurn(38); // turn to face pylon
+void conePushTurn(){
+  autoDrive(500); // drive out from wall
+  claw(35); //hold preload
+  gyTurn(35); // turn to face pylon
   armTarget = AP_MID; // raise arm
-  claw(40); //hold preload
-  delay(400);
   scoop(-127); //drop pylon scoop
   // delay until scoop bottoms out
   while(digitalRead(SCOOP_LIM_BOT) == HIGH){
     delay(20); //delay to make room for the other tasks to run
   }
-  delay(150);
   scoop(0);
-  delay(400); // wait for other tasks to reach their end point
-  autoDrive(1600); // drive to pylon
+  autoDrive(1450); // drive to pylon
 
-  liftTarget = 2200; // move lift to scoring height
+  autoDrive(-400);
+  gyTurn(18);
+  autoDrive(490); // drive into pylon
+
+  liftTarget = 2100; // move lift to scoring height
 
   scoop(127); //raise scoop
   while(digitalRead(SCOOP_LIM_TOP) == HIGH){
@@ -84,15 +76,13 @@ void PyDrive(){
   scoop(0);
 
   armTarget = AP_FRONT; // drop arm to score cone
-
-  gyTurn(-10);
 }
-
 
 // program 1 ===============================================================
 void pylon5() {
 
-  conePush(); //drive to pylon
+  conePushTurn(); //drive to pylon
+  gyTurn(-18);
   autoDrive(-1353); //reverse to zone
   gyTurn(140);//face the zone
 
@@ -118,12 +108,11 @@ void pylon5() {
 
 // program 2 ===============================================================
 void pylon20(){
-  conePush(); //drive to pylon
-  autoDrive(-1675); //reverse to zone
-  gyTurn(40);// parallel to the zone
-  autoDrive(-720); // center the robot
-  gyTurn(85); // face the zone
-  autoDrive(675); // drive in to the zone
+  conePushTurn(); //drive to pylon
+  gyTurn(-10);
+  autoDrive(-2300); //reverse to zone
+  gyTurn(106); // face the zone
+  autoDrive(625); // drive in to the zone
   drive(60);
   delay(300);
 

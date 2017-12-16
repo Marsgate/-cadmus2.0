@@ -86,7 +86,6 @@ void operatorControl() {
 					scoopOp();
 					break;
 				case 3:
-					liftPID(LP_ML);
 					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
 						//debug stuff here
 

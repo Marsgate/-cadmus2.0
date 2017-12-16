@@ -25,7 +25,7 @@ void drivePID(int sp){
   static int prevErr = 0;
 
   double kp = 1;
-  double ki = 0.1;
+  double ki = 0.18;
   double kd = 3;
 
   // define local  variables
@@ -137,7 +137,8 @@ void gyTurn(int distance){
 
   int deadzone = 1;
   gyroReset(gyro);
-  int ts = 60; // defualt turn speed
+  int ts = 80; // defualt turn speed
+  int br = 10;
 
   if(autoRight == true){
     distance = -distance; // inverted turn speed for right auton
@@ -155,11 +156,11 @@ void gyTurn(int distance){
       dir = 1;
     }else{
       if(dir == 0){
-        leftD(-5);
-        rightD(5);
+        leftD(-br);
+        rightD(br);
       }else{
-        leftD(5);
-        rightD(-5);
+        leftD(br);
+        rightD(-br);
       }
       delay(150);
       drive(0);

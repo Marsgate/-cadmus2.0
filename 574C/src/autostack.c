@@ -35,7 +35,6 @@ void stack(int vel){
       break;
     case 3:
       liftPos = LP_HIGH;
-      arm(80); //slower velocity for highstack
   }
   liftPID(liftPos); // sets the lift target for PID
 
@@ -60,11 +59,11 @@ void retract(){
   }else{
     hold = false;
 
-    if(mode == 1){
-      liftPID(LP_HIGH);
-    }
     if(stackHeight > 0){
       liftPID(liftPos+200); // hold the lift in place
+    }
+    if(mode == 1){
+      liftPID(LP_HIGH);
     }
 
     if(stacking == false){ //if claw is open
