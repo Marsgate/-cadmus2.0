@@ -32,7 +32,6 @@ void operatorControl() {
 				if (joystickGetDigital(1,8,JOY_LEFT)) {
 					break;
 				}
-				delay(20);
 			}
 		}
 		delay(20);

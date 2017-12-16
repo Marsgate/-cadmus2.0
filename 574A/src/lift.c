@@ -23,25 +23,50 @@ void barOp(){
 
 }
 void autostackOp(){
-  while(1){bar(127);
-  delay(550);
-  claw(127);
-  delay(200);
-  bar(0);
-  claw(0);
-  delay(50);
-  bar(-127);
-  delay(550);
-  claw(-127);
-  delay(200);
-  bar(0);
-  claw(0);
-  delay(50);
-  if (joystickGetDigital(1, 8, JOY_LEFT)) {
-    break;
-    delay(20);
+  if (joystickGetDigital(1,7,JOY_UP)) {
 
-  }
+    bar(127);//start of one
+    delay(1425);
+    bar(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    bar(-90);
+    delay(1525);
+    bar(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of one
+    bar(127);//start of two
+    delay(1300);
+    bar(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    bar(-90);
+    delay(1400);
+    bar(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of two
+    bar(127);//start of three
+    delay(1100);
+    bar(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    bar(-90);
+    delay(1200);
+    bar(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of three
+
 }
-
 }

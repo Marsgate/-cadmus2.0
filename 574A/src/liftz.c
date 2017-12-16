@@ -15,38 +15,63 @@ void liftzOp(){
     liftz(0);
   }
 }
-void barz(int vel){
+void barzz(int vel){
   motorSet(LIFT2, vel);
 }
-void barzOp(){
+void barzzOp(){
   if(joystickGetDigital(1, 6, JOY_UP)){
-    barz(127);
+    barzz(127);
   }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    barz(-127);
+    barzz(-127);
   }else{
-    barz(0);
+    barzz(0);
   }
 }
 void autostackzOp(){
-  while(1){barz(127);
-  delay(550);
-  claw(127);
-  delay(200);
-  barz(0);
-  claw(0);
-  delay(50);
-  barz(-127);
-  delay(550);
-  claw(-127);
-  delay(200);
-  barz(0);
-  claw(0);
-  delay(50);
-  if (joystickGetDigital(1, 8, JOY_RIGHT)) {
-    break;
-    delay(20);
+  if (joystickGetDigital(1, 8,JOY_UP)) {
+
+    barz(127);//start of one
+    delay(1425);
+    barz(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    barz(-90);
+    delay(1525);
+    barz(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of one
+    barz(127);//start of two
+    delay(1300);
+    barz(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    barz(-90);
+    delay(1400);
+    barz(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of two
+    barz(127);//start of three
+    delay(1100);
+    barz(0);
+    claw(127);
+    delay(450);
+    claw(0);
+    delay(100);
+    barz(-90);
+    delay(1200);
+    barz(0);
+    claw(-127);
+    delay(200);
+    claw(0);
+    delay(100);//end of three
 
   }
-}
-
 }
