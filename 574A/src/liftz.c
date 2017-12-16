@@ -1,5 +1,6 @@
 #include "main.h"
-
+#include "clawz.h"
+#include "claw.h"
 void liftz(int vel){
   motorSet(LIFT1, vel);
 
@@ -25,4 +26,27 @@ void barzOp(){
   }else{
     barz(0);
   }
+}
+void autostackzOp(){
+  while(1){barz(127);
+  delay(550);
+  claw(127);
+  delay(200);
+  barz(0);
+  claw(0);
+  delay(50);
+  barz(-127);
+  delay(550);
+  claw(-127);
+  delay(200);
+  barz(0);
+  claw(0);
+  delay(50);
+  if (joystickGetDigital(1, 8, JOY_RIGHT)) {
+    break;
+    delay(20);
+
+  }
+}
+
 }

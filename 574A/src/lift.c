@@ -1,4 +1,5 @@
 #include "main.h"
+#include "claw.h"
 
 void lift(int vel){
   motorSet(LIFT1, vel);
@@ -19,5 +20,28 @@ void bar(int vel){
 }
 void barOp(){
   bar(joystickGetAnalog(1,3));
+
+}
+void autostackOp(){
+  while(1){bar(127);
+  delay(550);
+  claw(127);
+  delay(200);
+  bar(0);
+  claw(0);
+  delay(50);
+  bar(-127);
+  delay(550);
+  claw(-127);
+  delay(200);
+  bar(0);
+  claw(0);
+  delay(50);
+  if (joystickGetDigital(1, 8, JOY_LEFT)) {
+    break;
+    delay(20);
+
+  }
+}
 
 }

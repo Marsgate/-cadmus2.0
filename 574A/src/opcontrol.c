@@ -19,6 +19,7 @@ void operatorControl() {
 		clawOp();
 		pylonOp();
 		antitipOp();
+		autostackOp();
 		if(joystickGetDigital(1,8,JOY_RIGHT)){
 			while (1) {
 				drivezOp();
@@ -27,6 +28,7 @@ void operatorControl() {
 				clawzOp();
 				pylonzOp();
 				antitipzOp();
+				autostackzOp();
 				if (joystickGetDigital(1,8,JOY_LEFT)) {
 					break;
 				}
