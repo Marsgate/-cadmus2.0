@@ -14,10 +14,6 @@ void drive(int vel){
 }
 
 void driveOp(){
-  int power;
-  int turn;
-  power = joystickGetAnalog(1, 3); // vertical axis on right joystick
-  turn  = joystickGetAnalog(1, 4); // horizontal axis on right joystick
-  left(power + turn); // set left wheels
-  right(power - turn); // set right wheels
+right(joystickGetAnalog(1,2));
+left(joystickGetAnalog(1, 3));
 }
