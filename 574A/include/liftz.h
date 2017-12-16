@@ -1,0 +1,3 @@
+void liftzOp();
+
+void barzOp();

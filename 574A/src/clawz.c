@@ -1,15 +1,15 @@
 #include "main.h"
 
-void claw(int vel){
+void clawz(int vel){
   motorSet(CLAW, vel);
 }
 
-void clawOp(){
+void clawzOp(){
   if(joystickGetDigital(1, 5, JOY_UP)){
-    claw(127);
+    clawz(127);
   }else if(joystickGetDigital(1,5,JOY_DOWN)){
-    claw(-127);
+    clawz(-127);
   }else{
-    claw(0);
+    clawz(0);
   }
 }
