@@ -105,10 +105,10 @@ Gyro gyro;
 
 
 //drive
-#define DRIVE1 2 // right front
-#define DRIVE2 3 // left back
-#define DRIVE3 8 // left front
-#define DRIVE4 9 // right back
+#define DRIVE1 3 // right front
+#define DRIVE2 2 // left back
+#define DRIVE3 9 // left front
+#define DRIVE4 8 // right back
 
 //claw
 #define CLAW 1 // claw

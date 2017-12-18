@@ -12,7 +12,7 @@
 
 void operatorControl() {
 	while (1) {
-		
+
 		driveOp();
 		liftOp();
 		barOp();
