@@ -35,7 +35,7 @@ void initialize() {
           selected = true;
           lcdSetText(uart1, 1, "Selected");
           break;
-        case 5:
+        case 4:
           auton++;
           break;
       }

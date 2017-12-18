@@ -15,16 +15,16 @@ void liftzOp(){
     liftz(0);
   }
 }
-void barzz(int vel){
+void barz(int vel){
   motorSet(LIFT2, vel);
 }
-void barzzOp(){
+void barzOp(){
   if(joystickGetDigital(1, 6, JOY_UP)){
-    barzz(127);
+    barz(127);
   }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    barzz(-127);
+    barz(-127);
   }else{
-    barzz(0);
+    barz(0);
   }
 }
 void autostackzOp(){

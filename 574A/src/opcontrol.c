@@ -12,7 +12,7 @@
 
 void operatorControl() {
 	while (1) {
-		lcdPrint(uart1, 1,"Gyro %d",gyroGet(gyro));
+		
 		driveOp();
 		liftOp();
 		barOp();

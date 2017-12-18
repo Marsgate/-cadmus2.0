@@ -5,6 +5,7 @@
 #include "pylon.h"
 #include "antitip.h"
 #include "gyro.h"
+#include "liftz.h"
 
 void Test(){
   drive(127);
@@ -12,39 +13,38 @@ void Test(){
   drive(0);
 }
 void leftPylon20(){
-  lift(127); //lift rises for 2.5 seconds then stop
-  drive(127);
   antitip(127);
-  delay(1000);
+  delay(1200);
   antitip(0);
-  delay(1000);
-  lift(0);
-  delay(500);
+  bar(127);
+  delay(1300);
+  bar(0);
+  drive(127);
+  delay(600);
+  delay(1800);
   drive(0);
-  delay(100);
   pylon(127);
   delay(1500);
   pylon(0);
   delay(100);
-  drive(-127);
-  delay(2000);
+  drive(-70);
+  delay(1500);
   drive(0);
   delay(100);
-  gyroturn(55);
+right(127);
+left(-127);
+delay(750);
+drive(0);
+delay(100);
+drive(127);
+delay(450);
+drive(0);
+  pylon(-127);
+  delay(1200);
+  pylon(0);
+  delay(100);
   drive(-127);
   delay(750);
-  drive(0);
-  delay(100);
-  gyroturn(60);
-  drive(127);
-  delay(1550);
-  drive(0);
-  delay(100);
-  antitip(-127);
-  delay(1100);
-  antitip(0);
-  drive(-127);
-  delay(1450);
   motorStopAll();
 }
 void rightPylon20() {
