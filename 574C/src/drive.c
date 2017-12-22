@@ -7,15 +7,21 @@ static int dir;
 //generic drive functions =============================================
 void leftD(int vel){
   motorSet(DRIVEL1, vel);
+  motorSet(DRIVEL2, vel);
 }
 void rightD(int vel){
-  motorSet(DRIVER2, vel);
   motorSet(DRIVER1, vel);
+  motorSet(DRIVER2, vel);
 }
 void drive(int vel){
-  motorSet(DRIVEL1, vel);
-  motorSet(DRIVER2, vel-5);
-  motorSet(DRIVER1, vel-5);
+  int brake = 8;
+  if(vel < 0){
+    brake = -brake;
+  }
+  motorSet(DRIVEL1, vel-brake);
+  motorSet(DRIVEL2, vel-brake);
+  motorSet(DRIVER1, vel);
+  motorSet(DRIVER2, vel);
 }
 
 
@@ -25,8 +31,8 @@ void drivePID(int sp){
   static int prevErr = 0;
 
   double kp = 1;
-  double ki = 0.18;
-  double kd = 3;
+  double ki = 0.15;
+  double kd = 3.1;
 
   // define local  variables
   int speed; // speed
@@ -44,6 +50,12 @@ void drivePID(int sp){
   prevErr = error; // set current error to equal previous error
 
   speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
+
+  if(speed > 127){
+    speed = 127;
+  }else if(speed < -127){
+    speed = -127;
+  }
 
   drive(speed);
 }
@@ -99,9 +111,8 @@ void tankSigLPC(){
     right = 0;
   }
 
-  motorSet(DRIVEL1, left);
-  motorSet(DRIVER2, right);
-  motorSet(DRIVER1, right);
+  leftD(left);
+  rightD(right);
 }
 
 // autonomous drive functions =============================================

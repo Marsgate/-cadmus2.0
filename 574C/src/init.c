@@ -21,6 +21,7 @@ void initialize() {
   lcdClear(uart1);
   lcdSetBacklight(uart1, true);
 
+  /*
   //expander light check
 	while(analogRead(EXPANDER) < 500){
 		digitalWrite(LED, LOW);
@@ -29,6 +30,7 @@ void initialize() {
 		delay(500);
     lcdPrint(uart1, 1, "!Check Pwr Exp!");
 	}
+  */
 
   delay(200);
 
@@ -60,6 +62,8 @@ void initialize() {
 
     //display current selection
     switch(auton){
+      case -2:
+        lcdSetText(uart1, 2, "Skills Auto");
       case -1:
         lcdSetText(uart1, 2, "Driver Skills");
         mode = 4;
@@ -79,6 +83,8 @@ void initialize() {
       case 4:
         lcdSetText(uart1, 2, "Right 20pt");
         break;
+      case 5:
+        lcdSetText(uart1, 2, "Ram");
       default:
         auton = 0;
     }

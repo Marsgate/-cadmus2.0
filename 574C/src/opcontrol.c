@@ -11,10 +11,13 @@
 
 
 void ptest(int port){
+	lcdPrint(uart1, 1, "%d", port);
 	motorSet(port, 127);
-	delay(100);
+	delay(1000);
 	motorSet(port, -127);
-	delay(100);
+	delay(1000);
+	motorStop(port);
+	delay(1000);
 }
 
 void gyTest(){
@@ -86,14 +89,8 @@ void operatorControl() {
 					scoopOp();
 					break;
 				case 3:
-					while(joystickGetDigital(1, 8, JOY_RIGHT) == false){
-						//debug stuff here
-
-						delay(20);
-					}
-					autonomous();
-					//mode = 1;
-					break;
+							//autonomous();
+							lcdSetText(uart1, 1, "naaaaaaah");
 				case 4:
 					if(analogRead(ARMPOT) < 4000){
 						armPID(4000);
@@ -105,6 +102,11 @@ void operatorControl() {
 		}else{
 			//armPID(1900);
 			//gyTurn(90);
+			/*
+			for(int i=1; i<=10; i++){
+				ptest(i);
+			}
+			*/
 
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
@@ -113,15 +115,14 @@ void operatorControl() {
 			}
 		}
 
-		//look at all those debugging print outs
 		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		//lcdPrint(uart1, 2, "Mode: %d", mode);
-		//lcdPrint(uart1, 2, "SH: %d", stackHeight);
 		lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
+		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+
 
 		delay(20);
 	}

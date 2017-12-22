@@ -19,39 +19,9 @@ void armTask(){
   armPID(armTarget);
 }
 
-
-//drive to pylon program =======================================
-void conePushStraight(){
-  claw(35); //hold preload
-  armTarget = AP_MID; // raise arm
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  scoop(0);
-  autoDrive(2300); // drive to pylon
-
-  autoDrive(-400);
-  gyTurn(11);
-  autoDrive(490); // drive into pylon
-
-  liftTarget = 2100; // move lift to scoring height
-
-  scoop(127); //raise scoop
-  while(digitalRead(SCOOP_LIM_TOP) == HIGH){
-    delay(20);
-  }
-  scoop(0);
-
-  armTarget = AP_FRONT; // drop arm to score cone
-
-  gyTurn(-18);
-}
-
 //drive to pylon program =======================================
 void conePushTurn(){
-  autoDrive(500); // drive out from wall
+  autoDrive(530); // drive out from wall
   claw(35); //hold preload
   gyTurn(35); // turn to face pylon
   armTarget = AP_MID; // raise arm
@@ -64,7 +34,7 @@ void conePushTurn(){
   autoDrive(1450); // drive to pylon
 
   autoDrive(-400);
-  gyTurn(18);
+  gyTurn(17);
   autoDrive(490); // drive into pylon
 
   liftTarget = 2100; // move lift to scoring height
@@ -110,8 +80,8 @@ void pylon5() {
 void pylon20(){
   conePushTurn(); //drive to pylon
   gyTurn(-10);
-  autoDrive(-2300); //reverse to zone
-  gyTurn(106); // face the zone
+  autoDrive(-2350); //reverse to zone
+  gyTurn(107); // face the zone
   autoDrive(625); // drive in to the zone
   drive(60);
   delay(300);
@@ -132,6 +102,11 @@ void pylon20(){
   autoDrive(-985);
 }
 
+void skills(){
+  pylon20();
+  gyTurn(100);
+  autoDrive(1700);
+}
 
 // testing PID ===============================================================
 void driveTest(){
@@ -140,6 +115,10 @@ void driveTest(){
   lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 }
 
+void ram(){
+  armTarget = 3000;
+  autoDrive(5000);
+}
 
 // control center ===============================================================
 void autonomous() {
@@ -152,6 +131,8 @@ void autonomous() {
   TaskHandle lHandle = taskRunLoop(liftTask, 20); //start lift
 
   switch(auton){
+    case -2:
+      skills();
     case 0:
       break; //dont run auton
     case 1:
@@ -167,6 +148,9 @@ void autonomous() {
     case 4:
       autoRight = true;
       pylon20();
+      break;
+    case 5:
+      ram();
       break;
   }
 

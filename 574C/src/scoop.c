@@ -2,8 +2,7 @@
 #include "API.h"
 
 void scoop(int vel){
-  motorSet(SCOOP1, vel);
-  motorSet(SCOOP2, vel);
+  motorSet(SCOOP, -vel);
 }
 
 void scoopOp(){
@@ -22,6 +21,24 @@ void scoopSkills(){
   }else if(joystickGetDigital(1, 6, JOY_UP)){
     scoop(-70);
   }else{
+    scoop(0);
+  }
+}
+
+void autoScoop(int target){
+  if(target == 0){
+    scoop(-127);
+    while(digitalRead(SCOOP_LIM_BOT) == HIGH){
+      delay(20); //delay to make room for the other tasks to run
+    }
+    delay(300);
+    scoop(0);
+  }else{
+    scoop(60);
+    while(digitalRead(SCOOP_LIM_TOP) == HIGH){
+      delay(20); //delay to make room for the other tasks to run
+    }
+    delay(300);
     scoop(0);
   }
 }
