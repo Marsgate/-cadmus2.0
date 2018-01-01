@@ -4,7 +4,7 @@
 //claw grip definitions and variables
 static int thresh = 30;
 static int sp = -1000; // set to low number to trigger a reset
-static int gripSpeed = 0;
+int gripSpeed = 0;
 
 void claw(int vel){
   motorSet(CLAW, vel);

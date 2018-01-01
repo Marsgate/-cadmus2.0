@@ -4,4 +4,6 @@
 void clawOp();
 void claw(int vel);
 
+int gripSpeed;
+
 #endif

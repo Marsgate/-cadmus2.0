@@ -6,12 +6,9 @@
 #include "ports.h"
 #include "sensorTargets.h"
 
-#define CP 15 // pause to allow the claw to open
-
 int stackHeight = 0; // variable changed by the second controller to control stack height
 bool stacking = false; // tracks current autostacker state
 int liftPos = LP_BOT;
-int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
   if(analogRead(ARMPOT) > AP_STACK){
@@ -45,19 +42,19 @@ void stack(int vel){
 void retract(){
 
   if(analogRead(ARMPOT) < AP_BOT){
-    arm(-18); //hold arm down
+    arm(-20); //hold arm down
 
     if(mode == 0){
       if(analogRead(LIFTPOT) < LP_BOT){
         lift(0);
       }else{
-        lift(-60);
+        lift(-100);
       }
     }else{
       liftPID(LP_ML);
     }
   }else{
-    //hold = false;
+    gripSpeed = -127;
 
     if(stackHeight > 0){
       liftPID(liftPos+200); // hold the lift in place
@@ -74,13 +71,11 @@ void retract(){
       }
     }else{
 
-      //pause to allow the claw to open
-      claw(-127);
-      clawTimer++;
-      if(clawTimer >= CP){
-        claw(-10);
-        clawTimer = 0;
-        stacking = false; // finish opening claw
+      if(analogRead(CLAWPOT) < 3000){
+        claw(-127);
+      }else{
+        claw(-20);
+        stacking = false;
       }
     }
   }
