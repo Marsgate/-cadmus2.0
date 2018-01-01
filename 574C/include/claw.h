@@ -3,6 +3,7 @@
 
 void clawOp();
 void claw(int vel);
+void clawGrip(int speed);
 
 int gripSpeed;
 

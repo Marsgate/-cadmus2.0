@@ -26,6 +26,7 @@ void scoopSkills(){
 }
 
 void autoScoop(int target){
+  //0 = down, 1 = up
   if(target == 0){
     scoop(-127);
     while(digitalRead(SCOOP_LIM_BOT) == HIGH){

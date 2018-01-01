@@ -60,32 +60,6 @@ void drivePID(int sp){
   drive(speed);
 }
 
-void turnPID(int sp){
-  static int integral = 0;
-  static int prevErr = 0;
-
-  double kp = 2.5;
-  double ki = 0.05;
-  double kd = 5;
-
-  // define local  variables
-  int speed; // speed
-  int derivative; // derivative
-
-  int sv = gyroGet(gyro);
-  int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
-
-  if(abs(error) > 10){integral = 0;} // only modify integral if close to target
-
-  derivative = error - prevErr; // calculate the derivative
-  prevErr = error; // set current error to equal previous error
-
-  speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
-  leftD(speed);
-  rightD(-speed);
-}
-
 // power curve =============================================
 void tankSigLPC(){
   double left;
@@ -132,22 +106,9 @@ void autoDrive(int distance){
   drive(0);
 }
 
-//turning
-void autoTurn(int distance){
-  int gy = gyroGet(gyro);
-  int deadzone = 3;
-  while(distance > gy + deadzone || distance < gy - deadzone){
-    gy = gyroGet(gyro);
-    turnPID(distance);
-    delay(20);
-  }
-  drive(0);
-}
-
 void gyTurn(int distance){
 
   int deadzone = 1;
-  gyroReset(gyro);
   int ts = 80; // defualt turn speed
   int br = 10;
 
@@ -178,8 +139,4 @@ void gyTurn(int distance){
       break;
     }
   }
-}
-
-void drivePIDTest(int distance){
-  turnPID(distance);
 }

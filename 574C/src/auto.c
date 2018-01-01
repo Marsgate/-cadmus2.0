@@ -10,6 +10,7 @@
 //PID targets
 static int liftTarget = 0;
 static int armTarget = 0;
+static int clawTarget = -1000;
 
 //PID tasks
 void liftTask(){
@@ -18,33 +19,28 @@ void liftTask(){
 void armTask(){
   armPID(armTarget);
 }
+void clawTask(){
+  clawGrip(clawTarget);
+}
 
 //drive to pylon program =======================================
 void conePushTurn(){
+  //drive from wall turn
   autoDrive(530); // drive out from wall
-  claw(35); //hold preload
+  clawTarget = 127; // close claw
   gyTurn(35); // turn to face pylon
+
+  //deploy and cone push
   armTarget = AP_MID; // raise arm
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  scoop(0);
-  autoDrive(1450); // drive to pylon
+  autoScoop(0); // deploy scoop
+  autoDrive(1450); // push cones
 
-  autoDrive(-400);
-  gyTurn(17);
+  //align with pylon and scoop it up
+  autoDrive(-400); // reverse from pushed cones
+  gyTurn(52); // turn to face pylon
   autoDrive(490); // drive into pylon
-
   liftTarget = 2100; // move lift to scoring height
-
-  scoop(127); //raise scoop
-  while(digitalRead(SCOOP_LIM_TOP) == HIGH){
-    delay(20);
-  }
-  scoop(0);
-
+  autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
 }
 
@@ -52,6 +48,7 @@ void conePushTurn(){
 void pylon5() {
 
   conePushTurn(); //drive to pylon
+  /*
   gyTurn(-18);
   autoDrive(-1353); //reverse to zone
   gyTurn(140);//face the zone
@@ -73,6 +70,7 @@ void pylon5() {
 
   //reverse out of zone
   autoDrive(-370);
+  */
 }
 
 
@@ -129,6 +127,7 @@ void autonomous() {
   //start all tasks
   TaskHandle aHandle = taskRunLoop(armTask, 20); //start arm
   TaskHandle lHandle = taskRunLoop(liftTask, 20); //start lift
+  TaskHandle cHandle = taskRunLoop(clawTask, 20); //start claw
 
   switch(auton){
     case -2:
@@ -157,5 +156,6 @@ void autonomous() {
   //stop all tasks
   taskDelete(lHandle);
   taskDelete(aHandle);
+  taskDelete(cHandle)
   motorStopAll();
 }
