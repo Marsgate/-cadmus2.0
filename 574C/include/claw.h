@@ -4,6 +4,4 @@
 void clawOp();
 void claw(int vel);
 
-bool hold;
-
 #endif

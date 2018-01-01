@@ -14,7 +14,7 @@ int liftPos = LP_BOT;
 int clawTimer = 0; //keeps track of how long the claw has been opening
 
 void stack(int vel){
-  if(analogRead(ARMPOT) < AP_STACK){
+  if(analogRead(ARMPOT) > AP_STACK){
     arm(0);
   }else{
     arm(vel);
@@ -44,8 +44,8 @@ void stack(int vel){
 
 void retract(){
 
-  if(analogRead(ARMPOT) > AP_BOT){
-    arm(0); //stop arm
+  if(analogRead(ARMPOT) < AP_BOT){
+    arm(-18); //hold arm down
 
     if(mode == 0){
       if(analogRead(LIFTPOT) < LP_BOT){
@@ -57,7 +57,7 @@ void retract(){
       liftPID(LP_ML);
     }
   }else{
-    hold = false;
+    //hold = false;
 
     if(stackHeight > 0){
       liftPID(liftPos+200); // hold the lift in place
@@ -67,7 +67,7 @@ void retract(){
     }
 
     if(stacking == false){ //if claw is open
-      if(analogRead(ARMPOT) > AP_MID){ // slow retraction after arm midpoint
+      if(analogRead(ARMPOT) < AP_MID){ // slow retraction after arm midpoint
         arm(0); // cut power prevents slamming
       }else{
         arm(-127);

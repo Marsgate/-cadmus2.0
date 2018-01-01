@@ -39,5 +39,7 @@ void armOp(){
     arm(127);
   }else if(joystickGetDigital(1, 6, JOY_DOWN)){
     arm(-127);
+  }else{
+    arm(0);
   }
 }

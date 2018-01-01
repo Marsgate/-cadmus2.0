@@ -5,5 +5,6 @@
 void arm(int vel);
 void armTest();
 void armPID(int sv);
+void armOp();
 
 #endif

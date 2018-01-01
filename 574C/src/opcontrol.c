@@ -89,8 +89,10 @@ void operatorControl() {
 					scoopOp();
 					break;
 				case 3:
-							//autonomous();
-							lcdSetText(uart1, 1, "naaaaaaah");
+					armOp();
+					//autonomous();
+					lcdSetText(uart1, 1, "naaaaaaah");
+					break;
 				case 4:
 					if(analogRead(ARMPOT) < 4000){
 						armPID(4000);
@@ -115,13 +117,14 @@ void operatorControl() {
 			}
 		}
 
-		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
-		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
+		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
+		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
+		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+		lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
 
 
 		delay(20);
@@ -130,7 +133,7 @@ void operatorControl() {
 }
 
 /* precautionary measures
-while(574C_Members > 0){se
+while(574C_Members > 0){
 	int distance = findNearestTallObject();
 	if(distance <= WALKABLE){
 		walk();
