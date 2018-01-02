@@ -111,13 +111,13 @@ Gyro gyro;
 #define DRIVE4 8 // right back
 
 //claw
-#define CLAW 1 // claw
+#define CLAW 10 // claw
 
 //pylon
 #define PYLON1 5 // right
 #define PYLON2 6 // left
 //anti-tip
-#define ANTITIP 10 // antitip
+#define ANTITIP 1 // antitip
 int auton;
 #define GYRO 1
 #endif
