@@ -11,8 +11,8 @@ void initialize() {
 
   setTeamName("574C Centurion");
 
-  driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
-  driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
+  driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, true);
+  driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, false);
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
 
@@ -63,7 +63,8 @@ void initialize() {
     //display current selection
     switch(auton){
       case -2:
-        lcdSetText(uart1, 2, "Skills Auto");
+        lcdSetText(uart1, 2, "Auton Skills");
+        break;
       case -1:
         lcdSetText(uart1, 2, "Driver Skills");
         mode = 4;

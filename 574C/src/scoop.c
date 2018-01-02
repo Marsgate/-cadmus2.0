@@ -39,7 +39,7 @@ void autoScoop(int target){
     while(digitalRead(SCOOP_LIM_TOP) == HIGH){
       delay(20); //delay to make room for the other tasks to run
     }
-    delay(300);
+    delay(400);
     scoop(0);
   }
 }

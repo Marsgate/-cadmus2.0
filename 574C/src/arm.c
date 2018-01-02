@@ -31,7 +31,7 @@ void armPID(int sp){
 
   speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
 
-  arm(-speed); // set the lift to the speed
+  arm(speed); // set the lift to the speed
 }
 
 void armOp(){

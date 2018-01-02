@@ -25,21 +25,22 @@ void clawTask(){
 
 //drive to pylon program =======================================
 void conePushTurn(){
+  armTarget = 4095;
+  clawTarget = 127; // close claw
   //drive from wall turn
   autoDrive(530); // drive out from wall
-  clawTarget = 127; // close claw
-  gyTurn(35); // turn to face pylon
+  armTarget = AP_AUTO; // raise arm
+  gyTurn(40); // turn to face pylon
 
   //deploy and cone push
-  armTarget = AP_MID; // raise arm
   autoScoop(0); // deploy scoop
   autoDrive(1450); // push cones
 
   //align with pylon and scoop it up
   autoDrive(-400); // reverse from pushed cones
-  gyTurn(52); // turn to face pylon
-  autoDrive(490); // drive into pylon
-  liftTarget = 2100; // move lift to scoring height
+  gyTurn(65); // turn to face pylon
+  autoDrive(520); // drive into pylon
+  liftTarget = LP_LOW; // move lift to scoring height
   autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
 }
@@ -48,62 +49,93 @@ void conePushTurn(){
 void pylon5() {
 
   conePushTurn(); //drive to pylon
-  /*
-  gyTurn(-18);
-  autoDrive(-1353); //reverse to zone
-  gyTurn(140);//face the zone
+  gyTurn(55);
+  autoDrive(-1100); //reverse to zone
+  gyTurn(195);//face the zone
 
   //release the cone
-  claw(-127);
-  delay(300);
-  claw(-30);
+  clawTarget = -127;
+  delay(500);
   armTarget = AP_BOT;
-  delay(300);
 
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  delay(300);
-  scoop(0);
+  autoScoop(0);
 
   //reverse out of zone
   autoDrive(-370);
-  */
 }
 
 
 // program 2 ===============================================================
 void pylon20(){
   conePushTurn(); //drive to pylon
-  gyTurn(-10);
-  autoDrive(-2350); //reverse to zone
-  gyTurn(107); // face the zone
-  autoDrive(625); // drive in to the zone
+  gyTurn(58);
+  autoDrive(-1850); //reverse to zone
+  gyTurn(180); // face the zone
+  autoDrive(555); // drive in to the zone
   drive(60);
-  delay(300);
+  delay(200);
 
 
   //release the cone
-  claw(-127);
-  delay(300);
-  claw(-30);
-  armTarget = AP_BOT;
-  delay(300);
+  clawTarget = -127;
+  delay(500);
+  armTarget = AP_AUTO;
 
   scoop(-127); //drop pylon scoop
   delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-985);
+  autoDrive(-785);
 }
 
 void skills(){
   pylon20();
-  gyTurn(100);
-  autoDrive(1700);
+
+  //grab the first pylon
+  autoScoop(0);
+  gyTurn(5);
+  autoDrive(600);
+  autoScoop(1);
+
+  //face zone
+  autoDrive(-700);
+  gyTurn(176);
+  autoDrive(350);
+
+  //manual drop
+  scoop(-127);
+  delay(1000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-275);
+
+  // next pylon
+  autoScoop(0);
+  gyTurn(5);
+  autoDrive(500);
+  gyTurn(-4);
+  autoDrive(1500);
+  autoScoop(1);
+
+  //turn parallel to zone
+  autoDrive(1200);
+  gyTurn(-80);
+  autoDrive(750);
+
+  //align with zone
+  gyTurn(0);
+  autoDrive(555); // drive in to the zone
+  drive(60);
+  delay(200);
+
+  scoop(-127); //drop pylon scoop
+  delay(1000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-785);
 }
 
 // testing PID ===============================================================
@@ -156,6 +188,6 @@ void autonomous() {
   //stop all tasks
   taskDelete(lHandle);
   taskDelete(aHandle);
-  taskDelete(cHandle)
+  taskDelete(cHandle);
   motorStopAll();
 }

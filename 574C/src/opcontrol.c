@@ -89,9 +89,8 @@ void operatorControl() {
 					scoopOp();
 					break;
 				case 3:
-					armOp();
-					//autonomous();
-					lcdSetText(uart1, 1, "naaaaaaah");
+					while(joystickGetDigital(1, 8, JOY_RIGHT) == false);
+					autonomous();
 					break;
 				case 4:
 					if(analogRead(ARMPOT) < 4000){
@@ -118,13 +117,13 @@ void operatorControl() {
 		}
 
 		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
-		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
+		lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
+		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
-		lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
+		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
 
 
 		delay(20);

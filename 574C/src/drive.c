@@ -30,8 +30,8 @@ void drivePID(int sp){
   static int integral = 0;
   static int prevErr = 0;
 
-  double kp = 1;
-  double ki = 0.15;
+  double kp = .6;
+  double ki = .09;
   double kd = 3.1;
 
   // define local  variables
@@ -105,6 +105,7 @@ void autoDrive(int distance){
   }
   drive(0);
 }
+
 
 void gyTurn(int distance){
 
