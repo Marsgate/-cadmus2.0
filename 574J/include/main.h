@@ -103,13 +103,15 @@ void operatorControl();
 #define LIFT1 4
 #define LIFT2 5
 #define LIFT3 6
-#define LIFT4 7
 
 //drive
-#define DRIVE1 2
+#define DRIVE1 7
 #define DRIVE2 8
 #define DRIVE3 3
 #define DRIVE4 9
+
+//arm
+#define ARM 2
 
 //claw
 #define CLAW 10
