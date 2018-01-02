@@ -69,7 +69,7 @@ void pylon5() {
 void pylon20(){
   conePushTurn(); //drive to pylon
   gyTurn(58);
-  autoDrive(-1850); //reverse to zone
+  autoDrive(-1920); //reverse to zone
   gyTurn(180); // face the zone
   autoDrive(555); // drive in to the zone
   drive(60);
@@ -92,6 +92,8 @@ void pylon20(){
 void skills(){
   pylon20();
 
+  //RED 10 point /////////////////////////////////////////////////////
+
   //grab the first pylon
   autoScoop(0);
   gyTurn(5);
@@ -101,7 +103,7 @@ void skills(){
   //face zone
   autoDrive(-700);
   gyTurn(176);
-  autoDrive(350);
+  autoDrive(300);
 
   //manual drop
   scoop(-127);
@@ -109,14 +111,16 @@ void skills(){
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-275);
+  autoDrive(-300);
+
+
+  //BLUE 20 point /////////////////////////////////////////////////////
 
   // next pylon
   autoScoop(0);
-  gyTurn(5);
-  autoDrive(500);
-  gyTurn(-4);
-  autoDrive(1500);
+  gyTurn(-6);
+  autoScoop(0);
+  autoDrive(2300);
   autoScoop(1);
 
   //turn parallel to zone
@@ -125,7 +129,7 @@ void skills(){
   autoDrive(750);
 
   //align with zone
-  gyTurn(0);
+  gyTurn(-18);
   autoDrive(555); // drive in to the zone
   drive(60);
   delay(200);
@@ -135,7 +139,56 @@ void skills(){
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-785);
+  autoDrive(-700);
+
+
+
+  //BLUE 10 point /////////////////////////////////////////////////////
+
+  // next pylon
+  autoScoop(0);
+  gyTurn(-185);
+  autoDrive(650);
+  autoScoop(1);
+
+  //face zone
+  autoDrive(-600);
+  gyTurn(-10);
+  autoDrive(320);
+
+  //manual drop
+  scoop(-127);
+  delay(1000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-275);
+
+
+  //FINAL 10 /////////////////////////////////////////////////////////
+  autoScoop(0);
+  gyTurn(-195);
+  autoScoop(0);
+  autoDrive(2300);
+  autoScoop(1);
+
+  //turn parallel to zone
+  gyTurn(-210);
+  autoDrive(1400);
+
+  //manual drop
+  scoop(-127);
+  delay(1000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-300);
+
+  //face next pylon
+  autoScoop(0);
+  gyTurn(-45);
+  autoDrive(2000);
+
 }
 
 // testing PID ===============================================================
