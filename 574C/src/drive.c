@@ -2,7 +2,9 @@
 #include "ports.h"
 #include "math.h"
 
+static int br = 10;
 static int dir;
+
 
 //generic drive functions =============================================
 void leftD(int vel){
@@ -14,12 +16,8 @@ void rightD(int vel){
   motorSet(DRIVER2, vel);
 }
 void drive(int vel){
-  int brake = 8;
-  if(vel < 0){
-    brake = -brake;
-  }
-  motorSet(DRIVEL1, vel-brake);
-  motorSet(DRIVEL2, vel-brake);
+  motorSet(DRIVEL1, vel);
+  motorSet(DRIVEL2, vel);
   motorSet(DRIVER1, vel);
   motorSet(DRIVER2, vel);
 }
@@ -30,9 +28,20 @@ void drivePID(int sp){
   static int integral = 0;
   static int prevErr = 0;
 
-  double kp = .6;
-  double ki = .09;
-  double kd = 3.1;
+  double kp;
+  double ki;
+  double kd;
+
+  //change the constants based on distance
+  if(abs(sp) > 400){
+    kp = .25;
+    ki = .0;
+    kd = .9;
+  }else{
+    kp = .35;
+    ki = .0;
+    kd = 1.2;
+  }
 
   // define local  variables
   int speed; // speed
@@ -42,7 +51,7 @@ void drivePID(int sp){
   int error = sp - sv; // find error
   integral = integral + error; // calculate integral
 
-  if(abs(error) > 100){
+  if(abs(error) > 200){
     integral = 0;
   }
 
@@ -93,16 +102,27 @@ void tankSigLPC(){
 
 // forward and backward
 void autoDrive(int distance){
-
+  int timer = 0;
   int encAvg = 0;
   int deadzone = 5;
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
-  while(distance > encAvg + deadzone || distance < encAvg - deadzone){
+  while(distance > encAvg + deadzone || distance < encAvg - deadzone || timer > 1000){
     encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
     drivePID(distance);
+    if(abs(distance - encAvg) < 50){
+      timer += 20;
+    }
     delay(20);
+    lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
   }
+  if(distance > 0){
+    drive(-br);
+  }else{
+    drive(br);
+  }
+  delay(150);
   drive(0);
 }
 
@@ -111,7 +131,6 @@ void gyTurn(int distance){
 
   int deadzone = 1;
   int ts = 80; // defualt turn speed
-  int br = 10;
 
   if(autoRight == true){
     distance = -distance; // inverted turn speed for right auton

@@ -93,8 +93,13 @@ void operatorControl() {
 					autonomous();
 					break;
 				case 4:
-					if(analogRead(ARMPOT) < 4000){
-						armPID(4000);
+					if(joystickGetDigital(1, 5, JOY_DOWN)){
+							armPID(AP_FRONT);
+							liftPID(LP_LOW);
+							clawGrip(-127);
+					}else{
+						clawGrip(127);
+						armPID(AP_AUTO);
 					}
 					scoopSkills();
 					tankSigLPC();
@@ -117,7 +122,7 @@ void operatorControl() {
 		}
 
 		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
+		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
 		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));

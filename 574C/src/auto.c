@@ -69,7 +69,7 @@ void pylon5() {
 void pylon20(){
   conePushTurn(); //drive to pylon
   gyTurn(58);
-  autoDrive(-1920); //reverse to zone
+  autoDrive(-1990); //reverse to zone
   gyTurn(180); // face the zone
   autoDrive(555); // drive in to the zone
   drive(60);
@@ -103,7 +103,7 @@ void skills(){
   //face zone
   autoDrive(-700);
   gyTurn(176);
-  autoDrive(300);
+  autoDrive(230);
 
   //manual drop
   scoop(-127);
@@ -218,6 +218,7 @@ void autonomous() {
     case -2:
       skills();
     case 0:
+      //autoDrive(1500);
       break; //dont run auton
     case 1:
       pylon5();
