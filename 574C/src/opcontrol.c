@@ -129,6 +129,7 @@ void operatorControl() {
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
+		lcdPrint(uart1, 1, "Sonar: %d", ultrasonicGet(sonar));
 
 
 		delay(20);

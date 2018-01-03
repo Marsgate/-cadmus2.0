@@ -11,17 +11,23 @@ void initialize() {
 
   setTeamName("574C Centurion");
 
+  //setup sensors
+  //drive encoders
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, true);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, false);
+  //drive
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
+  //ultrasonic
+  sonar = ultrasonicInit(5, 6);
+
 
   //lcd
   lcdInit(uart1);
   lcdClear(uart1);
   lcdSetBacklight(uart1, true);
 
-  /*
+
   //expander light check
 	while(analogRead(EXPANDER) < 500){
 		digitalWrite(LED, LOW);
@@ -30,7 +36,7 @@ void initialize() {
 		delay(500);
     lcdPrint(uart1, 1, "!Check Pwr Exp!");
 	}
-  */
+
 
   delay(200);
 

@@ -119,6 +119,8 @@ Encoder driveEncRight;
 
 Gyro gyro;
 
+Ultrasonic sonar;
+
 int mode;
 int auton;
 bool autoRight;

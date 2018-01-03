@@ -32,14 +32,12 @@ void autoScoop(int target){
     while(digitalRead(SCOOP_LIM_BOT) == HIGH){
       delay(20); //delay to make room for the other tasks to run
     }
-    delay(300);
-    scoop(0);
+
   }else{
     scoop(127);
     while(digitalRead(SCOOP_LIM_TOP) == HIGH){
       delay(20); //delay to make room for the other tasks to run
     }
-    delay(400);
-    scoop(0);
   }
+  scoop(0);
 }

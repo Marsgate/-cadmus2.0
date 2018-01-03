@@ -39,7 +39,7 @@ void conePushTurn(){
   //align with pylon and scoop it up
   autoDrive(-400); // reverse from pushed cones
   gyTurn(65); // turn to face pylon
-  autoDrive(520); // drive into pylon
+  sonarDrive(); // drive into pylon
   liftTarget = LP_LOW; // move lift to scoring height
   autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
@@ -71,14 +71,13 @@ void pylon20(){
   gyTurn(58);
   autoDrive(-1990); //reverse to zone
   gyTurn(180); // face the zone
-  autoDrive(555); // drive in to the zone
+  autoDrive(500); // drive in to the zone
   drive(60);
-  delay(200);
 
 
   //release the cone
   clawTarget = -127;
-  delay(500);
+  delay(200);
   armTarget = AP_AUTO;
 
   scoop(-127); //drop pylon scoop
@@ -219,6 +218,7 @@ void autonomous() {
       skills();
     case 0:
       //autoDrive(1500);
+      sonarDrive();
       break; //dont run auton
     case 1:
       pylon5();
