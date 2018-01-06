@@ -6,15 +6,25 @@ void lift(int vel){
 
 }
 
+
+
 void liftOp(){
-lift(joystickGetAnalog(1, 2));
+  if(joystickGetDigital(1, 6, JOY_UP)){
+    lift(127);
+  }else if(joystickGetDigital(1,6,JOY_DOWN)){
+    lift(-127);
+  }else{
+    lift(0);
+  }
 }
+
 void bar(int vel){
   motorSet(LIFT2, vel);
 }
 void barOp(){
   bar(-joystickGetAnalog(1,3));
 }
+
 void autostackOp(){
   if (joystickGetDigital(1,7,JOY_UP)) {
 

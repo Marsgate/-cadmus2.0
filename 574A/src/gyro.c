@@ -26,7 +26,7 @@ void gyroturn(int deg ){
         right0(-5);
       }
       delay(150);
-      drive0(0);
+      drive(0);
       break;
     }
   }

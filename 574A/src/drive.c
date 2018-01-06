@@ -12,10 +12,11 @@ void right1(int vel){
   motorSet(DRIVE4, vel);
 }
 
-void drive1(int vel){
+void drive(int vel){
   left1(vel);
   right1(vel);
 }
+
 void right0(int vel){
   motorSet(DRIVE2, vel);
 
@@ -28,10 +29,6 @@ motorSet(DRIVE1, vel);
   motorSet(DRIVE4, vel);
 }
 
-void drive0(int vel){
-  left0(vel);
-  right0(vel);
-}
 void driveOp(){
   //drive mode selector
   if(joystickGetDigital(2, 8, JOY_UP)){
@@ -50,4 +47,24 @@ void driveOp(){
       right1(-joystickGetAnalog(2, 2));
       break;
   }
+}
+void autodrive(int distance){
+  int enc;
+  if(distance > 0){
+    do{
+      enc = (encoderGet(r_encoder)+encoderGet(l_encoder))/2;
+      drive(-127);
+    }while(enc < distance);
+    drive(0);
+  }else{
+    do{
+      enc = (encoderGet(r_encoder)+encoderGet(l_encoder))/2;
+      drive(127);
+    }while(enc > distance);
+    drive(0);
+  }
+}
+void e_reset(){
+  encoderReset(l_encoder);
+  encoderReset(r_encoder);
 }

@@ -8,6 +8,11 @@ void initializeIO() {
 
 
 void initialize() {
+  l_encoder = encoderInit(L_ENCODER1, L_ENCODER2,false);
+  r_encoder = encoderInit(R_ENCODER1,R_ENCODER2,true);
+
+
+
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
   //lcd init
@@ -44,22 +49,46 @@ void initialize() {
     //display current selection
     switch(auton){
       case 0:
-        lcdSetText(uart1, 2, "None");
+        lcdSetText(uart1, 2, "MISSION ABORT");
         break;
       case 1:
-        lcdSetText(uart1, 2, "Left 20pt");
+        lcdSetText(uart1, 2, "BlueLP5");
         break;
-        case 2:
+      case 2:
+        lcdSetText(uart1, 2, "BlueRP5");
+        break;
+      case 3:
+        lcdSetText(uart1, 2, "RedLP5");
+        break;
+      case 4:
+        lcdSetText(uart1, 2, "RedRP5");
+        break;
+      case 5:
+        lcdSetText(uart1, 2, "BlueLP10");
+        break;
+      case 6:
+        lcdSetText(uart1, 2, "BlueRP10");
+        break;
+      case 7:
+        lcdSetText(uart1, 2, "RedLP10");
+        break;
+      case 8:
+        lcdSetText(uart1, 2, "RedRP10");
+        break;
+      case 9:
         lcdSetText(uart1, 2, "CSL");
         break;
-        case 3:
+      case 10:
         lcdSetText(uart1, 2, "CSR");
         break;
-        case 4:
-        lcdSetText(uart1, 2, "Right  20pt");
+      case 11:
+        lcdSetText(uart1, 2, "CenterPylonR");
         break;
-        case 5:
-        lcdSetText(uart1, 2, "Test");
+      case 12:
+        lcdSetText(uart1, 2, "CenterPylonL");
+        break;
+      case 13:
+        lcdSetText(uart1, 2, "DriveTest");
         break;
       default:
         auton = 0;
