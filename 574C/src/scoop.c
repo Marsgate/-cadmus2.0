@@ -1,5 +1,6 @@
 #include "ports.h"
 #include "API.h"
+#include "sensorTargets.h"
 
 void scoop(int vel){
   motorSet(SCOOP, -vel);
@@ -29,13 +30,12 @@ void autoScoop(int target){
   //0 = down, 1 = up
   if(target == 0){
     scoop(-127);
-    while(digitalRead(SCOOP_LIM_BOT) == HIGH){
+    while(analogRead(SCOOPPOT) < SP_BOT){
       delay(20); //delay to make room for the other tasks to run
     }
-
   }else{
     scoop(127);
-    while(digitalRead(SCOOP_LIM_TOP) == HIGH){
+    while(analogRead(SCOOPPOT) > SP_TOP){
       delay(20); //delay to make room for the other tasks to run
     }
   }

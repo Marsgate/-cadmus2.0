@@ -132,7 +132,7 @@ void sonarDrive(){
   do{
     ultra = ultrasonicGet(sonar);
     delay(20); //make room for other tasks
-  }while(ultra > 5 || ultra == 0);
+  }while(ultra > 8 || ultra == 0);
   drive(0);
   lcdPrint(uart1, 1, "sonar: %d", ultrasonicGet(sonar));
 }
@@ -140,7 +140,7 @@ void sonarDrive(){
 void gyTurn(int distance){
 
   int deadzone = 1;
-  int ts = 127; // defualt turn speed
+  int ts = 80; // defualt turn speed
 
   if(autoRight == true){
     distance = -distance; // inverted turn speed for right auton

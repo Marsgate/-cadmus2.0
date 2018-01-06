@@ -27,6 +27,7 @@
 
 //analog
 #define EXPANDER 3
+#define SCOOPPOT 4
 #define GYRO 5
 #define CLAWPOT 6
 #define LIFTPOT 7

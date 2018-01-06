@@ -121,15 +121,16 @@ void operatorControl() {
 			}
 		}
 
-		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
+		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
-		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
+		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
-		lcdPrint(uart1, 1, "Sonar: %d", ultrasonicGet(sonar));
+		//lcdPrint(uart1, 1, "Sonar: %d", ultrasonicGet(sonar));
+		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));
 
 
 		delay(20);
