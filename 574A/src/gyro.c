@@ -10,12 +10,12 @@ void gyroturn(int deg ){
   while(1){
     int gy = gyroGet(gyro);
     if(gy < deg - deadzone){
-      left0(ts);
-      right0(-ts);
-      dir = 0;
-    }else if(gy > deg + deadzone){
       left0(-ts);
       right0(ts);
+      dir = 0;
+    }else if(gy > deg + deadzone){
+      left0(ts);
+      right0(-ts);
       dir = 1;
     }else{
       if(dir == 0){

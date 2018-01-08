@@ -8,8 +8,7 @@
 
 void operatorControl() {
 	while (1) {
-		lcdPrint(uart1, 1, "Left: %d",encoderGet(l_encoder));
-		lcdPrint(uart1, 2, "Right: %d", encoderGet(r_encoder));
+		lcdPrint(uart1, 1, "Gyro: %d",gyroGet(gyro));
 		
 
 		driveOp();

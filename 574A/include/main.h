@@ -120,7 +120,7 @@ Gyro gyro;
 #define ANTITIP 1 // antitip
 int auton;
 int side;
-#define GYRO 1
+#define GYRO 2
 #define R_ENCODER1 1
 #define R_ENCODER2 2
 #define L_ENCODER1 3

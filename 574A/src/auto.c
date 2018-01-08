@@ -6,93 +6,189 @@
 #include "antitip.h"
 #include "gyro.h"
 
+void ReleasetheKraken(){
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  autodrive(150);
+  antitip(127);
+  delay(700);
+  antitip(0);
+  bar(-127);
+  delay(1300);
+  bar(0);
 
+}
+void SyncwithC(){
+
+}
 void  DriveTest(){
-      autodrive(360*5);
-      gyroturn(90);
-      e_reset();
-      autodrive(360);
-    }
+      autodrive(360*7);
+       }
 void BlueLP5(){
-
+//
 }
 void BlueRP5(){
-
+e_reset();
+pylon(-127);
+delay(750);
+pylon(0);
+antitip(127);
+delay(250);
+antitip(0);
+autodrive(360*2.60);
+e_reset();
+drive(-50);
+delay(500);
+drive(0);
+pylon(50);
+delay(2000);
+pylon(0);
+delay(100);
+autodrive(-360*.9);
+gyroturn(-92);
+e_reset();
+autodrive(360*.7);
+pylon(-127);
+delay(800);
+pylon(0);
+e_reset();
+autodrive(-200);
 }
 void RedLP5(){
-
+//
 }
 void RedRP5(){
-
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*1.1);
+  gyroturn(-190);
+  e_reset();
+  autodrive(360*.7);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
 void BlueLP10(){
-
+//
 }
 void BlueRP10(){
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*1.3);
+  gyroturn(-138);
+  e_reset();
+  autodrive(360*1.3);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
+  }
 
-}
 void RedLP10(){
-
+//
 }
 void RedRP10(){
-
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*1.1);
+  gyroturn(-190);
+  e_reset();
+  autodrive(360*1.2);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
 
-void CSL(){
 
-}
-void CSR(){
 
-}
-void CenterPylonR(){
-
-}
-void CenterPylonL(){
-
-}
 
 void autonomous() {
   switch(auton){
     case 0:
           break; //dont run auto
     case 1:
-        BlueLP5();
-          break; // blue left pylon
+        SyncwithC(); // run this code with 574c
+          break;
     case 2:
-        BlueRP5(); // blue right pylon
+        ReleasetheKraken();//unfolds robot and moves forward a little bit
           break;
-    case 3:
-        RedLP5();
-          break; // red left pylon
-    case 4:
-        RedRP5();
-          break; // red right pylon
-    case 5:
-        BlueLP10();
-          break; // blue left pylon
-    case 6:
-        BlueRP10(); // blue right pylon
-          break;
-    case 7:
-        RedLP10();
-          break; // red left pylon
-    case 8:
-        RedRP10();
-          break;
-    case 9:
-        CSL(); //center stack left
-          break;
-    case 10:
-        CSR(); // center stack right
-          break;
-    case 11:
-        CenterPylonR();
-          break;
-    case 12:
-    CenterPylonL();
-    break;
-    case  13:
+    case  3:
         DriveTest(); // name says it
           break;
+    case 4:
+        BlueLP5();
+          break; // blue left pylon
+    case 5:
+        BlueRP5(); // blue right pylon
+          break;
+    case 6:
+        RedLP5();
+          break; // red left pylon
+    case 7:
+        RedRP5();
+          break; // red right pylon
+    case 8:
+        BlueLP10();
+          break; // blue left pylon
+    case 9:
+        BlueRP10(); // blue right pylon
+          break;
+    case 10:
+        RedLP10();
+          break; // red left pylon
+    case 11:
+        RedRP10();
+          break;
+
+
+
   }
 }
