@@ -6,59 +6,107 @@
 #include "antitip.h"
 #include "gyro.h"
 
+void SyncwithC(){
+
+}
+
 void ReleasetheKraken(){
   pylon(-127);
   delay(750);
   pylon(0);
-  autodrive(150);
+  autodrive(150); 
   antitip(127);
   delay(700);
   antitip(0);
   bar(-127);
   delay(1300);
   bar(0);
-
 }
-void SyncwithC(){
 
-}
 void  DriveTest(){
-      autodrive(360*7);
-       }
-void BlueLP5(){
-//
+  autodrive(360*7);
+}
+void BlueLP5(){//test me
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  gyroturn(9);
+  autodrive(360*1.7);
+  e_reset();
+  autodrive(-150);
+  gyroturn(-26);
+  e_reset();
+  autodrive(150);
+  pylon(50);
+  delay(1000);
+  pylon(0);
+  e_reset();
+  autodrive(360*1.7);
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
 void BlueRP5(){
-e_reset();
-pylon(-127);
-delay(750);
-pylon(0);
-antitip(127);
-delay(250);
-antitip(0);
-autodrive(360*2.60);
-e_reset();
-drive(-50);
-delay(500);
-drive(0);
-pylon(50);
-delay(2000);
-pylon(0);
-delay(100);
-autodrive(-360*.9);
-gyroturn(-92);
-e_reset();
-autodrive(360*.7);
-pylon(-127);
-delay(800);
-pylon(0);
-e_reset();
-autodrive(-200);
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*.9);
+  gyroturn(-92);
+  e_reset();
+  autodrive(360*.7);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
-void RedLP5(){
-//
+void RedLP5(){//test me
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*.9);
+  gyroturn(92);
+  e_reset();
+  autodrive(360*.7);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
-void RedRP5(){
+void RedRP5(){//test me
   e_reset();
   pylon(-127);
   delay(750);
@@ -85,7 +133,7 @@ void RedRP5(){
   e_reset();
   autodrive(-200);
 }
-void BlueLP10(){
+void BlueLP10(){//test blp5 then add distance
 //
 }
 void BlueRP10(){
@@ -116,7 +164,7 @@ void BlueRP10(){
   autodrive(-200);
   }
 
-void RedLP10(){
+void RedLP10(){//test rlp5 then add more final distance
 //
 }
 void RedRP10(){
