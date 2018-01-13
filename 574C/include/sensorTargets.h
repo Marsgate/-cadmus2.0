@@ -14,5 +14,5 @@
 #define AP_FRONT 4090
 
 //scoop pot
-#define SP_BOT 3700
-#define SP_TOP 1800
+#define SP_BOT 2400
+#define SP_TOP 600

@@ -35,11 +35,14 @@ void armPID(int sp){
 }
 
 void armOp(){
-  if(joystickGetDigital(1, 6, JOY_UP)){
+  static int at;
+  if (joystickGetDigital(1,5,JOY_UP)){
     arm(127);
-  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
+    at = analogRead(ARMPOT); // arm target
+  }else if (joystickGetDigital(1, 5, JOY_DOWN)){
     arm(-127);
+    at = analogRead(ARMPOT); // arm target
   }else{
-    arm(0);
+    armPID(at);
   }
 }

@@ -2,10 +2,6 @@
 #include "ports.h"
 #include "math.h"
 
-static int br = 10;
-static int dir;
-
-
 //generic drive functions =============================================
 void leftD(int vel){
   motorSet(DRIVEL1, vel);
@@ -16,57 +12,18 @@ void rightD(int vel){
   motorSet(DRIVER2, vel);
 }
 void drive(int vel){
+
+  int br = 30; // brake
+
+  //velocity normalization
+  if(vel > 127) vel = 127 - br;
+  if(vel < -127) vel = -127 + br;
+
+
   motorSet(DRIVEL1, vel);
   motorSet(DRIVEL2, vel);
   motorSet(DRIVER1, vel);
   motorSet(DRIVER2, vel);
-}
-
-
-//PID functions =============================================
-void drivePID(int sp){
-  static int integral = 0;
-  static int prevErr = 0;
-
-  double kp;
-  double ki;
-  double kd;
-
-  //change the constants based on distance
-  if(abs(sp) > 400){
-    kp = .25;
-    ki = .0;
-    kd = .9;
-  }else{
-    kp = .35;
-    ki = .0;
-    kd = 1.2;
-  }
-
-  // define local  variables
-  int speed; // speed
-  int derivative; // derivative
-
-  int sv = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
-  int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
-
-  if(abs(error) > 200){
-    integral = 0;
-  }
-
-  derivative = error - prevErr; // calculate the derivative
-  prevErr = error; // set current error to equal previous error
-
-  speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
-
-  if(speed > 127){
-    speed = 127;
-  }else if(speed < -127){
-    speed = -127;
-  }
-
-  drive(speed);
 }
 
 // power curve =============================================
@@ -99,74 +56,61 @@ void tankSigLPC(){
 }
 
 // autonomous drive functions =============================================
-
 // forward and backward
-void autoDrive(int distance){
-  int timer = 0;
-  int encAvg = 0;
-  int deadzone = 5;
+void autoDrive(int sp){
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
-  while(distance > encAvg + deadzone || distance < encAvg - deadzone || timer > 1000){
-    encAvg = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
-    drivePID(distance);
-    if(abs(distance - encAvg) < 50){
-      timer += 20;
-    }
+
+  double kp = 0.3;
+  int error;
+  do{
+    int kc = 30;
+    int sv = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
+
+    error = sp-sv;
+    if(error < 0) kc = -kc;
+
+    int speed = error*kp + kc;
+    drive(speed);
+
+    lcdPrint(uart1, 1, "drive: %d", sv);
     delay(20);
-    lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
-		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
-  }
-  if(distance > 0){
-    drive(-br);
-  }else{
-    drive(br);
-  }
-  delay(150);
-  drive(0);
+  }while(abs(error) > 5); // deadzone = 10
+  drive(0); // stop drive
 }
+
 
 void sonarDrive(){
-  drive(127);
-  int ultra;
+  drive(127); // start driving forward
+  int u; // initialize the container for gyro
   do{
-    ultra = ultrasonicGet(sonar);
-    delay(20); //make room for other tasks
-  }while(ultra > 8 || ultra == 0);
-  drive(0);
-  lcdPrint(uart1, 1, "sonar: %d", ultrasonicGet(sonar));
+    u = ultrasonicGet(sonar);
+    delay(10);
+  }while(u > 3 || u < 2); // detect pylon in a certain range
+  drive(0); // stop drive
 }
 
-void gyTurn(int distance){
 
-  int deadzone = 1;
-  int ts = 80; // defualt turn speed
+void gyTurn(int sp){
+  if(autoRight == true) sp = -sp; // inverted turn speed for right auton
+  int sv;
+  int error;
+  double kp = 1.5;
 
-  if(autoRight == true){
-    distance = -distance; // inverted turn speed for right auton
-  }
+  do{
+    int kc = 30;
+    sv = gyroGet(gyro);
 
-  while(1){
-    int gy = gyroGet(gyro);
-    if(gy < distance - deadzone){
-      leftD(ts);
-      rightD(-ts);
-      dir = 0;
-    }else if(gy > distance + deadzone){
-      leftD(-ts);
-      rightD(ts);
-      dir = 1;
-    }else{
-      if(dir == 0){
-        leftD(-br);
-        rightD(br);
-      }else{
-        leftD(br);
-        rightD(-br);
-      }
-      delay(100);
-      drive(0);
-      break;
-    }
-  }
+    error = sp-sv;
+    if(error < 0) kc = -kc;
+
+    int ts =  error* kp + kc; // turn speed and PID
+
+    leftD(ts); // set the wheels
+    rightD(-ts);
+
+    lcdPrint(uart1, 1, "gy: %d", sv); //print out
+    delay(20);
+  }while(error != 0);
+  drive(0);
 }

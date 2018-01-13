@@ -54,8 +54,8 @@ void operatorControl() {
 				mode = 0;
 			}else if(joystickGetDigital(2, 8, JOY_DOWN)){
 				mode = 1;
-			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
-				//mode = 2;
+			}else if(joystickGetDigital(2, 8, JOY_RIGHT) || joystickGetDigital(1, 5, JOY_UP)){
+				mode = 2;
 			}else if (joystickGetDigital(2, 8, JOY_UP)){
 				mode = 4;
 			}
@@ -82,8 +82,8 @@ void operatorControl() {
 					autoStack();
 					break;
 				case 2:
-					armPID(75);
-					liftOp();
+					armOp();
+					liftPID(LP_LMID + 300);
 					tankSigLPC();
 					clawOp();
 					scoopOp();
@@ -121,17 +121,17 @@ void operatorControl() {
 			}
 		}
 
-		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
+		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
-		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
+		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
-		//lcdPrint(uart1, 1, "Sonar: %d", ultrasonicGet(sonar));
+		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));
 		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));
-
+		//lcdPrint(uart1, 1, "Mode: %d", mode);
 
 		delay(20);
 	}

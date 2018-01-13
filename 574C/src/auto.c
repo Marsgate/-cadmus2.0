@@ -30,15 +30,15 @@ void conePushTurn(){
   //drive from wall turn
   autoDrive(530); // drive out from wall
   armTarget = AP_AUTO; // raise arm
-  gyTurn(40); // turn to face pylon
+  gyTurn(43); // turn to face pylon
 
   //deploy and cone push
   autoScoop(0); // deploy scoop
-  autoDrive(1450); // push cones
+  autoDrive(1400); // push cones
 
   //align with pylon and scoop it up
   autoDrive(-400); // reverse from pushed cones
-  gyTurn(65); // turn to face pylon
+  gyTurn(75); // turn to face pylon
   sonarDrive(); // drive into pylon
   liftTarget = LP_LOW; // move lift to scoring height
   autoScoop(1); // bring scoop up
@@ -68,11 +68,10 @@ void pylon5() {
 // program 2 ===============================================================
 void pylon20(){
   conePushTurn(); //drive to pylon
-  gyTurn(58);
-  autoDrive(-1990); //reverse to zone
-  gyTurn(180); // face the zone
+  gyTurn(64);
+  autoDrive(-2350); //reverse to zone
+  gyTurn(186); // face the zone
   autoDrive(500); // drive in to the zone
-  drive(60);
 
 
   //release the cone
@@ -80,6 +79,7 @@ void pylon20(){
   delay(200);
   armTarget = AP_AUTO;
 
+  drive(80);
   scoop(-127); //drop pylon scoop
   delay(1000);
   scoop(0);
@@ -95,31 +95,30 @@ void skills(){
 
   //grab the first pylon
   autoScoop(0);
-  gyTurn(5);
-  autoDrive(600);
+  gyTurn(25);
+  sonarDrive();
   autoScoop(1);
 
   //face zone
-  autoDrive(-700);
+  autoDrive(-800);
   gyTurn(176);
-  autoDrive(230);
 
   //manual drop
+  drive(60);
   scoop(-127);
   delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-300);
+  autoDrive(-400);
 
 
   //BLUE 20 point /////////////////////////////////////////////////////
-
   // next pylon
   autoScoop(0);
-  gyTurn(-6);
+  gyTurn(10);
   autoScoop(0);
-  autoDrive(2300);
+  sonarDrive();
   autoScoop(1);
 
   //turn parallel to zone
@@ -147,7 +146,7 @@ void skills(){
   // next pylon
   autoScoop(0);
   gyTurn(-185);
-  autoDrive(650);
+  sonarDrive();
   autoScoop(1);
 
   //face zone
@@ -168,8 +167,7 @@ void skills(){
   autoScoop(0);
   gyTurn(-195);
   autoScoop(0);
-  autoDrive(2300);
-  autoScoop(1);
+  sonarDrive();
 
   //turn parallel to zone
   gyTurn(-210);
@@ -215,10 +213,13 @@ void autonomous() {
 
   switch(auton){
     case -2:
+      //autoRight = true;
       skills();
     case 0:
-      //autoDrive(1500);
-      sonarDrive();
+      autoDrive(-1500);
+      //sonarDrive();
+      //gyTurn(-45);
+
       break; //dont run auton
     case 1:
       pylon5();
