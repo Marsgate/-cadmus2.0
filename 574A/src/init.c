@@ -46,44 +46,50 @@ void initialize() {
 
     //display current selection
     switch(auton){
-      case 0:
-        lcdSetText(uart1, 2, "MISSION ABORT");
-        break;
-      case 1:
-        lcdSetText(uart1, 2, "SyncwithC");
-        break;
-      case 2:
-        lcdSetText(uart1, 2, "ReleasetheKraken");
-        break;
-      case 3:
-        lcdSetText(uart1, 2, "DriveTest");
-        break;
-      case 4:
-        lcdSetText(uart1, 2, "BlueLP5");
-        break;
-      case 5:
-        lcdSetText(uart1, 2, "BlueRP5");
-        break;
-      case 6:
-        lcdSetText(uart1, 2, "RedLP5");
-        break;
-      case 7:
-        lcdSetText(uart1, 2, "RedRP5");
-        break;
-      case 8:
-        lcdSetText(uart1, 2, "BlueLP10");
-        break;
-      case 9:
-        lcdSetText(uart1, 2, "BlueRP10");
-        break;
-      case 10:
-        lcdSetText(uart1, 2, "RedLP10");
-        break;
-      case 11:
-        lcdSetText(uart1, 2, "RedRP10");
-        break;
-      default:
-        auton = 0;
+    case 0:
+      lcdSetText(uart1, 2, "MISSION ABORT");
+      break;
+    case 1:
+      lcdSetText(uart1, 2, "SWCR");
+      break;
+    case 2:
+      lcdSetText(uart1, 2, "SWCB");
+      break;
+    case 3:
+      lcdSetText(uart1, 2, "Record");
+      break;
+    case 4:
+      lcdSetText(uart1, 2, "ReleasetheKraken");
+      break;
+    case 5:
+      lcdSetText(uart1, 2, "DriveTest");
+      break;
+    case 6:
+      lcdSetText(uart1, 2, "BlueLP5");
+      break;
+    case 7:
+      lcdSetText(uart1, 2, "BlueRP5");
+      break;
+    case 8:
+      lcdSetText(uart1, 2, "RedLP5");
+      break;
+    case 9:
+      lcdSetText(uart1, 2, "RedRP5");
+      break;
+    case 10:
+      lcdSetText(uart1, 2, "BlueLP10");
+      break;
+    case 11:
+      lcdSetText(uart1, 2, "BlueRP10");
+      break;
+    case 12:
+      lcdSetText(uart1, 2, "RedLP10");
+      break;
+    case 13:
+      lcdSetText(uart1, 2, "RedRP10");
+      break;
+    default:
+      auton = 0;
     }
 
     delay(20); //space for lcd to update

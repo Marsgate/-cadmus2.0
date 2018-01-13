@@ -6,22 +6,115 @@
 #include "antitip.h"
 #include "gyro.h"
 
-void SyncwithC(){
-
-}
-
 void ReleasetheKraken(){
   pylon(-127);
   delay(750);
   pylon(0);
-  autodrive(150); 
+  autodrive(360*1.3);
   antitip(127);
-  delay(700);
+  delay(1200);
   antitip(0);
   bar(-127);
   delay(1300);
   bar(0);
 }
+
+void SWCR(){
+  drive(127);
+  delay(170);
+  drive(0);
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(1200);
+  antitip(0);
+  bar(-127);
+  delay(1600);
+  bar(0);
+  claw(127);
+  delay(450);
+  claw(15);
+  bar(127);
+  delay(800);
+  bar(0);
+  lift(127);
+  delay(1500);
+  lift(0);
+  drive(127);
+  delay(300);
+  drive(0);
+  bar(-70);
+  delay(600);
+  bar(0);
+  claw(-127);
+  delay(450);
+  claw(0);
+  bar(70);
+  delay(700);
+  bar(0);
+  gyroturn(-90);
+  e_reset();
+  autodrive(500);
+
+}
+void SWCB(){
+  drive(127);
+  delay(170);
+  drive(0);
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(1200);
+  antitip(0);
+  bar(-127);
+  delay(1600);
+  bar(0);
+  claw(127);
+  delay(450);
+  claw(15);
+  bar(127);
+  delay(800);
+  bar(0);
+  lift(127);
+  delay(1500);
+  lift(0);
+  drive(127);
+  delay(300);
+  drive(0);
+  bar(-70);
+  delay(600);
+  bar(0);
+  claw(-127);
+  delay(450);
+  claw(0);
+  bar(70);
+  delay(700);
+  bar(0);
+  gyroturn(90);
+  e_reset();
+  autodrive(500);
+}
+void Record(){
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  e_reset();
+  autodrive(360*.7);
+  antitip(127);
+  delay(1200);
+  antitip(0);
+  bar(-127);
+  delay(800);
+  bar(0);
+  pylon(50);
+  delay(750);
+  pylon(0);
+  gyroturn(55);
+  autostacko();
+}
+
 
 void  DriveTest(){
   autodrive(360*7);
@@ -197,46 +290,48 @@ void RedRP10(){
 
 
 
-
 void autonomous() {
   switch(auton){
     case 0:
           break; //dont run auto
     case 1:
-        SyncwithC(); // run this code with 574c
+        SWCR(); // run this code with 574c
           break;
     case 2:
+        SWCB();
+        break;
+    case 3:
+        Record();
+        break;
+    case 4:
         ReleasetheKraken();//unfolds robot and moves forward a little bit
           break;
-    case  3:
+    case  5:
         DriveTest(); // name says it
           break;
-    case 4:
+    case 6:
         BlueLP5();
           break; // blue left pylon
-    case 5:
+    case 7:
         BlueRP5(); // blue right pylon
           break;
-    case 6:
+    case 8:
         RedLP5();
           break; // red left pylon
-    case 7:
+    case 9:
         RedRP5();
           break; // red right pylon
-    case 8:
+    case 10:
         BlueLP10();
           break; // blue left pylon
-    case 9:
+    case 11:
         BlueRP10(); // blue right pylon
           break;
-    case 10:
+    case 12:
         RedLP10();
           break; // red left pylon
-    case 11:
+    case 13:
         RedRP10();
           break;
-
-
-
   }
 }
