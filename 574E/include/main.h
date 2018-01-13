@@ -29,6 +29,9 @@ void operatorControl();
 #define DRIVE2 8 //front right
 #define DRIVE3 2 //back left
 #define DRIVE4 3 //back right
+#define DRIVE5 4 //middle right
+#define DRIVE6 7 //middle left
+
 
 #define BASE1 5 // base right
 #define BASE2 6 // base left
