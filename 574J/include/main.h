@@ -102,7 +102,7 @@ void operatorControl();
 //lift
 #define LIFT1 4
 #define LIFT2 5
-#define LIFT3 6
+
 
 //drive
 #define DRIVE1 7
@@ -117,7 +117,7 @@ void operatorControl();
 #define CLAW 10
 
 //pylon
-#define PYLON1 1
-#define PYLON2 2
+
+#define PYLON 6
 
 #endif

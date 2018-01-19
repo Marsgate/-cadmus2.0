@@ -1,8 +1,8 @@
 #include "main.h"
 
 void pylon(int val){
-  digitalWrite(PYLON1, val);
-  digitalWrite(PYLON2, val);
+  motorSet(PYLON, val);
+
 }
 
 void pylonOp(){
