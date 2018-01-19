@@ -8,7 +8,7 @@ void initializeIO() {
 void initialize() {
   l_encoder = encoderInit(L_ENCODER1, L_ENCODER2,false);
   r_encoder = encoderInit(R_ENCODER1,R_ENCODER2,true);
-
+  analogCalibrate(4);
 
 
   gyro = gyroInit(GYRO, 0);

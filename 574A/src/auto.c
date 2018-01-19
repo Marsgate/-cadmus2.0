@@ -19,63 +19,57 @@ void ReleasetheKraken(){
   bar(0);
 }
 
-void SWCR(){
-  drive(127);
-  delay(170);
-  drive(0);
-  pylon(-127);
-  delay(750);
-  pylon(0);
-  antitip(127);
-  delay(1200);
-  antitip(0);
-  bar(-127);
-  delay(1600);
-  bar(0);
-  claw(127);
-  delay(450);
-  claw(15);
-  bar(127);
-  delay(800);
-  bar(0);
-  lift(127);
-  delay(1500);
-  lift(0);
-  drive(127);
-  delay(300);
-  drive(0);
-  bar(-70);
-  delay(600);
-  bar(0);
-  claw(-127);
-  delay(450);
-  claw(0);
-  bar(70);
-  delay(700);
-  bar(0);
-  gyroturn(-90);
-  e_reset();
-  autodrive(500);
-
+void SWCR(){delay(1500);
+drive(127);
+delay(170);
+drive(0);
+pylon(-127);
+delay(750);
+pylon(0);
+bar(-127);
+delay(1700);
+bar(0);
+claw(127);
+delay(450);
+claw(15);
+bar(127);
+delay(650);
+bar(0);
+lift(127);
+delay(1500);
+lift(0);
+drive(127);
+delay(200);
+drive(0);
+bar(-127);
+delay(700);
+bar(0);
+claw(-127);
+delay(450);
+claw(0);
+bar(70);
+delay(700);
+bar(0);
+gyroturn(-75);
+e_reset();
+autodrive(500);
 }
 void SWCB(){
+  delay(1500);
   drive(127);
   delay(170);
   drive(0);
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(1200);
-  antitip(0);
   bar(-127);
-  delay(1600);
+  delay(1700);
   bar(0);
   claw(127);
   delay(450);
   claw(15);
   bar(127);
-  delay(800);
+  delay(650);
   bar(0);
   lift(127);
   delay(1500);
@@ -83,8 +77,8 @@ void SWCB(){
   drive(127);
   delay(300);
   drive(0);
-  bar(-70);
-  delay(600);
+  bar(-127);
+  delay(700);
   bar(0);
   claw(-127);
   delay(450);
@@ -92,7 +86,7 @@ void SWCB(){
   bar(70);
   delay(700);
   bar(0);
-  gyroturn(90);
+  gyroturn(75);
   e_reset();
   autodrive(500);
 }
@@ -163,7 +157,7 @@ void BlueRP5(){
   pylon(0);
   delay(100);
   autodrive(-360*.9);
-  gyroturn(-92);
+  gyroturn(-100);
   e_reset();
   autodrive(360*.7);
   pylon(-127);
@@ -190,7 +184,7 @@ void RedLP5(){//test me
   pylon(0);
   delay(100);
   autodrive(-360*.9);
-  gyroturn(92);
+  gyroturn(130);
   e_reset();
   autodrive(360*.7);
   pylon(-127);
@@ -247,7 +241,8 @@ void BlueRP10(){
   pylon(0);
   delay(100);
   autodrive(-360*1.3);
-  gyroturn(-138);
+  gyroturn(-150
+  );
   e_reset();
   autodrive(360*1.3);
   pylon(-127);
@@ -258,7 +253,31 @@ void BlueRP10(){
   }
 
 void RedLP10(){//test rlp5 then add more final distance
-//
+  e_reset();
+  pylon(-127);
+  delay(750);
+  pylon(0);
+  antitip(127);
+  delay(250);
+  antitip(0);
+  autodrive(360*2.60);
+  e_reset();
+  drive(-50);
+  delay(500);
+  drive(0);
+  pylon(50);
+  delay(2000);
+  pylon(0);
+  delay(100);
+  autodrive(-360*.9);
+  gyroturn(160);
+  e_reset();
+  autodrive(360*1.8);
+  pylon(-127);
+  delay(800);
+  pylon(0);
+  e_reset();
+  autodrive(-200);
 }
 void RedRP10(){
   e_reset();
