@@ -4,37 +4,26 @@
 #include "claw.h"
 #include "pylon.h"
 #include "drive.h"
-
+#include "arm.h"
 
 void autonomous() {
-  claw(60);
-  drive(127);
-  delay(500);
-  drive(0);
-  delay(200);
-  delay(100);
-  lift(127);
-  delay(1600);
+  arm(-75);
+  lift(107);
+  delay(1000);
+  arm(0);
   lift(0);
-
-  drive(127);
-  delay(300); //drive distance
+  drive(-127);
+  delay(530);
   drive(0);
-  lift(-60);
-  delay(500);
-  lift(0);
-  delay(400);
-
+  arm(-75);
+  delay(800);
+  arm(0);
   claw(-127);
-  delay(200);
-  lift(127);
-  delay(300);
+  delay(250);
+  claw(60);
+  arm(127);
+  delay(1000);
   claw(0);
-  delay(300);
-  lift(0);
-  drive(-60);
-  delay(500);
-  drive(0);
-  motorStopAll();
+  arm(0);
 
 }

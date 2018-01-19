@@ -7,8 +7,10 @@ void pylon(int val){
 
 void pylonOp(){
   if(joystickGetDigital(1, 8, JOY_UP)){
-    pylon(HIGH);
+    pylon(127);
   }else if(joystickGetDigital(1, 8, JOY_DOWN)){
-    pylon(LOW);
+    pylon(-127);
+  }else{
+    pylon(0);
   }
 }
