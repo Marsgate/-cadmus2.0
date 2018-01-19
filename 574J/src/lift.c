@@ -3,6 +3,7 @@
 void lift(int vel){
   motorSet(LIFT1, vel);
   motorSet(LIFT2, vel);
+  motorSet(LIFT3, vel);
 }
 
 void liftOp(){

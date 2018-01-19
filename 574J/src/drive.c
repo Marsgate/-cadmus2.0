@@ -9,7 +9,7 @@ void drive(int vel){
 
 void driveOp(){
   int power = -joystickGetAnalog(1, 3); // vertical axis on right joystick
-  int turn  = -joystickGetAnalog(1, 4); // horizontal axis on right joystick
+  int turn  = joystickGetAnalog(1, 4); // horizontal axis on right joystick
   motorSet(DRIVE1, power + turn); // set left wheels
   motorSet(DRIVE2, power - turn); // set right wheels
   motorSet(DRIVE3, power + turn); // set left wheels
