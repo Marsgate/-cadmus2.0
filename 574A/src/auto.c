@@ -11,15 +11,13 @@ void ReleasetheKraken(){
   delay(750);
   pylon(0);
   autodrive(360*1.3);
-  antitip(127);
-  delay(1200);
-  antitip(0);
   bar(-127);
   delay(1300);
   bar(0);
 }
 
-void SWCR(){delay(1500);
+void SWCR(){
+delay(1500);
 drive(127);
 delay(170);
 drive(0);

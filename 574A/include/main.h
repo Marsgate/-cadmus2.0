@@ -34,7 +34,7 @@ Gyro gyro;
 #define DRIVE4 8 // right back
 
 //claw
-#define CLAW 10 // claw
+#define CLAW 1 // claw
 
 //pylon
 #define PYLON1 5 // right
@@ -47,8 +47,10 @@ int side;
 #define R_ENCODER2 2
 #define L_ENCODER1 3
 #define L_ENCODER2 4
-#define ARMPOT 5
-#define BASEPOT 6
+#define LIFT_ENCODER1 5
+#define LIFT_ENCODER2 6
+#define ARMPOT 7
+#define BASEPOT 8
 Encoder l_encoder;
 Encoder r_encoder;
 Encoder lift_encoder;

@@ -12,7 +12,6 @@ void operatorControl() {
 		barOp();
 		clawOp();
 		pylonOp();
-		autoalignf();
 		autoalignp();
 		}
 		delay(20);

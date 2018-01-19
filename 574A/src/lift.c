@@ -104,32 +104,14 @@ void autostacko(){
 
 
   void autoalignp(){
-    if((joystickGetDigital(1, 8, JOY_DOWN))==1){
+    if((joystickGetDigital(1, 5, JOY_UP))==1){
       claw(-127);
       delay(350);
       bar(50);
       delay(200);
-      analogRead(4);
-  while(ARMPOT <160){
 
+  while(analogRead(ARMPOT) <3500){
       bar(127);
-
-  }
-      bar(-15);
-  }
-  }
-
-  void autoalignf(){
-    if((joystickGetDigital(1, 7, JOY_DOWN))==1){
-      claw(-127);
-      delay(350);
-      bar(50);
-      delay(200);
-      analogRead(4);
-  while(ARMPOT<180){
-
-      bar(127);
-
   }
       bar(-15);
   }
