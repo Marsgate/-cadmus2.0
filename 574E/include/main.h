@@ -25,12 +25,12 @@ void operatorControl();
 #endif
 
 //ports
-#define DRIVE1  3//front left
-#define DRIVE2  6//front right
-#define DRIVE3  5//back left
-#define DRIVE4  7//back right
-#define DRIVE5  8//middle right
-#define DRIVE6  4//middle left
+#define DRIVE1  3 //front left
+#define DRIVE2  6 //front right
+#define DRIVE3  4 //middle left
+#define DRIVE4  7 //mddle right
+#define DRIVE5  5 //back left
+#define DRIVE6  8 //back right
 
 
 #define BASE1 2 // base right
