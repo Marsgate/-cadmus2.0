@@ -107,12 +107,21 @@ void autostacko(){
     if((joystickGetDigital(1, 5, JOY_UP))==1){
       claw(-127);
       delay(350);
-      bar(50);
+      bar(-90);
       delay(200);
+      claw(0);
 
-  while(analogRead(ARMPOT) <3500){
-      bar(127);
+  while(analogRead(ARMPOT) <3800){
+      bar(-127);
   }
-      bar(-15);
+      bar(40);
   }
   }
+
+void autobar(int sp){
+  double kp = 0.25;
+  int sv = analogRead(ARMPOT);
+  int error = sp-sv;
+  int speed = error*kp;
+  bar(-speed);
+}

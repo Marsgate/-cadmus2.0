@@ -3,88 +3,71 @@
 #include "lift.h"
 #include "claw.h"
 #include "pylon.h"
-#include "antitip.h"
 #include "gyro.h"
+
+static int barTarget;
+
+void barTask(){
+  autobar(barTarget);
+}
 
 void ReleasetheKraken(){
   pylon(-127);
   delay(750);
   pylon(0);
   autodrive(360*1.3);
-  bar(-127);
-  delay(1300);
-  bar(0);
+  autobar(2000);
 }
 
 void SWCR(){
-delay(1500);
-drive(127);
-delay(170);
-drive(0);
+delay(2000);
+claw(47);
+e_reset();
+autodrive(-120);
 pylon(-127);
 delay(750);
 pylon(0);
-bar(-127);
-delay(1700);
-bar(0);
-claw(127);
-delay(450);
-claw(15);
-bar(127);
-delay(650);
-bar(0);
+barTarget=2000;
 lift(127);
-delay(1500);
+delay(2000);
 lift(0);
-drive(127);
-delay(200);
-drive(0);
-bar(-127);
-delay(700);
-bar(0);
+barTarget=3500;
+delay(600);
 claw(-127);
 delay(450);
 claw(0);
-bar(70);
-delay(700);
-bar(0);
+barTarget=1100;
 gyroturn(-75);
 e_reset();
 autodrive(500);
 }
 void SWCB(){
-  delay(1500);
-  drive(127);
-  delay(170);
-  drive(0);
+  delay(2000);
+  e_reset();
+autodrive(-50);
   pylon(-127);
   delay(750);
   pylon(0);
-  bar(-127);
-  delay(1700);
-  bar(0);
+  barTarget =2000;
+  e_reset();
+  autodrive(30);
+  barTarget=3950;
   claw(127);
   delay(450);
   claw(15);
-  bar(127);
-  delay(650);
-  bar(0);
+  barTarget=2000;
   lift(127);
-  delay(1500);
+  delay(2000);
   lift(0);
-  drive(127);
-  delay(300);
-  drive(0);
-  bar(-127);
-  delay(700);
-  bar(0);
+  e_reset();
+  autodrive(-20);
+  barTarget= 3600;
+  delay(600);
   claw(-127);
   delay(450);
   claw(0);
-  bar(70);
-  delay(700);
-  bar(0);
-  gyroturn(75);
+  barTarget=1100;
+  gyroturn(-75);
   e_reset();
   autodrive(500);
 }
@@ -94,9 +77,6 @@ void Record(){
   pylon(0);
   e_reset();
   autodrive(360*.7);
-  antitip(127);
-  delay(1200);
-  antitip(0);
   bar(-127);
   delay(800);
   bar(0);
@@ -116,9 +96,6 @@ void BlueLP5(){//test me
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   gyroturn(9);
   autodrive(360*1.7);
   e_reset();
@@ -142,9 +119,6 @@ void BlueRP5(){
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -169,9 +143,6 @@ void RedLP5(){//test me
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -196,9 +167,6 @@ void RedRP5(){//test me
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -226,9 +194,6 @@ void BlueRP10(){
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -255,9 +220,6 @@ void RedLP10(){//test rlp5 then add more final distance
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -282,9 +244,6 @@ void RedRP10(){
   pylon(-127);
   delay(750);
   pylon(0);
-  antitip(127);
-  delay(250);
-  antitip(0);
   autodrive(360*2.60);
   e_reset();
   drive(-50);
@@ -308,6 +267,9 @@ void RedRP10(){
 
 
 void autonomous() {
+  barTarget = analogRead(ARMPOT);
+  TaskHandle barHandle = taskRunLoop(barTask, 20);
+
   switch(auton){
     case 0:
           break; //dont run auto
@@ -351,4 +313,6 @@ void autonomous() {
         RedRP10();
           break;
   }
+
+  taskDelete(barHandle);
 }
