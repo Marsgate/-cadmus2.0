@@ -30,12 +30,12 @@ void autoScoop(int target){
   //0 = down, 1 = up
   if(target == 0){
     scoop(-127);
-    while(analogRead(SCOOPPOT) < SP_BOT){
+    while(analogRead(SCOOPPOT) > SP_BOT){
       delay(20); //delay to make room for the other tasks to run
     }
   }else{
     scoop(127);
-    while(analogRead(SCOOPPOT) > SP_TOP){
+    while(analogRead(SCOOPPOT) < SP_TOP){
       delay(20); //delay to make room for the other tasks to run
     }
   }

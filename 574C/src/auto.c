@@ -24,23 +24,13 @@ void clawTask(){
 }
 
 //drive to pylon program =======================================
-void conePushTurn(){
+void pickUp(){
   armTarget = 4095;
   clawTarget = 127; // close claw
-  //drive from wall turn
-  autoDrive(530); // drive out from wall
   armTarget = AP_AUTO; // raise arm
-  gyTurn(43); // turn to face pylon
-
-  //deploy and cone push
+  liftTarget = LP_LOW;
   autoScoop(0); // deploy scoop
-  autoDrive(1400); // push cones
-
-  //align with pylon and scoop it up
-  autoDrive(-400); // reverse from pushed cones
-  gyTurn(75); // turn to face pylon
-  sonarDrive(); // drive into pylon
-  liftTarget = LP_LOW; // move lift to scoring height
+  sonarDrive(); //go get pylon
   autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
 }
@@ -48,44 +38,41 @@ void conePushTurn(){
 // program 1 ===============================================================
 void pylon5() {
 
-  conePushTurn(); //drive to pylon
-  gyTurn(55);
-  autoDrive(-1100); //reverse to zone
-  gyTurn(195);//face the zone
+  pickUp(); //drive to pylon
+  autoDrive(-500);
+  gyTurn(170);//face the zone
 
   //release the cone
   clawTarget = -127;
   delay(500);
   armTarget = AP_BOT;
-
   autoScoop(0);
 
   //reverse out of zone
-  autoDrive(-370);
+  autoDrive(-450);
 }
 
 
 // program 2 ===============================================================
 void pylon20(){
-  conePushTurn(); //drive to pylon
-  gyTurn(64);
-  autoDrive(-2350); //reverse to zone
-  gyTurn(186); // face the zone
-  autoDrive(500); // drive in to the zone
+  pickUp(); //drive to pylon
+  gyTurn(60);
+  autoDrive(-1350); //reverse to zone
+  gyTurn(180);//face the zone
+  drive(60);
+  delay(600);
 
 
   //release the cone
   clawTarget = -127;
   delay(200);
   armTarget = AP_AUTO;
-
-  drive(80);
   scoop(-127); //drop pylon scoop
   delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-785);
+  autoDrive(-585);
 }
 
 void skills(){
@@ -200,6 +187,43 @@ void ram(){
   autoDrive(5000);
 }
 
+void tower(){
+  clawTarget = 127;
+  delay(500);
+  liftTarget = LP_LOW + 200;
+  autoDrive(-600);
+  drive(-60);
+  delay(300);
+  armTarget = AP_STACK + 200;
+  delay(700);
+  armTarget = AP_STACK;
+  clawTarget = -127;
+  delay(500);
+  autoDrive(600);
+  delay(500);
+
+/*  gyTurn(75);
+  delay(500);
+  armTarget = AP_BOT;
+  liftTarget = LP_BOT;
+  delay(500);
+  autoDrive(-340);
+  clawTarget = 127;
+  delay(500);
+  armTarget = AP_STACK + 100;
+  delay(250);
+  liftTarget = LP_LMID;
+  delay(500);
+  gyTurn(125);
+  autoDrive(-500);
+  drive(-60);
+  delay(500);
+  clawTarget = -127;
+  delay(500);
+  autoDrive(700);
+*/
+}
+
 // control center ===============================================================
 void autonomous() {
   gyroReset(gyro);
@@ -216,9 +240,10 @@ void autonomous() {
       //autoRight = true;
       skills();
     case 0:
-      autoDrive(-1500);
+      //autoDrive(-500);
       //sonarDrive();
       //gyTurn(-45);
+
 
       break; //dont run auton
     case 1:
@@ -236,7 +261,7 @@ void autonomous() {
       pylon20();
       break;
     case 5:
-      ram();
+      tower();
       break;
   }
 

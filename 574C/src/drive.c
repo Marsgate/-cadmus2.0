@@ -12,26 +12,16 @@ void rightD(int vel){
   motorSet(DRIVER2, vel);
 }
 void drive(int vel){
-
-  int br = 30; // brake
-
-  //velocity normalization
-  if(vel > 127) vel = 127 - br;
-  if(vel < -127) vel = -127 + br;
-
-
-  motorSet(DRIVEL1, vel);
-  motorSet(DRIVEL2, vel);
-  motorSet(DRIVER1, vel);
-  motorSet(DRIVER2, vel);
+  rightD(vel);
+  leftD(vel);
 }
 
 // power curve =============================================
 void tankSigLPC(){
   double left;
   double right;
-  double lJoy = -joystickGetAnalog(1, 3);
-  double rJoy = -joystickGetAnalog(1, 2);
+  double lJoy = joystickGetAnalog(1, 3);
+  double rJoy = joystickGetAnalog(1, 2);
   int deadzone = 8;
 
   if(mode == 4){
@@ -62,26 +52,36 @@ void autoDrive(int sp){
   encoderReset(driveEncRight);
 
   double kp = 0.3;
-  int error;
-  do{
-    int kc = 30;
-    int sv = (encoderGet(driveEncLeft) + encoderGet(driveEncRight))/2;
+  int kc = 40;
+  int brake = -20;
+  int dir = 1; //forward
+  if(sp < 0){ //backward
+    dir = 0;
+    brake = -brake;
+  }
 
-    error = sp-sv;
-    if(error < 0) kc = -kc;
+  while(1){
+    int sv = encoderGet(driveEncLeft);
+    int error = sp-sv;
+    int speed = error*kp;
 
-    int speed = error*kp + kc;
-    drive(speed);
+    //speed normalization
+    if(dir == 1 && speed < kc) speed = kc;
+    if(dir == 0 && speed > -kc) speed = -kc;
 
-    lcdPrint(uart1, 1, "drive: %d", sv);
-    delay(20);
-  }while(abs(error) > 5); // deadzone = 10
+    drive(-speed);
+
+    if(dir == 0 && error > 0) break;
+    if(dir == 1 && error < 0) break;
+  }
+  drive(brake);
+  delay(200);
   drive(0); // stop drive
 }
 
 
 void sonarDrive(){
-  drive(127); // start driving forward
+  drive(-127); // start driving forward
   int u; // initialize the container for gyro
   do{
     u = ultrasonicGet(sonar);
@@ -93,24 +93,49 @@ void sonarDrive(){
 
 void gyTurn(int sp){
   if(autoRight == true) sp = -sp; // inverted turn speed for right auton
-  int sv;
-  int error;
-  double kp = 1.5;
+  double kp = 2;
+  //int kc = 40;
+  int brake = 20;
 
-  do{
-    int kc = 30;
-    sv = gyroGet(gyro);
+  //set direction
+  int dir = 0; //left
+  if(sp - gyroGet(gyro) < 0) dir = 1; // right
 
-    error = sp-sv;
-    if(error < 0) kc = -kc;
+  while(1){
+    int sv = gyroGet(gyro); // get sensor
 
-    int ts =  error* kp + kc; // turn speed and PID
+    //calculate speed
+    int error = sp-sv;
+    int speed = error*kp;
 
-    leftD(ts); // set the wheels
-    rightD(-ts);
+    //velocity normalization
+    if(speed > 127) speed = 127;
+    if(speed < -127) speed = -127;
 
-    lcdPrint(uart1, 1, "gy: %d", sv); //print out
+    //kc enforcement
+    //if(dir == 0 && speed < kc) speed = kc;
+    //if(dir == 1 && speed > -kc) speed = -kc;
+
+    leftD(-speed);
+    rightD(speed);
+
+    lcdPrint(uart1, 1, "gyro: %d", sv);
+
+    //braking
+    if(dir == 0 && error <= 0){
+      leftD(brake);
+      rightD(-brake);
+      delay(200);
+      break;
+    }
+    if(dir == 1 && error >= 0){
+      leftD(-brake);
+      rightD(brake);
+      delay(200);
+      break;
+    }
+
     delay(20);
-  }while(error != 0);
-  drive(0);
+  }
+  drive(0); // stop drive
 }

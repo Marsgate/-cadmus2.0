@@ -3,34 +3,32 @@
 
 
 //motors
-#define DRIVER1 1
-#define DRIVEL1 2
+#define DRIVEL1 1
+#define DRIVER1 2
 #define SCOOP 3
 #define LIFT1 4
 #define ARM1 5
 #define CLAW 6
 #define ARM2 7
 #define LIFT2 8
-#define DRIVER2 9
-#define DRIVEL2 10
+#define DRIVEL2 9
+#define DRIVER2 10
 
 //sensors
 #define LED 10
-#define D_ENC_R1 1
-#define D_ENC_R2 2
+#define D_ENC_R1 8
+#define D_ENC_R2 9
 #define D_ENC_L1 11
 #define D_ENC_L2 12
-#define SCOOP_LIM_BOT 3
-#define SCOOP_LIM_TOP 4
-#define ULTRA_O 5
-#define ULTRA_Y 6
+#define ULTRA_O 6
+#define ULTRA_Y 7
 
 //analog
 #define EXPANDER 3
 #define SCOOPPOT 4
 #define GYRO 5
-#define CLAWPOT 6
-#define LIFTPOT 7
-#define ARMPOT 8
+#define CLAWPOT 8
+#define LIFTPOT 6
+#define ARMPOT 7
 
 #endif

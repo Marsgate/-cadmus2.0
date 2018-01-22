@@ -14,12 +14,12 @@ void initialize() {
   //setup sensors
   //drive encoders
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, true);
-  driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, false);
+  driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
   //drive
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
   //ultrasonic
-  sonar = ultrasonicInit(5, 6);
+  sonar = ultrasonicInit(ULTRA_Y, ULTRA_O);
 
 
   //lcd
@@ -91,7 +91,8 @@ void initialize() {
         lcdSetText(uart1, 2, "Right 20pt");
         break;
       case 5:
-        lcdSetText(uart1, 2, "Ram");
+        lcdSetText(uart1, 2, "Tower");
+        break;
       default:
         auton = 0;
     }

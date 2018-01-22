@@ -54,7 +54,7 @@ void operatorControl() {
 				mode = 0;
 			}else if(joystickGetDigital(2, 8, JOY_DOWN)){
 				mode = 1;
-			}else if(joystickGetDigital(2, 8, JOY_RIGHT) || joystickGetDigital(1, 5, JOY_UP)){
+			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
 				mode = 2;
 			}else if (joystickGetDigital(2, 8, JOY_UP)){
 				mode = 4;
@@ -106,7 +106,7 @@ void operatorControl() {
 					break;
 			}
 		}else{
-			//armPID(1900);
+			//arm(127);
 			//gyTurn(90);
 			/*
 			for(int i=1; i<=10; i++){
@@ -122,12 +122,12 @@ void operatorControl() {
 		}
 
 		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		//lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
+		//lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
 		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
-		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
-		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+		lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
 		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));
 		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));

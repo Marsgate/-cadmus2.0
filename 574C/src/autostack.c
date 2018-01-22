@@ -71,7 +71,7 @@ void retract(){
       }
     }else{
 
-      if(analogRead(CLAWPOT) < 3000){
+      if(analogRead(CLAWPOT) > 200){
         claw(-127);
       }else{
         claw(-20);
