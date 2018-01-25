@@ -11,13 +11,11 @@ bool stacking = false; // tracks current autostacker state
 int liftPos = LP_BOT;
 
 void stack(int vel){
-
   if(analogRead(ARMPOT) > AP_STACK){
     arm(0);
   }else{
     arm(vel);
   }
-
   //lift control
   switch(stackHeight){
     case 0:
@@ -38,9 +36,9 @@ void stack(int vel){
 
 void retract(){
   if(analogRead(ARMPOT) < AP_BOT){
-    arm(-22); //hold arm down
+    arm(-10); //hold arm down
     lift(-127); // lower lift
-    if(analogRead(LIFTPOT) < LP_BOT) lift(0); // stop the lift if its already down
+    if(analogRead(LIFTPOT) < LP_BOT) lift(-21); // stop the lift if its already down
   }else{
     gripSpeed = -127;
     claw(-127);
