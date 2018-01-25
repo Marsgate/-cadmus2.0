@@ -28,11 +28,15 @@ void pickUp(){
   armTarget = 4095;
   clawTarget = 127; // close claw
   armTarget = AP_AUTO; // raise arm
-  liftTarget = LP_LOW;
+  liftTarget = LP_BOT;
   autoScoop(0); // deploy scoop
   sonarDrive(); //go get pylon
   autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
+  while(analogRead(ARMPOT) < AP_AUTO) delay(20);
+  clawTarget = -127; // open claw
+  while(analogRead(CLAWPOT) < 1500) delay(20);
+  armTarget = AP_AUTO;
 }
 
 // program 1 ===============================================================
@@ -41,38 +45,31 @@ void pylon5() {
   pickUp(); //drive to pylon
   autoDrive(-500);
   gyTurn(170);//face the zone
-
-  //release the cone
-  clawTarget = -127;
-  delay(500);
-  armTarget = AP_BOT;
   autoScoop(0);
 
   //reverse out of zone
-  autoDrive(-450);
+  autoDrive(-150);
 }
 
 
 // program 2 ===============================================================
 void pylon20(){
   pickUp(); //drive to pylon
-  gyTurn(60);
-  autoDrive(-1350); //reverse to zone
-  gyTurn(180);//face the zone
-  drive(60);
-  delay(600);
+  autoDrive(-550);
 
+  gyTurn(45);//face the zone
+  autoDrive(-180);
+  gyTurn(135);
 
-  //release the cone
-  clawTarget = -127;
-  delay(200);
-  armTarget = AP_AUTO;
-  scoop(-127); //drop pylon scoop
+  drive(-127);
   delay(1000);
+  drive(-60);
+  scoop(-127); //drop pylon scoop
+  delay(1500);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-585);
+  autoDrive(-200);
 }
 
 void skills(){
@@ -236,15 +233,11 @@ void autonomous() {
   TaskHandle cHandle = taskRunLoop(clawTask, 20); //start claw
 
   switch(auton){
-    case -2:
+    case -1:
       //autoRight = true;
       skills();
     case 0:
-      //autoDrive(-500);
-      //sonarDrive();
-      //gyTurn(-45);
-
-
+      autoDrive(300);
       break; //dont run auton
     case 1:
       pylon5();
@@ -253,14 +246,6 @@ void autonomous() {
       pylon20();
       break;
     case 3:
-      autoRight = true;
-      pylon5();
-      break;
-    case 4:
-      autoRight = true;
-      pylon20();
-      break;
-    case 5:
       tower();
       break;
   }

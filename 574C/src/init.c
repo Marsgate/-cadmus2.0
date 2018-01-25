@@ -12,91 +12,71 @@ void initialize() {
   setTeamName("574C Centurion");
 
   //setup sensors
-  //drive encoders
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, true);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
-  //drive
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
-  //ultrasonic
   sonar = ultrasonicInit(ULTRA_Y, ULTRA_O);
-
 
   //lcd
   lcdInit(uart1);
   lcdClear(uart1);
   lcdSetBacklight(uart1, true);
 
+  buttonInit();
 
   //expander light check
 	while(analogRead(EXPANDER) < 500){
+    lcdSetText(uart1, 1, "!Check Pwr Exp!");
 		digitalWrite(LED, LOW);
 		delay(500);
 		digitalWrite(LED, HIGH);
 		delay(500);
-    lcdPrint(uart1, 1, "!Check Pwr Exp!");
 	}
 
+  int selected = 0; //layered selection
+  while(selected < 2){
+    lcdSetText(uart1, 2, "");
+    while(selected < 1){
+      //logic
+      if(buttonIsNewPress(LCD_CENT)){
+        selected++;
+      }else if(buttonIsNewPress(LCD_LEFT)){
+        if(auton > -2)auton--;
+      }else if(buttonIsNewPress(LCD_RIGHT)){
+        if(auton < 3)auton++;
+      }
 
-  delay(200);
-
-  //mode selector from LCD
-  autoRight = false;
-  bool selected = false;
-  bool buttonDown = false;
-  while(selected == false){
-    lcdSetText(uart1, 1, "Autonomous");
-
-    int but = lcdReadButtons(uart1); // get the lcd button
-    if(but == 0){
-      buttonDown = false;
-    }else if(buttonDown == false){
-      buttonDown = true;
-      switch(but){
+      //display
+      switch(auton){
+        case -1:
+          lcdSetText(uart1, 1, "Skills");
+          break;
+          lcdSetText(uart1, 1, "None");
+          break;
         case 1:
-          auton--;
+          lcdSetText(uart1, 1, "5pt");
           break;
         case 2:
-          selected = true;
-          lcdSetText(uart1, 1, "Selected");
+          lcdSetText(uart1, 1, "20pt");
           break;
-        case 4:
-          auton++;
+        case 3:
+          lcdSetText(uart1, 1, "Tower");
           break;
       }
+      delay(20);
     }
-
-    //display current selection
-    switch(auton){
-      case -2:
-        lcdSetText(uart1, 2, "Auton Skills");
-        break;
-      case -1:
-        lcdSetText(uart1, 2, "Driver Skills");
-        mode = 4;
-        break;
-      case 0:
-        lcdSetText(uart1, 2, "None");
-        break;
-      case 1:
-        lcdSetText(uart1, 2, "Left 5pt");
-        break;
-      case 2:
-        lcdSetText(uart1, 2, "Left 20pt");
-        break;
-      case 3:
-        lcdSetText(uart1, 2, "Right 5pt");
-        break;
-      case 4:
-        lcdSetText(uart1, 2, "Right 20pt");
-        break;
-      case 5:
-        lcdSetText(uart1, 2, "Tower");
-        break;
-      default:
-        auton = 0;
+    lcdSetText(uart1, 2, "Left ----- Right");
+    if(buttonIsNewPress(LCD_CENT)){
+      selected--;
+    }else if(buttonIsNewPress(LCD_LEFT)){
+      selected++;
+      lcdSetText(uart1, 2,"left selected");
+    }else if(buttonIsNewPress(LCD_RIGHT)){
+      selected++;
+      lcdSetText(uart1, 2,"right selected");
+      autoRight = true;
     }
-
-    delay(20); //space for lcd to update
+    delay(20);
   }
 }

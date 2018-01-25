@@ -30,22 +30,21 @@ void operatorControl() {
 
 	TaskHandle gyHandle = taskRunLoop(gyTest, 20);
 
-	// only run mode selector if not in competition
+	// only run debug in non competition
+	lcdClear(uart1);
 	while(isOnline() == false){
-		lcdSetText(uart1, 1, "1:Op 3:Debug");
-
-		int but = lcdReadButtons(uart1);
-
-		if(but == 1){
-			mode = 0;
-			break;
-		}else if(but == 4){
+		lcdSetText(uart1, 1, "Op ------- Debug");
+		if(buttonIsNewPress(LCD_LEFT)) break;
+		if(buttonIsNewPress(LCD_RIGHT)){
 			mode = 3;
 			break;
 		}
-		delay(50); //space for lcd to update
+		delay(20);
 	}
+
 	while (1) {
+		if(auton == -1) mode = 4; //skills
+
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
 
@@ -56,8 +55,6 @@ void operatorControl() {
 				mode = 1;
 			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
 				mode = 2;
-			}else if (joystickGetDigital(2, 8, JOY_UP)){
-				mode = 4;
 			}
 
 			//get the mode from 1st joy
@@ -123,11 +120,11 @@ void operatorControl() {
 
 		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
-		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
+		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
-		lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
-		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 1, "claw: %d", motorGet(CLAW));
 		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));
 		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));

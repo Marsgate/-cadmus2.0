@@ -11,13 +11,12 @@ bool stacking = false; // tracks current autostacker state
 int liftPos = LP_BOT;
 
 void stack(int vel){
+
   if(analogRead(ARMPOT) > AP_STACK){
     arm(0);
   }else{
     arm(vel);
   }
-
-  claw(30); //squeeze
 
   //lift control
   switch(stackHeight){
@@ -34,50 +33,22 @@ void stack(int vel){
       liftPos = LP_HIGH;
   }
   liftPID(liftPos); // sets the lift target for PID
-
-
 }
 
 
 void retract(){
-
   if(analogRead(ARMPOT) < AP_BOT){
-    arm(-20); //hold arm down
-
-    if(mode == 0){
-      if(analogRead(LIFTPOT) < LP_BOT){
-        lift(0);
-      }else{
-        lift(-100);
-      }
-    }else{
-      liftPID(LP_ML);
-    }
+    arm(-22); //hold arm down
+    lift(-127); // lower lift
+    if(analogRead(LIFTPOT) < LP_BOT) lift(0); // stop the lift if its already down
   }else{
     gripSpeed = -127;
-
-    if(stackHeight > 0){
-      liftPID(liftPos+200); // hold the lift in place
-    }
-    if(mode == 1){
-      liftPID(LP_HIGH);
-    }
-
+    claw(-127);
     if(stacking == false){ //if claw is open
-      if(analogRead(ARMPOT) < AP_MID){ // slow retraction after arm midpoint
-        arm(0); // cut power prevents slamming
-      }else{
-        arm(-127);
-      }
-    }else{
-
-      if(analogRead(CLAWPOT) > 200){
-        claw(-127);
-      }else{
-        claw(-20);
-        stacking = false;
-      }
-    }
+      claw(0);
+      arm(-127);
+      if(analogRead(ARMPOT) < AP_MID) arm(-20); // slow arm descent to prevent slamming
+    }else if(analogRead(CLAWPOT) > 1500) stacking = false; // don't tratract until claw is open
   }
 
 }

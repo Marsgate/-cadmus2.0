@@ -51,9 +51,9 @@ void autoDrive(int sp){
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
 
-  double kp = 0.3;
-  int kc = 40;
-  int brake = -20;
+  double kp = 0.6;
+  int kc = 60;
+  int brake = -60;
   int dir = 1; //forward
   if(sp < 0){ //backward
     dir = 0;
@@ -75,7 +75,7 @@ void autoDrive(int sp){
     if(dir == 1 && error < 0) break;
   }
   drive(brake);
-  delay(200);
+  delay(100);
   drive(0); // stop drive
 }
 
@@ -94,12 +94,14 @@ void sonarDrive(){
 void gyTurn(int sp){
   if(autoRight == true) sp = -sp; // inverted turn speed for right auton
   double kp = 2;
-  //int kc = 40;
-  int brake = 20;
+  int kc = 60;
+  int brake = 60;
 
   //set direction
   int dir = 0; //left
-  if(sp - gyroGet(gyro) < 0) dir = 1; // right
+  if(sp - gyroGet(gyro) < 0) dir = 1;
+  if(dir == 1) brake = -brake;
+
 
   while(1){
     int sv = gyroGet(gyro); // get sensor
@@ -113,29 +115,21 @@ void gyTurn(int sp){
     if(speed < -127) speed = -127;
 
     //kc enforcement
-    //if(dir == 0 && speed < kc) speed = kc;
-    //if(dir == 1 && speed > -kc) speed = -kc;
+    if(dir == 0 && speed < kc) speed = kc;
+    if(dir == 1 && speed > -kc) speed = -kc;
+
+    //end loop check
+    if(dir == 0 && error <= 0) break;
+    if(dir == 1 && error >= 0) break;
 
     leftD(-speed);
     rightD(speed);
 
     lcdPrint(uart1, 1, "gyro: %d", sv);
-
-    //braking
-    if(dir == 0 && error <= 0){
-      leftD(brake);
-      rightD(-brake);
-      delay(200);
-      break;
-    }
-    if(dir == 1 && error >= 0){
-      leftD(-brake);
-      rightD(brake);
-      delay(200);
-      break;
-    }
-
     delay(20);
   }
+  leftD(brake);
+  rightD(-brake);
+  delay(100);
   drive(0); // stop drive
 }
