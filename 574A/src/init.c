@@ -50,10 +50,10 @@ void initialize() {
       lcdSetText(uart1, 2, "MISSION ABORT");
       break;
     case 1:
-      lcdSetText(uart1, 2, "SWCR");
+      lcdSetText(uart1, 2, "Tower");
       break;
     case 2:
-      lcdSetText(uart1, 2, "SWCB");
+      lcdSetText(uart1, 2, "");
       break;
     case 3:
       lcdSetText(uart1, 2, "ReleasetheKraken");
@@ -62,30 +62,18 @@ void initialize() {
       lcdSetText(uart1, 2, "DriveTest");
       break;
     case 5:
-      lcdSetText(uart1, 2, "BlueLP5");
+      lcdSetText(uart1, 2, "BlueLRedL12");
       break;
     case 6:
-      lcdSetText(uart1, 2, "BlueRP5");
+      lcdSetText(uart1, 2, "BlueRRedR12");
       break;
     case 7:
-      lcdSetText(uart1, 2, "RedLP5");
+      lcdSetText(uart1, 2, "BlueLRedL17");
       break;
     case 8:
-      lcdSetText(uart1, 2, "RedRP5");
+      lcdSetText(uart1, 2, "BlueRRedR17");
       break;
-    case 9:
-      lcdSetText(uart1, 2, "BlueLP10");
-      break;
-    case 10:
-      lcdSetText(uart1, 2, "BlueRP10");
-      break;
-    case 11:
-      lcdSetText(uart1, 2, "RedLP10");
-      break;
-    case 12:
-      lcdSetText(uart1, 2, "RedRP10");
-      break;
-    default:
+      default:
       auton = 0;
     }
 

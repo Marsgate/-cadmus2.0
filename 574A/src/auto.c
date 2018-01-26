@@ -12,83 +12,89 @@ void barTask(){
 }
 
 void ReleasetheKraken(){
-  pylon(-127);
+  barTarget=2000;//raises arm vertical
+  pylon(-127);//lowers MB lift
   delay(750);
   pylon(0);
-  barTarget=2000;
-  autodrive(360*1.3);
+  autodrive(360*1.3);//drives forward
 
 }
 
-void SWCR(){
+void SWCR(){//test me first!!
+  claw(25);//claw hold
+  barTarget=1700;// raises arm to rough elevation to hold cone
+  pylon(-127);// lowers MB lift
+  delay(750);
+  pylon(-25);
+  e_reset();
+  autodrive(360*1.7);//drives foreward to MB
+  pylon(75);// picks up MB
+  delay(1500);
+  pylon(0);
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(250);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1700;// raises arm to clear cone
+  e_reset();
+  autodrive(-360*1.2);//drives backward to clear cones
+  claw(0);
+  gyroturn(-175);//turns 170 (to account for drift) left towards 5pt zone
+  e_reset();
+  autodrive(360*.8);//drives foreward to 5pt zone
+  pylon(-127);//lowers MB
+  delay(750);
+  pylon(0);
+  e_reset();
+  autodrive(-360*.6);//reverses away from MB then stops
 
 }
-void SWCB(){
-
+void SWCB(){//test me next
+  claw(25);//claw hold
+  barTarget=1700;// raises arm to rough elevation to hold cone
+  pylon(-127);// lowers MB lift
+  delay(750);
+  pylon(-25);
+  e_reset();
+  autodrive(360*1.7);//drives foreward to MB
+  pylon(75);// picks up MB
+  delay(1500);
+  pylon(0);
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(250);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1700;// raises arm to clear cone
+  e_reset();
+  autodrive(-360*1.2);//drives backward to clear cones
+  claw(0);
+  gyroturn(175);//turns 170 (to account for drift) left towards 5pt zone
+  e_reset();
+  autodrive(360*.8);//drives foreward to 5pt zone
+  pylon(-127);//lowers MB
+  delay(750);
+  pylon(0);
+  e_reset();
+  autodrive(-360*.6);//reverses away from MB then stops
 }
 
 void  DriveTest(){
-  autodrive(360*4.5);
+  autodrive(360*4.5);//Ram
 }
-void BlueLP5(){//test me
-  pylon(-127);
-  delay(750);
-  pylon(-25);
-  barTarget=2000;
-  e_reset();
-  autodrive(360*1.5);
-  pylon(75);
-  delay(1500);
-  pylon(0);
-  e_reset();
-  autodrive(-360*1);
-  gyroturn(170);
-  e_reset();
-  autodrive(360*.5);
-  pylon(-127);
-  delay(750);
-  pylon(0);
-  e_reset();
-  autodrive(-360*.5);
-}
-void BlueRP5(){
-  e_reset();
-  pylon(-127);
-  delay(850);
-  pylon(-30);
-  autodrive(360*2.60);
-  e_reset();
-  pylon(50);
-  delay(2000);
-  pylon(0);
-  delay(100);
-  autodrive(-360*.9);
-  gyroturn(-100);
-  e_reset();
-  autodrive(360*.7);
-  pylon(-127);
-  delay(800);
-  pylon(0);
-  e_reset();
-  autodrive(-200);
-}
-void RedLP5(){//test me
-}
-
-void RedRP5(){//test me
+void BlueLRedL12(){
 
 }
-void BlueLP10(){//test blp5 then add more final distance
-//
-}
-void BlueRP10(){//test brp5 then add more final distance
-  }
-
-void RedLP10(){//test rlp5 then add more final distance
+void BlueRRedR12(){
 
 }
-void RedRP10(){//test rrp5 then add more final distance
+
+void BlueLRedL17(){
 }
+
+void BlueRRedR17(){
+}
+
+
 
 
 
@@ -100,7 +106,7 @@ void autonomous() {
     case 0:
           break; //dont run auto
     case 1:
-        SWCR(); // run this code with 574c
+        SWCR();
           break;
     case 2:
         SWCB();
@@ -112,30 +118,17 @@ void autonomous() {
         DriveTest(); // name says it
           break;
     case 5:
-        BlueLP5();
+        BlueLRedL12();
           break; // blue left pylon
     case 6:
-        BlueRP5(); // blue right pylon
+        BlueRRedR12(); // blue right pylon
           break;
     case 7:
-        RedLP5();
+        BlueLRedL17();
           break; // red left pylon
     case 8:
-        RedRP5();
-          break; // red right pylon
-    case 9:
-        BlueLP10();
-          break; // blue left pylon
-    case 10:
-        BlueRP10(); // blue right pylon
-          break;
-    case 11:
-        RedLP10();
-          break; // red left pylon
-    case 12:
-        RedRP10();
-          break;
-  }
+        BlueRRedR17();
+    }
 
   taskDelete(barHandle);
 }
