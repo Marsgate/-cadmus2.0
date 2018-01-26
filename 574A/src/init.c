@@ -56,36 +56,33 @@ void initialize() {
       lcdSetText(uart1, 2, "SWCB");
       break;
     case 3:
-      lcdSetText(uart1, 2, "Record");
-      break;
-    case 4:
       lcdSetText(uart1, 2, "ReleasetheKraken");
       break;
-    case 5:
+    case 4:
       lcdSetText(uart1, 2, "DriveTest");
       break;
-    case 6:
+    case 5:
       lcdSetText(uart1, 2, "BlueLP5");
       break;
-    case 7:
+    case 6:
       lcdSetText(uart1, 2, "BlueRP5");
       break;
-    case 8:
+    case 7:
       lcdSetText(uart1, 2, "RedLP5");
       break;
-    case 9:
+    case 8:
       lcdSetText(uart1, 2, "RedRP5");
       break;
-    case 10:
+    case 9:
       lcdSetText(uart1, 2, "BlueLP10");
       break;
-    case 11:
+    case 10:
       lcdSetText(uart1, 2, "BlueRP10");
       break;
-    case 12:
+    case 11:
       lcdSetText(uart1, 2, "RedLP10");
       break;
-    case 13:
+    case 12:
       lcdSetText(uart1, 2, "RedRP10");
       break;
     default:
