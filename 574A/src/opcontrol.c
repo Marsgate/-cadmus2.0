@@ -13,7 +13,6 @@ void operatorControl() {
 		barOp();
 		clawOp();
 		pylonOp();
-		autoalignp();
 		delay(20);
 	}
 }

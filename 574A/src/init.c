@@ -53,7 +53,7 @@ void initialize() {
       lcdSetText(uart1, 2, "Tower");
       break;
     case 2:
-      lcdSetText(uart1, 2, "");
+      lcdSetText(uart1, 2, "Test");
       break;
     case 3:
       lcdSetText(uart1, 2, "ReleasetheKraken");

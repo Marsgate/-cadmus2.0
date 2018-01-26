@@ -37,11 +37,11 @@ void SWCR(){//test me first!!
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1700;// raises arm to clear cone
   e_reset();
-  autodrive(-360*1.2);//drives backward to clear cones
+  autodrive(-360*1.6);//drives backward to clear cones
   claw(0);
   gyroturn(-175);//turns 170 (to account for drift) left towards 5pt zone
   e_reset();
-  autodrive(360*.8);//drives foreward to 5pt zone
+  autodrive(360*.6);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
   delay(750);
   pylon(0);
@@ -66,11 +66,11 @@ void SWCB(){//test me next
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1700;// raises arm to clear cone
   e_reset();
-  autodrive(-360*1.2);//drives backward to clear cones
+  autodrive(-360*1.6);//drives backward to clear cones
   claw(0);
   gyroturn(175);//turns 170 (to account for drift) left towards 5pt zone
   e_reset();
-  autodrive(360*.8);//drives foreward to 5pt zone
+  autodrive(360*.6);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
   delay(750);
   pylon(0);
@@ -89,9 +89,11 @@ void BlueRRedR12(){
 }
 
 void BlueLRedL17(){
+
 }
 
 void BlueRRedR17(){
+  
 }
 
 
