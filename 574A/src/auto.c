@@ -15,8 +15,9 @@ void ReleasetheKraken(){
   pylon(-127);
   delay(750);
   pylon(0);
+  barTarget=2000;
   autodrive(360*1.3);
-  autobar(2000);
+
 }
 
 void SWCR(){
@@ -42,34 +43,7 @@ e_reset();
 autodrive(500);
 }
 void SWCB(){
-  delay(2000);
-  e_reset();
-autodrive(-50);
-  pylon(-127);
-  delay(750);
-  pylon(0);
-  barTarget =2000;
-  e_reset();
-  autodrive(30);
-  barTarget=3950;
-  claw(127);
-  delay(450);
-  claw(15);
-  barTarget=2000;
-  lift(127);
-  delay(2000);
-  lift(0);
-  e_reset();
-  autodrive(-20);
-  barTarget= 3600;
-  delay(600);
-  claw(-127);
-  delay(450);
-  claw(0);
-  barTarget=1100;
-  gyroturn(-75);
-  e_reset();
-  autodrive(500);
+
 }
 void Record(){
   pylon(-127);
@@ -94,8 +68,8 @@ void  DriveTest(){
 void BlueLP5(){//test me
   e_reset();
   pylon(-127);
-  delay(750);
-  pylon(0);
+  delay(850);
+  pylon(-20);
   gyroturn(9);
   autodrive(360*1.7);
   e_reset();
@@ -117,13 +91,10 @@ void BlueLP5(){//test me
 void BlueRP5(){
   e_reset();
   pylon(-127);
-  delay(750);
-  pylon(0);
+  delay(850);
+  pylon(-30);
   autodrive(360*2.60);
   e_reset();
-  drive(-50);
-  delay(500);
-  drive(0);
   pylon(50);
   delay(2000);
   pylon(0);
@@ -165,13 +136,10 @@ void RedLP5(){//test me
 void RedRP5(){//test me
   e_reset();
   pylon(-127);
-  delay(750);
-  pylon(0);
-  autodrive(360*2.60);
+  delay(850);
+  pylon(-30);
+  autodrive(360*1.90);
   e_reset();
-  drive(-50);
-  delay(500);
-  drive(0);
   pylon(50);
   delay(2000);
   pylon(0);
@@ -179,7 +147,7 @@ void RedRP5(){//test me
   autodrive(-360*1.1);
   gyroturn(-190);
   e_reset();
-  autodrive(360*.7);
+  autodrive(360*.8);
   pylon(-127);
   delay(800);
   pylon(0);
