@@ -53,13 +53,13 @@ void autodrive(int distance){
   if(distance > 0){
     do{
       enc = (encoderGet(r_encoder)+encoderGet(l_encoder))/2;
-      drive(-127);
+      drive(-60);
     }while(enc < distance);
     drive(0);
   }else{
     do{
       enc = (encoderGet(r_encoder)+encoderGet(l_encoder))/2;
-      drive(127);
+      drive(60);
     }while(enc > distance);
     drive(0);
   }

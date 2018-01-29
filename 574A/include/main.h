@@ -23,8 +23,8 @@ Gyro gyro;
 #endif
 
 //lift
-#define LIFT1 4 //vert lift
-#define LIFT2 7 //chainbar
+#define LIFT 4 //vert lift
+#define BAR 7 //chainbar
 
 
 //drive
@@ -49,8 +49,8 @@ int side;
 #define L_ENCODER2 4
 #define LIFT_ENCODER1 5
 #define LIFT_ENCODER2 6
-#define ARMPOT 7
-#define BASEPOT 8
+#define ARMPOT 3
+#define BASEPOT 4 
 Encoder l_encoder;
 Encoder r_encoder;
 Encoder lift_encoder;

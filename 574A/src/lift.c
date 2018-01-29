@@ -3,7 +3,7 @@
 #include "pylon.h"
 
 void lift(int vel){
-  motorSet(LIFT1, vel);
+  motorSet(LIFT, vel);
 
 }
 
@@ -18,7 +18,7 @@ void liftOp(){
 }
 
 void bar(int vel){
-    motorSet(LIFT2, vel);
+    motorSet(BAR, vel);
 }
 void barOp(){
     bar(-joystickGetAnalog(1,3));
@@ -26,7 +26,7 @@ void barOp(){
 
 
 void autobar(int sp){
-  double kp = 0.25;
+  double kp = 0.22;
   int sv = analogRead(ARMPOT);
   int error = sp-sv;
   int speed = error*kp;

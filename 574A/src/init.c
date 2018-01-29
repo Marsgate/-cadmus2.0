@@ -62,16 +62,16 @@ void initialize() {
       lcdSetText(uart1, 2, "DriveTest");
       break;
     case 5:
-      lcdSetText(uart1, 2, "BlueLRedL12");
+      lcdSetText(uart1, 2, "BRL12");
       break;
     case 6:
-      lcdSetText(uart1, 2, "BlueRRedR12");
+      lcdSetText(uart1, 2, "BRR12");
       break;
     case 7:
-      lcdSetText(uart1, 2, "BlueLRedL17");
+      lcdSetText(uart1, 2, "BRL17");
       break;
     case 8:
-      lcdSetText(uart1, 2, "BlueRRedR17");
+      lcdSetText(uart1, 2, "BRR17");
       break;
       default:
       auton = 0;
