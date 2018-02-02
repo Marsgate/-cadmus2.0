@@ -30,7 +30,6 @@ delay(650);
 lift(0);
 barTarget=2150;
 delay(3000);
-
 delay(750);
 claw(-127);
 delay(1000);
@@ -40,7 +39,7 @@ autodrive(360*.4);
 }
 void SWCB(){//test me next
   claw(25);//claw hold
-  barTarget=1300;// raises arm to rough elevation to hold cone
+  barTarget=1400;// raises arm to rough elevation to hold cone
   pylon(-127);// lowers MB lift
   delay(750);
   pylon(-12);
@@ -53,11 +52,11 @@ void SWCB(){//test me next
   claw(-127);//deposits cone on MB
   delay(250);
   claw(-50);//keeps spinning to affirm cone release
-  barTarget=1300;// raises arm to clear cone
+  barTarget=1400;// raises arm to clear cone
   e_reset();
   autodrive(-360*1.6);//drives backward to clear cones
   claw(0);
-  gyroturn(-165);//turns 170 (to account for drift) right towards 5pt zone
+  gyroturn(-165);//turns 165 (to account for drift) right towards 5pt zone
   e_reset();
   autodrive(360*1);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
