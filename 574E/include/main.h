@@ -29,9 +29,11 @@ void operatorControl();
 #define DRIVE2  6//front right
 #define DRIVE3  5//back left
 #define DRIVE4  7//back right
-#define DRIVE5  8//middle right
-#define DRIVE6  4//middle left
 
+#define CHAIN1 4//chain left
+#define CHAIN2 8//chain right
+
+#define CLAW 10//claw
 
 #define BASE1 2 // base right
 #define BASE2 9// base left
