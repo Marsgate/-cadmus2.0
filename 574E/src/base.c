@@ -5,9 +5,9 @@ void base(int vel){
   motorSet(BASE2,vel);
 }
 void baseOp(){
-  if(joystickGetDigital(1, 6,JOY_UP)){
+  if(joystickGetDigital(1, 8,JOY_UP)){
     base(127);
-  }else if(joystickGetDigital(1, 6,JOY_DOWN)){
+  }else if(joystickGetDigital(1, 8,JOY_DOWN)){
       base(-127);
   }else {
     base(0);

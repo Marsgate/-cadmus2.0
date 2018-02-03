@@ -1,6 +1,8 @@
 #include "main.h"
 #include "base.h"
 #include "drive.h"
+#include "claw.h"
+#include "chain.h"
 
 void autonomous() {
   base(-127);
