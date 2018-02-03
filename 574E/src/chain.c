@@ -8,7 +8,7 @@ void chainOp(){
   if(joystickGetDigital(1, 6,JOY_UP)){
     chain(127);
   }else if(joystickGetDigital(1, 6,JOY_DOWN)){
-      chain(-127);
+    chain(-127);
   }else {
     chain(0);
   }
