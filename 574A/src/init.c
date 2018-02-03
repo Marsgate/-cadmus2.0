@@ -6,8 +6,8 @@ void initializeIO() {
 
 
 void initialize() {
-  l_encoder = encoderInit(L_ENCODER1, L_ENCODER2,false);
-  r_encoder = encoderInit(R_ENCODER1,R_ENCODER2,true);
+  l_encoder = encoderInit(L_ENCODER1, L_ENCODER2,true);
+  r_encoder = encoderInit(R_ENCODER1,R_ENCODER2,false);
   lift_encoder = encoderInit(LIFT_ENCODER1, LIFT_ENCODER2, true);
 
 
@@ -62,16 +62,16 @@ void initialize() {
       lcdSetText(uart1, 2, "DriveTest");
       break;
     case 5:
-      lcdSetText(uart1, 2, "BRL12");
+      lcdSetText(uart1, 2, "BRL10");
       break;
     case 6:
-      lcdSetText(uart1, 2, "BRR12");
+      lcdSetText(uart1, 2, "BRR10");
       break;
     case 7:
-      lcdSetText(uart1, 2, "BRL17");
+      lcdSetText(uart1, 2, "BRL20");
       break;
     case 8:
-      lcdSetText(uart1, 2, "BRR17");
+      lcdSetText(uart1, 2, "BRR20");
       break;
       default:
       auton = 0;

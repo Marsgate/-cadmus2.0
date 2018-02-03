@@ -12,7 +12,7 @@ void barTask(){
 }
 
 void ReleasetheKraken(){
-  barTarget=1600;//raises arm vertical
+  barTarget=1600;//raises arm 65 degrees
   pylon(-127);//lowers MB lift
   delay(750);
   pylon(0);
@@ -21,21 +21,21 @@ void ReleasetheKraken(){
 }
 
 void Tower(){//test me first!!
-delay(2700);
+//delay(2700);
 e_reset();
 claw(45);
-autodrive(-360*.83);
+autodrive(-360*1.3);
 lift(127);
 delay(650);
 lift(0);
-barTarget=2150;
+barTarget=1950;
 delay(3000);
 delay(750);
 claw(-127);
 delay(1000);
 claw(0);
 barTarget=1200;
-autodrive(360*.4);
+autodrive(360*.3);
 }
 void SWCB(){//test me next
   claw(25);//claw hold
@@ -75,29 +75,28 @@ void BRL12(){
 void BRR12(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
-  delay(550);
-  pylon(-12);
+  pylon(-60);// lowers MB lift
+  delay(600);
   drive(-40);
   delay(200);
   e_reset();
-  autodrive(360*3.2);//drives foreward to MB
+  autodrive(360*2.9);//drives foreward to MB
   pylon(75);// picks up MB
   delay(1500);
   pylon(0);
   barTarget= 600;//lowers arm
   claw(-127);//deposits cone on MB
-  delay(250);
+  delay(450);
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;// raises arm to clear cone
   e_reset();
   autodrive(-360*2.3);//drives backward to clear cones
   claw(0);
-  gyroturn(200);//turns 170 (to account for drift) left towards 5pt zone
+  gyroturn(190);//turns 170 (to account for drift) left towards 5pt zone
   e_reset();
   autodrive(360*.4);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
-  delay(750);
+  delay(1000);
   pylon(0);
   e_reset();
   autodrive(-360*.6);//reverses away from MB then stops
@@ -109,7 +108,36 @@ void BRL17(){
 }
 
 void BRR17(){
-
+  claw(25);//claw hold
+  barTarget=1300;// raises arm to rough elevation to hold cone
+  pylon(-60);// lowers MB lift
+  delay(600);
+  drive(-40);
+  delay(200);
+  e_reset();
+  autodrive(360*2.9);//drives foreward to MB
+  pylon(75);// picks up MB
+  delay(1500);
+  pylon(0);
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(450);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;// raises arm to clear cone
+  e_reset();
+  autodrive(-360*2.3);//drives backward to clear cones
+  claw(0);
+  gyroturn(120);//turns 170 (to account for drift) left towards 5pt zone
+  e_reset();
+  autodrive(360*.9);
+  gyroturn(80);
+  e_reset();
+  autodrive(360*1.7);//drives foreward to 5pt zone
+  pylon(-127);//lowers MB
+  delay(1000);
+  pylon(0);
+  e_reset();
+  autodrive(-360*1.7);//reverses away from MB then stops
 }
 
 
