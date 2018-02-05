@@ -5,7 +5,7 @@ static int dir;
 void gyroturn(int deg ){
   int deadzone = 1;
   gyroReset(gyro);
-  int ts = 60; // defualt turn speed
+  int ts = 65; // defualt turn speed
 
   while(1){
     int gy = gyroGet(gyro);

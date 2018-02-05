@@ -8,7 +8,7 @@ void operatorControl() {
 	while (1) {
 		//lcdSetText(uart1, 1, "    Team 574A");
 		lcdPrint(uart1, 1, "Gyro, %d", gyroGet(gyro));
-		lcdPrint(uart1, 2, "Armpot, %d", analogRead(ARMPOT));
+		lcdPrint(uart1, 2, "Basepot, %d", analogRead(BASEPOT));
 		driveOp();
 		liftOp();
 		barOp();

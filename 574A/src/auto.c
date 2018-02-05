@@ -61,7 +61,7 @@ void DelayTower(){//test me next
 void  DriveTest(){
   autodrive(360*4.5);//Ram
 }
-void BRL12(){
+void BRL17(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
   pylon(-127);// lowers MB lift
@@ -92,7 +92,7 @@ void BRL12(){
   autodrive(-360*.6);//reverses away from MB then stops
 
 }
-void BRR12(){
+void BRR17(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
   pylon(-127);// lowers MB lift
@@ -124,7 +124,7 @@ void BRR12(){
 
 }
 
-void BRL17(){
+void BRL27(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
   pylon(-127);// lowers MB lift
@@ -158,7 +158,7 @@ void BRL17(){
   autodrive(-360*1.3);//reverses away from MB then stops
 }
 
-void BRR17(){
+void BRR27(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
   pylon(-127);// lowers MB lift
@@ -192,13 +192,70 @@ void BRR17(){
   autodrive(-360*1.3);//reverses away from MB then stops
 }
 void CenterRight(){
+claw(25);
+barTarget=1300;
+autodrive(360*1.3);
+gyroturn(55);
+autodrive(360*1.6);
+gyroturn(-90);
+baseTarget=2000;
+autodrive(360*1.6);
+gyroturn(-25);
+autodrive(360);
+baseTarget=250;
+barTarget=600;
+gyroturn(-65);
+autodrive(360*1.6);
+gyroturn(90);
+autodrive(360*1.6);
+gyroturn(-59);
+claw(-127);
+delay(100);
+barTarget=1300;
+autodrive(360*1.4);
+baseTarget=2000;
+autodrive(-360);
 
 }
 void CenterLeft(){
 
 }
-void PreloadRed(){
-
+void PreloadRed(){//test
+  claw(25);//claw hold
+  barTarget=1300;// raises arm to rough elevation to hold cone
+  baseTarget=2000;
+  drive(-40);
+  delay(200);
+  e_reset();
+  autodrive(360*2.9);//drives foreward to MB
+  baseTarget=250;
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(250);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;// raises arm to clear cone
+  gyroturn(25);
+  barTarget=3100;
+  claw(127);
+  delay(250);
+  claw(20);
+  barTarget=700;
+  claw(-127);//deposits cone on MB
+  delay(250);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=3100;
+  claw(127);
+  delay(250);
+  claw(20);
+  barTarget=800;
+  gyroturn(120);
+  claw(-127);//deposits cone on MB
+  delay(250);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;
+  autodrive(360*1.4);
+  baseTarget=1300;
+  autodrive(-360*.6);
 }
 void PreloadBlue(){
 
@@ -229,16 +286,16 @@ void autonomous() {
         DriveTest(); // name says it
           break;
     case 5:
-        BRL12();
+        BRL17();
           break; // blue left pylon
     case 6:
-        BRR12(); // blue right pylon
+        BRR17(); // blue right pylon
           break;
     case 7:
-        BRL17();
+        BRL27();
           break; // red left pylon
     case 8:
-        BRR17();
+        BRR27();
         break;
     case 9:
         CenterRight();
