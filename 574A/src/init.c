@@ -53,25 +53,40 @@ void initialize() {
       lcdSetText(uart1, 2, "Tower");
       break;
     case 2:
-      lcdSetText(uart1, 2, "Test");
+      lcdSetText(uart1, 2, "DelayTower");
       break;
     case 3:
       lcdSetText(uart1, 2, "ReleasetheKraken");
       break;
     case 4:
-      lcdSetText(uart1, 2, "DriveTest");
+      lcdSetText(uart1, 2, "Ram");
       break;
     case 5:
-      lcdSetText(uart1, 2, "BRL10");
+      lcdSetText(uart1, 2, "Left10");
       break;
     case 6:
-      lcdSetText(uart1, 2, "BRR10");
+      lcdSetText(uart1, 2, "Right10");
       break;
     case 7:
-      lcdSetText(uart1, 2, "BRL20");
+      lcdSetText(uart1, 2, "Left20");
       break;
     case 8:
-      lcdSetText(uart1, 2, "BRR20");
+      lcdSetText(uart1, 2, "Right20");
+      break;
+    case 9:
+      lcdSetText(uart1, 2, "CenterRight");
+        break;
+    case 10:
+      lcdSetText(uart1, 2, "CenterLeft");
+          break;
+    case 11:
+      lcdSetText(uart1, 2, "PreloadBlue");
+            break;
+    case 12:
+      lcdSetText(uart1, 2, "PreloadRed");
+      break;
+      case 13:
+      lcdSetText(uart1, 2, "Skills");
       break;
       default:
       auton = 0;

@@ -6,11 +6,14 @@
 #include "gyro.h"
 
 static int barTarget;
+static int baseTarget;
 
 void barTask(){
   autobar(barTarget);
 }
-
+void baseTask(){
+  autobase(baseTarget);
+}
 void ReleasetheKraken(){
   barTarget=1600;//raises arm 65 degrees
   pylon(-127);//lowers MB lift
@@ -28,7 +31,7 @@ autodrive(-360*1.3);
 lift(127);
 delay(650);
 lift(0);
-barTarget=1950;
+barTarget=2200;
 delay(3000);
 delay(750);
 claw(-127);
@@ -37,46 +40,64 @@ claw(0);
 barTarget=1200;
 autodrive(360*.3);
 }
-void SWCB(){//test me next
-  claw(25);//claw hold
-  barTarget=1400;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
+void DelayTower(){//test me next
+  delay(6000);
+  e_reset();
+  claw(45);
+  autodrive(-360*1.3);
+  lift(127);
+  delay(650);
+  lift(0);
+  barTarget=1950;
+  delay(3000);
   delay(750);
-  pylon(-12);
-  e_reset();
-  autodrive(360*3.2);//drives foreward to MB
-  pylon(75);// picks up MB
-  delay(1500);
-  pylon(0);
-  barTarget= 600;//lowers arm
-  claw(-127);//deposits cone on MB
-  delay(250);
-  claw(-50);//keeps spinning to affirm cone release
-  barTarget=1400;// raises arm to clear cone
-  e_reset();
-  autodrive(-360*1.6);//drives backward to clear cones
+  claw(-127);
+  delay(1000);
   claw(0);
-  gyroturn(-165);//turns 165 (to account for drift) right towards 5pt zone
-  e_reset();
-  autodrive(360*1);//drives foreward to 5pt zone
-  pylon(-127);//lowers MB
-  delay(750);
-  pylon(0);
-  e_reset();
-  autodrive(-360*1);//reverses away from MB then stops
+  barTarget=1200;
+  autodrive(360*.3);
 }
 
 void  DriveTest(){
   autodrive(360*4.5);//Ram
 }
 void BRL12(){
+  claw(25);//claw hold
+  barTarget=1300;// raises arm to rough elevation to hold cone
+  pylon(-127);// lowers MB lift
+  delay(980);
+  pylon(-20);
+  drive(-40);
+  delay(200);
+  e_reset();
+  autodrive(360*2.9);//drives foreward to MB
+  pylon(75);// picks up MB
+  delay(1500);
+  pylon(0);
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(450);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;// raises arm to clear cone
+  e_reset();
+  autodrive(-360*2.3);//drives backward to clear cones
+  claw(0);
+  gyroturn(-190);//turns 170 (to account for drift) left towards 5pt zone
+  e_reset();
+  autodrive(360*.4);//drives foreward to 5pt zone
+  pylon(-127);//lowers MB
+  delay(1450);
+  pylon(0);
+  e_reset();
+  autodrive(-360*.6);//reverses away from MB then stops
 
 }
 void BRR12(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-60);// lowers MB lift
-  delay(600);
+  pylon(-127);// lowers MB lift
+  delay(980);
+  pylon(-20);
   drive(-40);
   delay(200);
   e_reset();
@@ -96,7 +117,7 @@ void BRR12(){
   e_reset();
   autodrive(360*.4);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
-  delay(1000);
+  delay(1450);
   pylon(0);
   e_reset();
   autodrive(-360*.6);//reverses away from MB then stops
@@ -104,14 +125,11 @@ void BRR12(){
 }
 
 void BRL17(){
-
-}
-
-void BRR17(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-60);// lowers MB lift
-  delay(600);
+  pylon(-127);// lowers MB lift
+  delay(980);
+  pylon(-20);
   drive(-40);
   delay(200);
   e_reset();
@@ -127,26 +145,73 @@ void BRR17(){
   e_reset();
   autodrive(-360*2.3);//drives backward to clear cones
   claw(0);
-  gyroturn(120);//turns 170 (to account for drift) left towards 5pt zone
+  gyroturn(-110);//turns 170 (to account for drift) left towards 5pt zone
   e_reset();
-  autodrive(360*.9);
-  gyroturn(80);
+  autodrive(360*1.3);
+  gyroturn(-70);
   e_reset();
-  autodrive(360*1.7);//drives foreward to 5pt zone
+  autodrive(360*1.2);//drives foreward to 5pt zone
   pylon(-127);//lowers MB
   delay(1000);
-  pylon(0);
+  pylon(40);
   e_reset();
-  autodrive(-360*1.7);//reverses away from MB then stops
+  autodrive(-360*1.3);//reverses away from MB then stops
 }
 
+void BRR17(){
+  claw(25);//claw hold
+  barTarget=1300;// raises arm to rough elevation to hold cone
+  pylon(-127);// lowers MB lift
+  delay(980);
+  pylon(-20);
+  drive(-40);
+  delay(200);
+  e_reset();
+  autodrive(360*2.9);//drives foreward to MB
+  pylon(75);// picks up MB
+  delay(1500);
+  pylon(0);
+  barTarget= 600;//lowers arm
+  claw(-127);//deposits cone on MB
+  delay(450);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;// raises arm to clear cone
+  e_reset();
+  autodrive(-360*2.3);//drives backward to clear cones
+  claw(0);
+  gyroturn(110);//turns 170 (to account for drift) left towards 5pt zone
+  e_reset();
+  autodrive(360*1.3);
+  gyroturn(70);
+  e_reset();
+  autodrive(360*1.2);//drives foreward to 5pt zone
+  pylon(-127);//lowers MB
+  delay(1000);
+  pylon(40);
+  e_reset();
+  autodrive(-360*1.3);//reverses away from MB then stops
+}
+void CenterRight(){
 
+}
+void CenterLeft(){
 
+}
+void PreloadRed(){
 
+}
+void PreloadBlue(){
+
+}
+void Skills(){
+
+}
 
 void autonomous() {
   barTarget = analogRead(ARMPOT);
   TaskHandle barHandle = taskRunLoop(barTask, 20);
+  baseTarget = analogRead(BASEPOT);
+  TaskHandle baseHandle = taskRunLoop(baseTask, 20);
 
   switch(auton){
     case 0:
@@ -155,7 +220,7 @@ void autonomous() {
         Tower();
           break;
     case 2:
-        SWCB();
+        DelayTower();
         break;
     case 3:
         ReleasetheKraken();//unfolds robot and moves forward a little bit
@@ -174,7 +239,21 @@ void autonomous() {
           break; // red left pylon
     case 8:
         BRR17();
+        break;
+    case 9:
+        CenterRight();
+        break;
+    case 10:
+        CenterLeft();
+        break;
+    case 11:
+        PreloadRed();
+        break;
+    case 12:
+        Skills();
+        break;
     }
 
   taskDelete(barHandle);
+  taskDelete(baseHandle);
 }
