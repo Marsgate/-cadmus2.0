@@ -9,6 +9,7 @@
 #include "arm.h"
 #include "sensorTargets.h"
 
+static bool firstStack = false; // used for driver skills
 
 void ptest(int port){
 	lcdPrint(uart1, 1, "%d", port);
@@ -43,7 +44,7 @@ void operatorControl() {
 	}
 
 	while (1) {
-		if(auton == -1) mode = 4; //skills
+		if(auton == -1 && isOnline() == true) mode = 4; //skills
 
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
@@ -90,13 +91,23 @@ void operatorControl() {
 					autonomous();
 					break;
 				case 4:
-					if(joystickGetDigital(1, 5, JOY_DOWN)){
-							armPID(AP_FRONT);
-							liftPID(LP_LOW);
-							clawGrip(-127);
+					if(firstStack == false){
+						if(joystickGetDigital(1, 5, JOY_DOWN)){
+								armPID(AP_FRONT);
+								liftPID(LP_LOW);
+								clawGrip(-127);
+								firstStack = true;
+						}else{
+							armPID(AP_AUTO);
+							clawGrip(127);
+						}
 					}else{
-						clawGrip(127);
-						armPID(AP_AUTO);
+						if(joystickGetDigital(1, 6, JOY_DOWN)){
+							clawGrip(127);
+						}else{
+							clawGrip(-127);
+						}
+						autoStack();
 					}
 					scoopSkills();
 					tankSigLPC();

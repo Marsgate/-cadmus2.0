@@ -43,119 +43,123 @@ void pickUp(){
 void pylon5() {
 
   pickUp(); //drive to pylon
-  autoDrive(-500);
-  gyTurn(170);//face the zone
+  autoDrive(-700);
+  gyTurn(-180);//face the zone
   autoScoop(0);
 
   //reverse out of zone
-  autoDrive(-150);
+  autoDrive(-300);
 }
 
 
 // program 2 ===============================================================
 void pylon20(){
   pickUp(); //drive to pylon
-  autoDrive(-550);
-
-  gyTurn(45);//face the zone
-  autoDrive(-180);
-  gyTurn(135);
+  autoDrive(-1100);
+  gyTurn(-132);//face the zone
+  autoDrive(210);
+  gyTurn(-222);
 
   drive(-127);
-  delay(1000);
+  delay(650);
   drive(-60);
   scoop(-127); //drop pylon scoop
-  delay(1500);
+  delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-200);
+  autoDrive(-600);
+  gyTurn(-398);
+
 }
 
 void skills(){
   pylon20();
-
+  gyroReset(gyro);
   //RED 10 point /////////////////////////////////////////////////////
 
   //grab the first pylon
   autoScoop(0);
-  gyTurn(25);
   sonarDrive();
   autoScoop(1);
 
   //face zone
-  autoDrive(-800);
-  gyTurn(176);
+  autoDrive(-400);
+  gyroReset(gyro);
+  gyTurn(160);
 
   //manual drop
-  drive(60);
+  drive(-40);
   scoop(-127);
   delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-400);
+
+  autoDrive(-300);
 
 
   //BLUE 20 point /////////////////////////////////////////////////////
   // next pylon
-  autoScoop(0);
-  gyTurn(10);
+  gyroReset(gyro);
+  gyTurn(-156);
   autoScoop(0);
   sonarDrive();
   autoScoop(1);
 
   //turn parallel to zone
-  autoDrive(1200);
-  gyTurn(-80);
-  autoDrive(750);
+  autoDrive(650);
+  gyTurn(-272);
+  autoDrive(300);
 
   //align with zone
-  gyTurn(-18);
-  autoDrive(555); // drive in to the zone
-  drive(60);
-  delay(200);
+  gyTurn(-185);
+  autoDrive(500); // drive in to the zone
+  drive(-60);
 
   scoop(-127); //drop pylon scoop
   delay(1000);
+  autoDrive(-450);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-700);
+
 
 
 
   //BLUE 10 point /////////////////////////////////////////////////////
 
   // next pylon
+  gyroReset(gyro);
   autoScoop(0);
-  gyTurn(-185);
+  gyTurn(-157);
   sonarDrive();
   autoScoop(1);
 
   //face zone
-  autoDrive(-600);
-  gyTurn(-10);
-  autoDrive(320);
-
+  autoDrive(-400);
+  gyroReset(gyro);
+  gyTurn(150);
+  autoDrive(150);
   //manual drop
   scoop(-127);
   delay(1000);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-275);
+  autoDrive(-300);
 
 
-  //FINAL 10 /////////////////////////////////////////////////////////
-  autoScoop(0);
-  gyTurn(-195);
+  //10 /////////////////////////////////////////////////////////
+
+  gyroReset(gyro);
+  gyTurn(-160);
   autoScoop(0);
   sonarDrive();
-
+  autoScoop(1);
   //turn parallel to zone
-  gyTurn(-210);
-  autoDrive(1400);
+
+  autoDrive(900);
 
   //manual drop
   scoop(-127);
@@ -165,11 +169,34 @@ void skills(){
   //reverse out of zone
   autoDrive(-300);
 
+
+  //FINAL /////////////////////////////////////////////////////////
   //face next pylon
   autoScoop(0);
-  gyTurn(-45);
-  autoDrive(2000);
+  gyroReset(gyro);
+  gyTurn(80);
+  autoDrive(225);
+  gyTurn(118);
+  sonarDrive();
+  autoScoop(1);
 
+  //go score
+  autoDrive(-400);
+  gyTurn(270);
+  autoDrive(800);
+  gyTurn(350);
+  autoDrive(150);
+
+  //manual drop
+  scoop(-127);
+  delay(1000);
+  scoop(0);
+
+  //reverse out of zone
+  autoDrive(-150);
+  gyroReset(gyro);
+  gyTurn(100);
+  autoDrive(1000);
 }
 
 // testing PID ===============================================================
@@ -180,7 +207,6 @@ void driveTest(){
 }
 
 void ram(){
-  armTarget = 3000;
   autoDrive(5000);
 }
 
@@ -198,27 +224,6 @@ void tower(){
   delay(500);
   autoDrive(600);
   delay(500);
-
-/*  gyTurn(75);
-  delay(500);
-  armTarget = AP_BOT;
-  liftTarget = LP_BOT;
-  delay(500);
-  autoDrive(-340);
-  clawTarget = 127;
-  delay(500);
-  armTarget = AP_STACK + 100;
-  delay(250);
-  liftTarget = LP_LMID;
-  delay(500);
-  gyTurn(125);
-  autoDrive(-500);
-  drive(-60);
-  delay(500);
-  clawTarget = -127;
-  delay(500);
-  autoDrive(700);
-*/
 }
 
 // control center ===============================================================

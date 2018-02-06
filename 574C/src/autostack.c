@@ -25,10 +25,10 @@ void stack(int vel){
       liftPos = LP_LMID;
       break;
     case 2:
-      liftPos = LP_HMID;
-      break;
     case 3:
       liftPos = LP_HIGH;
+      if(analogRead(LIFTPOT) < LP_LMID) arm(0);
+      if(analogRead(ARMPOT) > AP_AS) liftPos = LP_LOW;
   }
   liftPID(liftPos); // sets the lift target for PID
 }
@@ -36,19 +36,23 @@ void stack(int vel){
 
 void retract(){
   if(analogRead(ARMPOT) < AP_BOT){
-    arm(-10); //hold arm down
+    arm(-15); //hold arm down
     lift(-127); // lower lift
-    if(analogRead(LIFTPOT) < LP_BOT) lift(-21); // stop the lift if its already down
+    if(analogRead(LIFTPOT) < LP_BOT) lift(-25);
   }else{
+    if(analogRead(ARMPOT) > AP_MID && stackHeight > 0) lift(127);
     gripSpeed = -127;
     claw(-127);
     if(stacking == false){ //if claw is open
       claw(0);
       arm(-127);
-      if(analogRead(ARMPOT) < AP_MID) arm(-20); // slow arm descent to prevent slamming
-    }else if(analogRead(CLAWPOT) > 1500) stacking = false; // don't tratract until claw is open
+      if(analogRead(ARMPOT) < AP_MID){
+        lift(-127); // lower lift
+        arm(0); // slow arm descent to prevent slamming
+      }
+    }else if(analogRead(CLAWPOT) > CP_OPEN) stacking = false; // don't tratract until claw is open
   }
-
+  lcdPrint(uart1, 1, "Stacking: %d", stacking);
 }
 
 void shSelector(){

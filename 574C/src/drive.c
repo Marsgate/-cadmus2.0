@@ -75,7 +75,7 @@ void autoDrive(int sp){
     if(dir == 1 && error < 0) break;
   }
   drive(brake);
-  delay(100);
+  delay(200);
   drive(0); // stop drive
 }
 

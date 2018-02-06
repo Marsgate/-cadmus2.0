@@ -52,6 +52,7 @@ void initialize() {
         case -1:
           lcdSetText(uart1, 1, "Skills");
           break;
+        case 0:
           lcdSetText(uart1, 1, "None");
           break;
         case 1:

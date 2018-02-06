@@ -33,6 +33,8 @@ void autoScoop(int target){
     while(analogRead(SCOOPPOT) > SP_BOT){
       delay(20); //delay to make room for the other tasks to run
     }
+    scoop(-127);
+    delay(250);
   }else{
     scoop(127);
     while(analogRead(SCOOPPOT) < SP_TOP){
