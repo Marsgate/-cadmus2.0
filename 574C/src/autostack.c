@@ -28,31 +28,23 @@ void stack(int vel){
     case 3:
       liftPos = LP_HIGH;
       if(analogRead(LIFTPOT) < LP_LMID) arm(0);
-      if(analogRead(ARMPOT) > AP_AS) liftPos = LP_LOW;
+      if(analogRead(ARMPOT) > AP_AS) liftPos = LP_LMID;
   }
   liftPID(liftPos); // sets the lift target for PID
 }
 
 
 void retract(){
-  if(analogRead(ARMPOT) < AP_BOT){
-    arm(-15); //hold arm down
-    lift(-127); // lower lift
-    if(analogRead(LIFTPOT) < LP_BOT) lift(-25);
-  }else{
-    if(analogRead(ARMPOT) > AP_MID && stackHeight > 0) lift(127);
-    gripSpeed = -127;
-    claw(-127);
-    if(stacking == false){ //if claw is open
-      claw(0);
-      arm(-127);
-      if(analogRead(ARMPOT) < AP_MID){
-        lift(-127); // lower lift
-        arm(0); // slow arm descent to prevent slamming
-      }
-    }else if(analogRead(CLAWPOT) > CP_OPEN) stacking = false; // don't tratract until claw is open
+  arm(-127);
+  if(analogRead(ARMPOT) > AP_MID && stackHeight > 0) lift(127);
+  if(analogRead(ARMPOT) < AP_MID){
+    liftPID(LP_LOW); // lower lift
+    arm(0); // slow arm descent to prevent slamming
+  }else claw(-127);
+  if(buttonGetState(JOY1_6U)){
+    lift(-127);
+    arm(-20);
   }
-  lcdPrint(uart1, 1, "Stacking: %d", stacking);
 }
 
 void shSelector(){
@@ -66,17 +58,6 @@ void shSelector(){
   }else if(joystickGetDigital(1, 7, JOY_UP)){
     stackHeight = 3; // high
   }
-
-  //alternate controller
-  if(joystickGetDigital(2, 7, JOY_LEFT)){
-    stackHeight = 0; // low
-  }else if(joystickGetDigital(2, 7, JOY_DOWN)){
-    stackHeight = 1; // low mid
-  }else if(joystickGetDigital(2, 7, JOY_RIGHT)){
-    stackHeight = 2; // high mid
-  }else if(joystickGetDigital(2, 7, JOY_UP)){
-    stackHeight = 3; // high
-  }
 }
 
 void autoStack(){
@@ -84,7 +65,7 @@ void autoStack(){
   arm(0);
   lift(0);
 
-  shSelector(); // find out current stack height from second controller
+  shSelector(); // find out current stack height
 
   if(joystickGetDigital(1, 5, JOY_DOWN)){
     stacking = true;

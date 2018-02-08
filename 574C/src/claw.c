@@ -1,5 +1,4 @@
-#include "ports.h"
-#include "API.h"
+#include "main.h"
 
 //claw grip definitions and variables
 static int thresh = 30;
@@ -25,6 +24,7 @@ void clawGrip(int speed){
 }
 
 void clawOp(){
+  /*
   //two state claw grip
   if(joystickGetDigital(1, 6, JOY_UP)){
     gripSpeed = 127;
@@ -34,4 +34,12 @@ void clawOp(){
     sp = -1000;
   }
   clawGrip(gripSpeed);
+  */
+  if(buttonGetState(JOY1_6U)){
+    claw(127);
+  }else if(buttonGetState(JOY1_6D)){
+    claw(-127);
+  }else{
+    claw(0);
+  }
 }

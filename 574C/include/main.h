@@ -115,6 +115,7 @@ void initialize();
 void operatorControl();
 
 #include "buttons.h"
+#include "ports.h"
 
 Encoder driveEncLeft;
 Encoder driveEncRight;
