@@ -33,7 +33,6 @@ delay(650);
 lift(0);
 barTarget=2200;
 delay(3000);
-delay(750);
 claw(-127);
 delay(1000);
 claw(0);
@@ -48,9 +47,8 @@ void DelayTower(){//test me next
   lift(127);
   delay(650);
   lift(0);
-  barTarget=1950;
+  barTarget=2200;
   delay(3000);
-  delay(750);
   claw(-127);
   delay(1000);
   claw(0);
@@ -62,158 +60,96 @@ void  DriveTest(){
   autodrive(360*4.5);//Ram
 }
 void BRL17(){
-  claw(25);//claw hold
-  barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
-  delay(980);
-  pylon(-20);
-  drive(-40);
-  delay(200);
-  e_reset();
-  autodrive(360*2.9);//drives foreward to MB
-  pylon(75);// picks up MB
-  delay(1500);
-  pylon(0);
-  barTarget= 600;//lowers arm
-  claw(-127);//deposits cone on MB
-  delay(450);
-  claw(-50);//keeps spinning to affirm cone release
-  barTarget=1300;// raises arm to clear cone
-  e_reset();
-  autodrive(-360*2.3);//drives backward to clear cones
-  claw(0);
-  gyroturn(-190);//turns 170 (to account for drift) left towards 5pt zone
-  e_reset();
-  autodrive(360*.4);//drives foreward to 5pt zone
-  pylon(-127);//lowers MB
-  delay(1450);
-  pylon(0);
-  e_reset();
-  autodrive(-360*.6);//reverses away from MB then stops
 
 }
 void BRR17(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
-  delay(980);
-  pylon(-20);
-  drive(-40);
-  delay(200);
+  baseTarget=2000;
   e_reset();
   autodrive(360*2.9);//drives foreward to MB
-  pylon(75);// picks up MB
-  delay(1500);
-  pylon(0);
+  baseTarget=180;
+  delay(1000);
   barTarget= 600;//lowers arm
+  claw(0);
+  e_reset();
+  autodrive(-360*2.3);//drives backward to clear cones
+  gyroturn(190);//turns 170 (to account for drift) left towards 5pt zone
   claw(-127);//deposits cone on MB
   delay(450);
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;// raises arm to clear cone
+  delay(500);
+  baseTarget=1900;
+  delay(850);
   e_reset();
-  autodrive(-360*2.3);//drives backward to clear cones
-  claw(0);
-  gyroturn(190);//turns 170 (to account for drift) left towards 5pt zone
-  e_reset();
-  autodrive(360*.4);//drives foreward to 5pt zone
-  pylon(-127);//lowers MB
-  delay(1450);
-  pylon(0);
-  e_reset();
-  autodrive(-360*.6);//reverses away from MB then stops
+  autodrive(-360*1.3);//reverses away from MB then stops
 
 }
 
 void BRL27(){
-  claw(25);//claw hold
-  barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
-  delay(980);
-  pylon(-20);
-  drive(-40);
-  delay(200);
-  e_reset();
-  autodrive(360*2.9);//drives foreward to MB
-  pylon(75);// picks up MB
-  delay(1500);
-  pylon(0);
-  barTarget= 600;//lowers arm
-  claw(-127);//deposits cone on MB
-  delay(450);
-  claw(-50);//keeps spinning to affirm cone release
-  barTarget=1300;// raises arm to clear cone
-  e_reset();
-  autodrive(-360*2.3);//drives backward to clear cones
-  claw(0);
-  gyroturn(-110);//turns 170 (to account for drift) left towards 5pt zone
-  e_reset();
-  autodrive(360*1.3);
-  gyroturn(-70);
-  e_reset();
-  autodrive(360*1.2);//drives foreward to 5pt zone
-  pylon(-127);//lowers MB
-  delay(1000);
-  pylon(40);
-  e_reset();
-  autodrive(-360*1.3);//reverses away from MB then stops
+
 }
 
 void BRR27(){
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  pylon(-127);// lowers MB lift
-  delay(980);
-  pylon(-20);
-  drive(-40);
-  delay(200);
+  baseTarget=2000;
   e_reset();
   autodrive(360*2.9);//drives foreward to MB
-  pylon(75);// picks up MB
-  delay(1500);
-  pylon(0);
+  baseTarget=180;
+  delay(1000);
   barTarget= 600;//lowers arm
-  claw(-127);//deposits cone on MB
-  delay(450);
-  claw(-50);//keeps spinning to affirm cone release
-  barTarget=1300;// raises arm to clear cone
+  claw(0);
   e_reset();
   autodrive(-360*2.3);//drives backward to clear cones
-  claw(0);
   gyroturn(110);//turns 170 (to account for drift) left towards 5pt zone
   e_reset();
   autodrive(360*1.3);
   gyroturn(70);
   e_reset();
-  autodrive(360*1.2);//drives foreward to 5pt zone
-  pylon(-127);//lowers MB
-  delay(1000);
-  pylon(40);
+  autodrive(360*1.3);//drives foreward to 5pt zone
+  claw(-127);//deposits cone on MB
+  delay(450);
+  claw(-50);//keeps spinning to affirm cone release
+  barTarget=1300;// raises arm to clear cone
+  delay(500);
+  baseTarget=1900;
+  delay(850);
   e_reset();
   autodrive(-360*1.3);//reverses away from MB then stops
 }
 void CenterRight(){
 claw(25);
 barTarget=1300;
+e_reset();
 autodrive(360*1.3);
-gyroturn(55);
-autodrive(360*1.6);
-gyroturn(-90);
-baseTarget=2000;
-autodrive(360*1.6);
-gyroturn(-25);
-autodrive(360);
-baseTarget=250;
-barTarget=600;
-gyroturn(-65);
+gyroturn(-55);
+e_reset();
 autodrive(360*1.6);
 gyroturn(90);
+baseTarget=2000;
+e_reset();
 autodrive(360*1.6);
-gyroturn(-59);
+gyroturn(25);
+e_reset();
+autodrive(360);
+baseTarget=180;
+barTarget=600;
+gyroturn(65);
+e_reset();
+autodrive(360*1.6);
+gyroturn(-90);
+e_reset();
+autodrive(360*1.6);
+gyroturn(59);
 claw(-127);
 delay(100);
 barTarget=1300;
+e_reset();
 autodrive(360*1.4);
 baseTarget=2000;
+e_reset();
 autodrive(-360);
 
 }
@@ -224,11 +160,9 @@ void PreloadRed(){//test
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
   baseTarget=2000;
-  drive(-40);
-  delay(200);
   e_reset();
   autodrive(360*2.9);//drives foreward to MB
-  baseTarget=250;
+  baseTarget=180;
   barTarget= 600;//lowers arm
   claw(-127);//deposits cone on MB
   delay(250);
@@ -253,8 +187,11 @@ void PreloadRed(){//test
   delay(250);
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;
+  claw(0);
+  e_reset();
   autodrive(360*1.4);
-  baseTarget=1300;
+  baseTarget=2000;
+  e_reset();
   autodrive(-360*.6);
 }
 void PreloadBlue(){

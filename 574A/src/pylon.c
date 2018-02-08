@@ -15,5 +15,5 @@ void autobase(int sp){
   int sv = analogRead(BASEPOT);
   int error = sp-sv;
   int speed = error*kp;
-  pylon(speed);
+  pylon(-speed);
 }
