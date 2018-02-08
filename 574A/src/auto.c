@@ -20,11 +20,8 @@ void ReleasetheKraken(){
   delay(750);
   pylon(0);
   autodrive(360*1.3);//drives forward
-
 }
-
 void Tower(){//test me first!!
-//delay(2700);
 e_reset();
 claw(45);
 autodrive(-360*1.3);
@@ -40,7 +37,8 @@ barTarget=1200;
 autodrive(360*.3);
 }
 void DelayTower(){//test me next
-  delay(6000);
+  delay(2700);
+  //delay(3300);
   e_reset();
   claw(45);
   autodrive(-360*1.3);
@@ -55,7 +53,6 @@ void DelayTower(){//test me next
   barTarget=1200;
   autodrive(360*.3);
 }
-
 void  DriveTest(){
   autodrive(360*4.5);//Ram
 }
@@ -84,7 +81,6 @@ void BRR17(){
   delay(850);
   e_reset();
   autodrive(-360*1.3);//reverses away from MB then stops
-
 }
 
 void BRL27(){
@@ -198,6 +194,79 @@ void PreloadBlue(){
 
 }
 void Skills(){
+claw(25);
+barTarget=1300;
+e_reset();
+baseTarget=2000;
+autodrive(360*1.5);
+baseTarget=180;
+delay(1000);
+barTarget=600;
+gyroturn(180);
+e_reset();
+autodrive(360*.8);
+gyroturn(80);
+e_reset();
+autodrive(360*1.2);
+gyroturn(-90);
+claw(-127);
+delay(250);
+barTarget=1300;
+claw(0);
+e_reset();
+autodrive(360*1.4);
+baseTarget=1900;
+delay(750);
+e_reset();
+autodrive(-360*1.4);
+baseTarget=180;
+gyroturn(-90);
+e_reset();
+autodrive(360*1.1);
+gyroturn(-90);
+e_reset();
+baseTarget=2000;
+autodrive(360*1.9);
+baseTarget=180;
+e_reset();
+autodrive(360*1.4);
+gyroturn(-90);
+e_reset();
+autodrive(360*1.1);
+gyroturn(90);
+e_reset();
+autodrive(360*1.4);
+baseTarget=1900;
+delay(750);
+e_reset();
+autodrive(-360*1.4);
+baseTarget=180;
+gyroturn(-90);
+e_reset();
+autodrive(360*1.1);
+gyroturn(-90);
+baseTarget=2000;
+e_reset();
+autodrive(360*1.5);
+baseTarget=180;
+gyroturn(180);
+e_reset();
+autodrive(360*1.9);
+baseTarget=1950;
+e_reset();
+autodrive(-360*.8);
+baseTarget=800;
+gyroturn(-180);
+e_reset();
+baseTarget=2000;
+autodrive(360*1.9);
+baseTarget=180;
+e_reset();
+autodrive(360*1.5);
+baseTarget=1950;
+e_reset();
+autodrive(-360*.8);
+
 
 }
 
