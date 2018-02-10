@@ -26,10 +26,12 @@ void operatorControl();
 
 
 //ports
+
 #define DRIVE1  3//front left
 #define DRIVE2  6//front right
 #define DRIVE3  5//back left
 #define DRIVE4  7//back right
+
 
 #define CHAIN1 4//chain left
 #define CHAIN2 8//chain right
