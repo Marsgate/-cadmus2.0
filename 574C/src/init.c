@@ -12,7 +12,7 @@ void initialize() {
   setTeamName("574C Centurion");
 
   //setup sensors
-  driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, true);
+  driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
   gyro = gyroInit(GYRO, 0);
   gyroReset(gyro);
@@ -24,6 +24,7 @@ void initialize() {
   lcdSetBacklight(uart1, true);
 
   buttonInit();
+
 
   //expander light check
 	while(analogRead(EXPANDER) < 500){
@@ -42,7 +43,7 @@ void initialize() {
       if(buttonIsNewPress(LCD_CENT)){
         selected++;
       }else if(buttonIsNewPress(LCD_LEFT)){
-        if(auton > -2)auton--;
+        if(auton > -1)auton--;
       }else if(buttonIsNewPress(LCD_RIGHT)){
         if(auton < 3)auton++;
       }

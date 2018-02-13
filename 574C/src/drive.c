@@ -1,5 +1,4 @@
 #include "main.h"
-#include "ports.h"
 #include "math.h"
 
 //generic drive functions =============================================

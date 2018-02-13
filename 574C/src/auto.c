@@ -25,7 +25,6 @@ void clawTask(){
 
 //drive to pylon program =======================================
 void pickUp(){
-  armTarget = 4095;
   clawTarget = 127; // close claw
   armTarget = AP_AUTO; // raise arm
   liftTarget = LP_BOT;
@@ -33,9 +32,9 @@ void pickUp(){
   sonarDrive(); //go get pylon
   autoScoop(1); // bring scoop up
   armTarget = AP_FRONT; // drop arm to score cone
-  while(analogRead(ARMPOT) < AP_AUTO) delay(20);
+  delay(400);
   clawTarget = -127; // open claw
-  while(analogRead(CLAWPOT) < 1500) delay(20);
+  while(analogRead(CLAWPOT) < CP_OPEN) delay(20);
   armTarget = AP_AUTO;
 }
 

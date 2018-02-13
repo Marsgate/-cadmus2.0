@@ -116,6 +116,9 @@ void operatorControl();
 
 #include "buttons.h"
 #include "ports.h"
+#include "mtrmgr.h"
+#include "drive.h"
+#include "sensorTargets.h"
 
 Encoder driveEncLeft;
 Encoder driveEncRight;

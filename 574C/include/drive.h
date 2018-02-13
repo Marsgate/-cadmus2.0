@@ -9,5 +9,6 @@ void sonarDrive();
 void leftD(int vel);
 void rightD(int vel);
 void drive(int vel);
+void driveInit();
 
 #endif

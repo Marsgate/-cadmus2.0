@@ -1,25 +1,15 @@
-#include "ports.h"
-#include "API.h"
+#include "main.h"
 #include "sensorTargets.h"
 
 void scoop(int vel){
-  motorSet(SCOOP, -vel);
+  motorSet(SCOOP1, -vel);
+  motorSet(SCOOP2, -vel);
 }
 
 void scoopOp(){
-  if(joystickGetDigital(1, 8, JOY_UP)){
+  if(buttonGetState(JOY1_5U)){
     scoop(127);
-  }else if(joystickGetDigital(1, 8, JOY_DOWN)){
-    scoop(-70);
-  }else{
-    scoop(0);
-  }
-}
-
-void scoopSkills(){
-  if(joystickGetDigital(1, 5, JOY_UP)){
-    scoop(127);
-  }else if(joystickGetDigital(1, 6, JOY_UP)){
+  }else if(buttonGetState(JOY1_6U)){
     scoop(-70);
   }else{
     scoop(0);

@@ -10,26 +10,20 @@
 #include "sensorTargets.h"
 
 static bool firstStack = false; // used for driver skills
-
-void ptest(int port){
-	lcdPrint(uart1, 1, "%d", port);
-	motorSet(port, 127);
-	delay(1000);
-	motorSet(port, -127);
-	delay(1000);
-	motorStop(port);
-	delay(1000);
-}
-
-void gyTest(){
-	if(powerLevelMain() < 100){
-		gyroShutdown(gyro);
+void portTest(){
+	int i = 0;
+	while(1){
+		lcdPrint(uart1, 1, "Port: %d", i);
+		motorStopAll();
+		if(buttonGetState(LCD_CENT)) motorSet(i, 127);
+		if(buttonIsNewPress(LCD_RIGHT)) i++;
+		if(buttonIsNewPress(LCD_LEFT)) i--;
+		delay(20);
 	}
 }
 
 void operatorControl() {
-
-	TaskHandle gyHandle = taskRunLoop(gyTest, 20);
+	//portTest();
 
 	// only run debug in non competition
 	lcdClear(uart1);
@@ -80,11 +74,6 @@ void operatorControl() {
 					autoStack();
 					break;
 				case 2:
-					armOp();
-					liftPID(LP_LMID + 300);
-					tankSigLPC();
-					clawOp();
-					scoopOp();
 					break;
 				case 3:
 					while(joystickGetDigital(1, 8, JOY_RIGHT) == false);
@@ -92,24 +81,23 @@ void operatorControl() {
 					break;
 				case 4:
 					if(firstStack == false){
-						if(joystickGetDigital(1, 5, JOY_DOWN)){
-								armPID(AP_FRONT);
-								liftPID(LP_LOW);
-								clawGrip(-127);
-								firstStack = true;
-						}else{
-							armPID(AP_AUTO);
-							clawGrip(127);
+						static bool bd = false;
+						armPID(AP_AUTO);
+						lift(-15);
+						clawGrip(127);
+						if(buttonGetState(JOY1_5D)){
+							liftPID(LP_LOW);
+							armPID(AP_FRONT);
+							bd = true;
 						}
+						if(bd == true && buttonGetState(JOY1_5D) == false) firstStack = true;
+
 					}else{
-						if(joystickGetDigital(1, 6, JOY_DOWN)){
-							clawGrip(127);
-						}else{
-							clawGrip(-127);
-						}
+						if(buttonGetState(JOY1_8L)) firstStack = false;
 						autoStack();
+						clawOp();
 					}
-					scoopSkills();
+					scoopOp();
 					tankSigLPC();
 					break;
 			}
@@ -130,7 +118,7 @@ void operatorControl() {
 		}
 
 		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		//lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
+		lcdPrint(uart1, 1, "AP: %d", analogRead(ARMPOT));
 		lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
@@ -143,7 +131,6 @@ void operatorControl() {
 
 		delay(20);
 	}
-	taskDelete(gyHandle); // litterally just deals with a warning message
 }
 
 /* precautionary measures

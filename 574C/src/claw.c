@@ -1,9 +1,9 @@
 #include "main.h"
 
 //claw grip definitions and variables
-static int thresh = 30;
+static int thresh = 20;
 static int sp = -1000; // set to low number to trigger a reset
-int gripSpeed = 0;
+int gripSpeed = -127;
 
 void claw(int vel){
   motorSet(CLAW, vel);
@@ -24,22 +24,13 @@ void clawGrip(int speed){
 }
 
 void clawOp(){
-  /*
-  //two state claw grip
-  if(joystickGetDigital(1, 6, JOY_UP)){
-    gripSpeed = 127;
-    sp = -1000;
-  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    gripSpeed = -127;
-    sp = -1000;
+  if(buttonIsNewPress(JOY1_6D)){
+    if(gripSpeed < 0){
+      gripSpeed = 127;
+    }else{
+      gripSpeed = -127;
+    }
+    sp = -1000; // reset
   }
   clawGrip(gripSpeed);
-  */
-  if(buttonGetState(JOY1_6U)){
-    claw(127);
-  }else if(buttonGetState(JOY1_6D)){
-    claw(-127);
-  }else{
-    claw(0);
-  }
 }

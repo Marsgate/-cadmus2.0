@@ -5,12 +5,12 @@
 //motors
 #define DRIVEL1 1
 #define DRIVER1 2
-#define SCOOP 3
-#define LIFT1 4
+#define LIFT 3
+#define SCOOP1 4
 #define ARM1 5
 #define CLAW 6
 #define ARM2 7
-#define LIFT2 8
+#define SCOOP2 8
 #define DRIVEL2 9
 #define DRIVER2 10
 

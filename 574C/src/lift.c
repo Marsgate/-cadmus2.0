@@ -1,23 +1,20 @@
-#include "API.h"
-#include "ports.h"
+#include "main.h"
 
 //PID variables
 static int integral = 0;
 static int prevErr = 0;
-static int liftOpTarget = 700;
 
 void lift(int vel){
-  motorSet(LIFT1, vel);
-  motorSet(LIFT2, vel);
+  motorSet(LIFT, vel);
 }
 
 //lift PID control
 void liftPID(int sp){
 
-  double kp = .22;
+  double kp = .1;
   double ki = .000;
-  double kd = .16;
-  double kc = 20;
+  double kd = .1;
+  double kc = 0;
 
   // define local  variables
   int speed; // speed
@@ -35,16 +32,4 @@ void liftPID(int sp){
   speed = error*kp + integral*ki + derivative*kd + kc; // add the values to get the motor speed
 
   lift(speed); // set the lift to the speed
-}
-
-void liftOp(){
-  if (joystickGetDigital(1,5,JOY_UP)){
-    lift(127);
-    liftOpTarget = analogRead(LIFTPOT);
-  }else if (joystickGetDigital(1, 5, JOY_DOWN)){
-    lift(-127);
-    liftOpTarget = analogRead(LIFTPOT);
-  }else{
-    liftPID(liftOpTarget);
-  }
 }

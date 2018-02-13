@@ -14,9 +14,10 @@ void arm(int vel){
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
   //define coefficients
-  double kp = 0.17;
-  double ki = 0.0005;
-  double kd = 0.4;
+  double kp = 0.1;
+  double ki = 0.00;
+  double kd = 0.0;
+  double kc = 0;
 
   // define local variables
   int speed; // speed
@@ -29,20 +30,7 @@ void armPID(int sp){
   derivative = error - prevErr; // calculate the derivative
   prevErr = error; // set current error to equal previous error
 
-  speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
+  speed = error*kp + integral*ki + derivative*kd + kc; // add the values to get the motor speed
 
   arm(speed); // set the lift to the speed
-}
-
-void armOp(){
-  static int at;
-  if (joystickGetDigital(1,5,JOY_UP)){
-    arm(127);
-    at = analogRead(ARMPOT); // arm target
-  }else if (joystickGetDigital(1, 5, JOY_DOWN)){
-    arm(-127);
-    at = analogRead(ARMPOT); // arm target
-  }else{
-    armPID(at);
-  }
 }
