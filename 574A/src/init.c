@@ -80,10 +80,10 @@ void initialize() {
       lcdSetText(uart1, 2, "CenterLeft");
           break;
     case 11:
-      lcdSetText(uart1, 2, "PreloadBlue");
+      lcdSetText(uart1, 2, "PreloadRed");
             break;
     case 12:
-      lcdSetText(uart1, 2, "PreloadRed");
+      lcdSetText(uart1, 2, "PreloadBlue");
       break;
       case 13:
       lcdSetText(uart1, 2, "Skills");

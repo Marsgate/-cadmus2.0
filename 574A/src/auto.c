@@ -115,12 +115,12 @@ void BRL27(){//test
   claw(0);
   e_reset();
   autodrive(-360*2.3);//drives backward to clear cones
-  gyroturn(-110);//110 degree left turn
+  gyroturn(-130);//110 degree left turn
   e_reset();
-  autodrive(360*1.3);
-  gyroturn(-70);//70 degree right turn
+  autodrive(360*.85);
+  gyroturn(-65);//70 degree right turn
   e_reset();
-  autodrive(360*1.3);//drives foreward
+  autodrive(360*1.4);//drives foreward
   claw(-127);//deposits cone on MB
   delay(450);
   claw(-50);//keeps spinning to affirm cone release
@@ -129,7 +129,7 @@ void BRL27(){//test
   baseTarget=1900;//drop off MB
   delay(850);
   e_reset();
-  autodrive(-360*1.3);//reverses away from MB then stops
+  autodrive(-360*1);//reverses away from MB then stops
 }
 
 void BRR27(){
@@ -215,7 +215,7 @@ void PreloadRed(){//test
   claw(127);
   delay(250);
   claw(20);
-  barTarget=700;//drop off cone 1
+  barTarget=700;//drop off preload cone 1
   claw(-127);//deposits cone on MB
   delay(250);
   claw(-25);//keeps spinning to affirm cone release
@@ -223,7 +223,7 @@ void PreloadRed(){//test
   claw(127);
   delay(250);
   claw(20);
-  barTarget=800;//drops off cone 2
+  barTarget=800;//drops off preload cone 2
   gyroturn(-120);//120 degree turn right
   e_reset();
   autodrive(360*1.4);
@@ -242,98 +242,77 @@ void PreloadBlue(){
 
 }
 void Skills(){
-claw(25);//claw hold
-barTarget=1300;//sets arm height perfect for cone drop
-baseTarget=2000;//base lift down
-e_reset();
-autodrive(360*2.9);//drive forward to MB1
-baseTarget=180;//picks up MB1
-delay(1000);//waits till picked up
-barTarget=600;//sets cone down on top of MB1
-e_reset();
-autodrive(-360*2.3);//reverses towards goals
-gyroturn(-165);//145 degree turn right
-e_reset();
-autodrive(360*1.1);//drives the stright in front of goal
-gyroturn(-90);//90 degree right turn
-claw(-127);//release cone
-delay(250);
-barTarget=1300;//arm raise to hold height
-claw(0);//claw stops
-e_reset();
-autodrive(360*1.4);//drives to 20pt zone
-baseTarget=1900;//lowers base lift to drop of MB1 with cone
-delay(850);
-e_reset();
-autodrive(-360*1.4);//reverse out of zones
-baseTarget=800;//raise lift
-gyroturn(90);//90 degree turn left
-e_reset();
-autodrive(360*1.2);//drives past stationary
+BRL27();
+claw(0);
 gyroturn(-90);//90 degree turn right
+e_reset();
+autodrive(360*.7);//drives past stationary
+gyroturn(-54);//90 degree turn right
 baseTarget=2000;//base lift down
 e_reset();
-autodrive(360*1.4);//drives into MB2
+autodrive(360*.8);//drives into MB2
 baseTarget=180;//picks up MB2
 delay(500);
-gyroturn(180);//180 degree turn left
+gyroturn(164);//180 degree turn left
 e_reset();
-autodrive(360*1.6);//drives to 10 pt
+autodrive(360*1.55);//drives to 10 pt
 baseTarget=1950;//drops off MB2 on the right side
 delay(850);
 e_reset();
 autodrive(-360*.4);//reverse away
-baseTarget=800;//base lift up
-gyroturn(-180);//180 degree turn right
+baseTarget=800;
+gyroturn(-156);//180 degree turn right
 e_reset();
 baseTarget=2000;//base lift down
-autodrive(360*1.9);//drive to MB3
+delay(500);
+autodrive(360*2.15);//drive to MB3
 baseTarget=180;//pickup MB3
 delay(500);
 e_reset();
-autodrive(360*1.4);//Drive towards opp zone
-gyroturn(-90);//90 degree right turn
+autodrive(360*1.85);//Drive towards opp zone
+gyroturn(-80);//90 degree right turn
 e_reset();
-autodrive(360*1.1);//drives in front of zone
-gyroturn(90);//90 degree left turn, should be centered
+autodrive(360*.82);//drives in front of zone
+gyroturn(85);//90 degree left turn, should be centered
 e_reset();
 autodrive(360*1.4);//drives into 10pt to drop 20pt
-baseTarget=1900;//drops off MB3
+baseTarget=1800;//drops off MB3
 delay(850);
 e_reset();
-autodrive(-360*1.4);//reverses out
+autodrive(-360*1);//reverses out
 baseTarget=800;//raises lift
-gyroturn(-90);//90 degree right turn
+gyroturn(-80);//90 degree right turn
 e_reset();
-autodrive(360*1.1);//drives forward past stationary
-gyroturn(-90);//90 degree right turn
+autodrive(360*.7);//drives forward past stationary
+gyroturn(-60);//90 degree right turn
 baseTarget=2000;//base lift down
+delay(500);
 e_reset();
-autodrive(360*1.5);//drives into MB4
+autodrive(360*.8);//drives into MB4
 baseTarget=180;//picks up MB4
 delay(500);
-gyroturn(180);//180 degree left turn
+gyroturn(175);//180 degree left turn
 e_reset();
-autodrive(360*1.9);//drive to 10pt
+autodrive(360*2);//drive to 10pt
 baseTarget=1950;//dropoff MB4 in 10pt
 delay(850);
 e_reset();
 autodrive(-360*.8);//reverse out of zone
 baseTarget=800;//base lift up
-gyroturn(-180);//180 degree turn right
+gyroturn(-167);//180 degree turn right
 e_reset();
 baseTarget=2000;//base lift down
 autodrive(360*1.9);//drive into MB5
 baseTarget=180;//picks up MB5
 delay(500);
 e_reset();
-autodrive(360*.8);//drives forward
-gyroturn(-90);//90 degree right turn
+autodrive(360*2.5);//drives forward
+gyroturn(-95);//90 degree right turn
 e_reset();
 autodrive(360*1.3);//drives in front of goals
 gyroturn(90);//90 degree left turn
 e_reset();
-autodrive(360*.4);//drives to 10pt
+autodrive(360*.6);//drives to 10pt
 baseTarget=1950;//drops off into 10 pt
 delay(850);
 e_reset();
@@ -342,7 +321,7 @@ baseTarget=800;//raise lift
 gyroturn(90);//90 degree left turn
 e_reset();
 autodrive(360*.8);//drive forward
-gyroturn(35);//35 degree left turn
+gyroturn(37);//35 degree left turn
 e_reset();
 baseTarget=2000;//base lift down
 autodrive(360*2.9);//drive forward to MB6
@@ -404,6 +383,9 @@ void autonomous() {
         PreloadRed();
         break;
     case 12:
+      PreloadBlue();
+        break;
+    case 13:
         Skills();
         break;
     }
