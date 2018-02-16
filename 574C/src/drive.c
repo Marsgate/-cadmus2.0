@@ -92,7 +92,10 @@ void sonarDrive(){
 
 void gyTurn(int sp){
   if(autoRight == true) sp = -sp; // inverted turn speed for right auton
-  double kp = 2;
+  double kp = 3.5;
+  if(abs(sp - gyroGet(gyro)) > 110) kp = 1.8;
+  if(abs(sp - gyroGet(gyro)) > 150) kp = 1.2;
+  if(abs(sp - gyroGet(gyro)) > 180) kp = .8;
   int kc = 60;
   int brake = 60;
 

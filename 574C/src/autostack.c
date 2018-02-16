@@ -24,28 +24,28 @@ void stack(int vel){
       liftPos = LP_HMID;
       break;
     case 3:
+      if(analogRead(LIFTPOT) < LP_HMID) arm(0);
       liftPos = LP_HIGH;
-      arm(80);
   }
   liftPID(liftPos); // sets the lift target for PID
 
   if(analogRead(ARMPOT) > AP_STACK) arm(0);
-  if(analogRead(ARMPOT) < AP_MID && stackHeight < 3) liftPID(liftPos + 200);
   if(analogRead(ARMPOT) > AP_AS) lift(0);
-  if(analogRead(LIFTPOT) < LP_LMID && stackHeight > 1) arm(0);
 }
 
 
 void retract(){
   arm(-127);
-  lift(-10);
+  lift(-21);
   if(analogRead(ARMPOT) < AP_MID){
-    if(analogRead(LIFTPOT) > LP_BOT) lift(-127); // lower lift
+    if(analogRead(LIFTPOT) > LP_BOT) liftPID(LP_BOT); // lower lift
     arm(-10);
   }else{
     gripSpeed = -127;
-    if(analogRead(CLAWPOT) > CP_OPEN) arm(0);
-    if(analogRead(LIFTPOT) < LP_HMID && stackHeight > 0) arm(0);
+    if(analogRead(CLAWPOT) > CP_OPEN){
+      arm(0);
+      gripSpeed = -10000;
+    }
     if(stackHeight > 0) lift(127);
   }
 }

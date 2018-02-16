@@ -1,9 +1,9 @@
 //lift potentiometer stack target constants
-#define LP_BOT 1800
-#define LP_LOW 2100
-#define LP_LMID 2900
-#define LP_HMID 3600
-#define LP_HIGH 3200
+#define LP_BOT 1600
+#define LP_LOW 1700
+#define LP_LMID 2700
+#define LP_HMID 2900
+#define LP_HIGH 3550
 #define LP_ML 3200
 
 //arm pot
@@ -19,4 +19,4 @@
 #define SP_TOP 3500
 
 //claw target
-#define CP_OPEN 2050
+#define CP_OPEN 2100

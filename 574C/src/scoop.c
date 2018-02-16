@@ -33,3 +33,9 @@ void autoScoop(int target){
   }
   scoop(0);
 }
+
+void manualDrop(){
+  scoop(-127);
+  delay(1000);
+  scoop(0);
+}

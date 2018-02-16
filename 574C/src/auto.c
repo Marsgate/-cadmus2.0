@@ -31,11 +31,14 @@ void pickUp(){
   autoScoop(0); // deploy scoop
   sonarDrive(); //go get pylon
   autoScoop(1); // bring scoop up
+  liftTarget = LP_LOW;
   armTarget = AP_FRONT; // drop arm to score cone
-  delay(400);
+  delay(300);
   clawTarget = -127; // open claw
-  while(analogRead(CLAWPOT) < CP_OPEN) delay(20);
+  while(analogRead(CLAWPOT) > CP_OPEN) delay(20);
+  delay(200);
   armTarget = AP_AUTO;
+  liftTarget = LP_BOT;
 }
 
 // program 1 ===============================================================
@@ -54,6 +57,7 @@ void pylon5() {
 // program 2 ===============================================================
 void pylon20(){
   pickUp(); //drive to pylon
+
   autoDrive(-1100);
   gyTurn(-132);//face the zone
   autoDrive(210);
@@ -62,7 +66,7 @@ void pylon20(){
   drive(-127);
   delay(650);
   drive(-60);
-  scoop(-127); //drop pylon scoop
+  scoop(-127);
   delay(1000);
   scoop(0);
 
@@ -73,61 +77,79 @@ void pylon20(){
 }
 
 void skills(){
+  //1 /////////////////////////////////////////////////////
   pylon20();
   gyroReset(gyro);
-  //RED 10 point /////////////////////////////////////////////////////
 
-  //grab the first pylon
+
+  //2 /////////////////////////////////////////////////////
+  //grab
   autoScoop(0);
   sonarDrive();
   autoScoop(1);
-
-  //face zone
+  //alignment
   autoDrive(-400);
   gyroReset(gyro);
   gyTurn(160);
-
-  //manual drop
+  //drop
   drive(-40);
-  scoop(-127);
-  delay(1000);
-  scoop(0);
-
-  //reverse out of zone
-
-  autoDrive(-300);
-
-
-  //BLUE 20 point /////////////////////////////////////////////////////
-  // next pylon
+  manualDrop();
   gyroReset(gyro);
-  gyTurn(-156);
+  autoDrive(-300); //reverse
+
+
+  //3 /////////////////////////////////////////////////////
+  //grab
+  gyTurn(-163);
+  autoScoop(0);
+  scoop(-20);
+  sonarDrive();
+  autoScoop(1);
+  //alignment
+  autoDrive(1000);
+  //drop
+  manualDrop();
+  gyroReset(gyro);
+  autoDrive(-150); //reverse
+
+
+  //4 /////////////////////////////////////////////////////
+  //grab
+  autoScoop(1);
+  gyTurn(60);
+  autoDrive(270);
+  gyTurn(110);
   autoScoop(0);
   sonarDrive();
   autoScoop(1);
+  //alignment
+  autoDrive(-950);
+  gyTurn(90);
+  autoDrive(-400);
+  gyTurn(0);
+  autoDrive(270);
+  //drop
+  drive(-40);
+  manualDrop();
+  gyroReset(gyro);
+  autoDrive(-200);
 
-  //turn parallel to zone
-  autoDrive(650);
-  gyTurn(-272);
-  autoDrive(300);
+  //5 //////////////////////////////////////////////////
+  //grab
+  autoScoop(0);
+  gyTurn(-90);
+  autoDrive(350);
+  gyTurn(-135);
+  sonarDrive();
+  autoScoop(1);
+  //alignment
+  autoDrive(-800);
+  gyTurn(-90);
+  autoDrive(-200);
+  gyTurn(0);
+  autoDrive(270);
 
-  //align with zone
-  gyTurn(-185);
-  autoDrive(500); // drive in to the zone
-  drive(-60);
-
-  scoop(-127); //drop pylon scoop
-  delay(1000);
-  autoDrive(-450);
-  scoop(0);
-
-  //reverse out of zone
-
-
-
-
-  //BLUE 10 point /////////////////////////////////////////////////////
-
+  /*
   // next pylon
   gyroReset(gyro);
   autoScoop(0);
@@ -172,7 +194,6 @@ void skills(){
   //FINAL /////////////////////////////////////////////////////////
   //face next pylon
   autoScoop(0);
-  gyroReset(gyro);
   gyTurn(80);
   autoDrive(225);
   gyTurn(118);
@@ -196,6 +217,7 @@ void skills(){
   gyroReset(gyro);
   gyTurn(100);
   autoDrive(1000);
+  */
 }
 
 // testing PID ===============================================================
@@ -240,8 +262,9 @@ void autonomous() {
     case -1:
       //autoRight = true;
       skills();
+      break;
     case 0:
-      autoDrive(300);
+      //autoDrive(300);
       break; //dont run auton
     case 1:
       pylon5();

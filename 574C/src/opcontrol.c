@@ -9,7 +9,10 @@
 #include "arm.h"
 #include "sensorTargets.h"
 
-static bool firstStack = false; // used for driver skills
+// used for driver skills
+static bool firstStack = false;
+static bool bd = false;
+
 void portTest(){
 	int i = 0;
 	while(1){
@@ -81,19 +84,17 @@ void operatorControl() {
 					break;
 				case 4:
 					if(firstStack == false){
-						static bool bd = false;
 						armPID(AP_AUTO);
 						lift(-15);
 						clawGrip(127);
 						if(buttonGetState(JOY1_5D)){
-							liftPID(LP_LOW);
 							armPID(AP_FRONT);
+							liftPID(LP_LOW-100);
 							bd = true;
 						}
 						if(bd == true && buttonGetState(JOY1_5D) == false) firstStack = true;
 
 					}else{
-						if(buttonGetState(JOY1_8L)) firstStack = false;
 						autoStack();
 						clawOp();
 					}
