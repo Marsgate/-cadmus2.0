@@ -8,20 +8,67 @@ void baseTask(){
 }
 
 void comp(){
-  baseT=2000;
-  delay(500);
-  autodrive(360*1.5);
-  baseT=250;
-  autodrive(360-1.2);
-  gyroturn(130);
-  autodrive(360*.6);
-  gyroturn(90);
-  autodrive(360*1.4);
-  baseT=1900;
-  autodrive(-360*1.4);
+e_reset();
+autodrive(25);
+gyroturn(-30);
+  baseT=1230;
+  delay(1000);
+  e_reset();
+  autodrive(360*3.2);
+  baseT=3980;
+  delay(1000);
+  e_reset();
+  autodrive(-360*3.1);
+  gyroturn(-50);
+  e_reset();
+  autodrive(360*-1.2);
+  gyroturn(255);
+  e_reset();
+  autodrive(360*2.5);
+  baseT=2330;
+  delay(950);
+  e_reset();
+  autodrive(-360*1.6);
 }
 void skills(){
   comp();
+gyroturn(80);
+e_reset();
+autodrive(360*.5);
+gyroturn(66);
+e_reset();
+baseT=1230;
+delay(500);
+autodrive(360*1.65);
+baseT=3980;
+delay(1000);
+gyroturn(160);
+e_reset();
+autodrive(360*2.7);
+baseT=1950;
+delay(1050);
+e_reset();
+autodrive(360*-.5);
+gyroturn(-80);
+e_reset();
+autodrive(360*1.3);
+gyroturn(-66);
+baseT=1230;
+e_reset();
+autodrive(360*1.65);
+baseT=3980;
+delay(1000);
+gyroturn(-160);
+e_reset();
+autodrive(360*2.7);
+baseT=1950;
+delay(1050);
+e_reset();
+autodrive(360*-.5);
+
+
+
+
 
 }
 void autonomous() {

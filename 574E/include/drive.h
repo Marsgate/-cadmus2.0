@@ -6,3 +6,4 @@ void ultraDrive();
 void driveForward(int target);
 void driveBackward(int target);
 void autodrive(int distance);
+void e_reset();

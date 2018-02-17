@@ -5,17 +5,17 @@ static int dir;
 void gyroturn(int deg ){
   int deadzone = 1;
   gyroReset(gyro);
-  int ts = 65; // defualt turn speed
+  int ts = 45; // defualt turn speed
 
   while(1){
     int gy = gyroGet(gyro);
     if(gy < deg - deadzone){
-      left(-ts);
-      right(ts);
-      dir = 0;
-    }else if(gy > deg + deadzone){
       left(ts);
       right(-ts);
+      dir = 0;
+    }else if(gy > deg + deadzone){
+      left(-ts);
+      right(ts);
       dir = 1;
     }else{
       if(dir == 0){
