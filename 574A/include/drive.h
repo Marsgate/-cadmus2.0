@@ -6,3 +6,4 @@ void left1(int vel);
 void right1(int vel);
 void autodrive(int distance);
 void e_reset();
+void drive2Op();

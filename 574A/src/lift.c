@@ -23,7 +23,9 @@ void bar(int vel){
 void barOp(){
     bar(-joystickGetAnalog(1,3));
 }
-
+void bar2Op(){
+    bar(-joystickGetAnalog(2,2));
+}
 
 void autobar(int sp){
   double kp = 0.22;

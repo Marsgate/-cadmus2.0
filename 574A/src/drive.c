@@ -46,7 +46,12 @@ void driveOp(){
       left1(-joystickGetAnalog(2, 3));
       right1(-joystickGetAnalog(2, 2));
       break;
+
   }
+}
+void drive2Op(){
+  left1(-joystickGetAnalog(1, 3));
+  right1(-joystickGetAnalog(1, 2));
 }
 void autodrive(int distance){
   int enc;

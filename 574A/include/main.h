@@ -40,6 +40,7 @@ Gyro gyro;
 #define PYLON1 5 // right
 #define PYLON2 6 // left
 
+int drivemode;
 int auton;
 int side;
 #define GYRO 2
@@ -50,7 +51,7 @@ int side;
 #define LIFT_ENCODER1 5
 #define LIFT_ENCODER2 6
 #define ARMPOT 3
-#define BASEPOT 4 
+#define BASEPOT 4
 Encoder l_encoder;
 Encoder r_encoder;
 Encoder lift_encoder;
