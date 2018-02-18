@@ -1,7 +1,7 @@
 //lift potentiometer stack target constants
-#define LP_BOT 1600
-#define LP_LOW 1700
-#define LP_LMID 2700
+#define LP_BOT 1750
+#define LP_LOW 1750
+#define LP_LMID 2500
 #define LP_HMID 2900
 #define LP_HIGH 3550
 #define LP_ML 3200

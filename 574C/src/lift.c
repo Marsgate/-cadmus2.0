@@ -11,7 +11,7 @@ void lift(int vel){
 //lift PID control
 void liftPID(int sp){
 
-  double kp = .15;
+  double kp = .1;
   double ki = .000;
   double kd = .1;
   double kc = 0;

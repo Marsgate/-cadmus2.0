@@ -25,7 +25,6 @@ void initialize() {
 
   buttonInit();
 
-
   //expander light check
 	while(analogRead(EXPANDER) < 500){
     lcdSetText(uart1, 1, "!Check Pwr Exp!");

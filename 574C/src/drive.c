@@ -11,8 +11,8 @@ void rightD(int vel){
   motorSet(DRIVER2, vel);
 }
 void drive(int vel){
-  rightD(vel);
-  leftD(vel);
+  rightD(-vel);
+  leftD(-vel);
 }
 
 // power curve =============================================
@@ -68,27 +68,26 @@ void autoDrive(int sp){
     if(dir == 1 && speed < kc) speed = kc;
     if(dir == 0 && speed > -kc) speed = -kc;
 
-    drive(-speed);
+    drive(speed);
 
     if(dir == 0 && error > 0) break;
     if(dir == 1 && error < 0) break;
   }
-  drive(brake);
+  drive(-brake);
   delay(200);
   drive(0); // stop drive
 }
 
 
 void sonarDrive(){
-  drive(-127); // start driving forward
+  drive(127); // start driving forward
   int u; // initialize the container for gyro
   do{
     u = ultrasonicGet(sonar);
     delay(10);
-  }while(u > 3 || u < 2); // detect pylon in a certain range
+  }while(u > 6 || u == 0); // detect pylon in a certain range
   drive(0); // stop drive
 }
-
 
 void gyTurn(int sp){
   if(autoRight == true) sp = -sp; // inverted turn speed for right auton

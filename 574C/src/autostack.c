@@ -36,9 +36,9 @@ void stack(int vel){
 
 void retract(){
   arm(-127);
-  lift(-21);
+  lift(-10);
   if(analogRead(ARMPOT) < AP_MID){
-    if(analogRead(LIFTPOT) > LP_BOT) liftPID(LP_BOT); // lower lift
+    if(analogRead(LIFTPOT) > LP_BOT) lift(-127); // lower lift
     arm(-10);
   }else{
     gripSpeed = -127;
