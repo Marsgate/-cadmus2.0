@@ -82,7 +82,7 @@ void BRL17(){//test
 void BRR17(){//test
   claw(25);//claw hold
   barTarget=1300;// raises arm to rough elevation to hold cone
-  baseTarget=2000;
+  baseTarget=2100;
   e_reset();
   autodrive(360*2.9);//drives foreward to MB
   baseTarget=180;
@@ -97,8 +97,12 @@ void BRR17(){//test
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;// raises arm to clear cone
   delay(500);
-  baseTarget=1900;//base drop off
+  e_reset();
+  autodrive(45);
+  baseTarget=1720;//base drop off
   delay(850);
+  baseTarget=1650;
+  delay(200);
   e_reset();
   autodrive(-360*1.3);//reverses away from MB then stops
 }
@@ -114,11 +118,11 @@ void BRL27(){//test
   barTarget= 600;//lowers arm
   claw(0);
   e_reset();
-  autodrive(-360*2.3);//drives backward to clear cones
-  gyroturn(-130);//110 degree left turn
+  autodrive(-360*2.45);//drives backward to clear cones
+  gyroturn(-118);//110 degree left turn
   e_reset();
   autodrive(360*.85);
-  gyroturn(-65);//70 degree right turn
+  gyroturn(-55);//70 degree right turn
   e_reset();
   autodrive(360*1.4);//drives foreward
   claw(-127);//deposits cone on MB
@@ -126,8 +130,10 @@ void BRL27(){//test
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;// raises arm to clear cone
   delay(500);
-  baseTarget=1900;//drop off MB
+  baseTarget=1650;//drop off MB
   delay(850);
+  baseTarget=200;
+  delay(200);
   e_reset();
   autodrive(-360*1);//reverses away from MB then stops
 }
@@ -148,15 +154,17 @@ void BRR27(){
   e_reset();
   autodrive(360*1.3);
   gyroturn(70);
-  e_reset();
-  autodrive(360*1.3);//drives foreward to 5pt zone
   claw(-127);//deposits cone on MB
   delay(450);
   claw(-50);//keeps spinning to affirm cone release
   barTarget=1300;// raises arm to clear cone
   delay(500);
-  baseTarget=1900;
+  e_reset();
+  autodrive(360*1.5);//drives foreward to 5pt zone
+  baseTarget=1650;
   delay(850);
+  baseTarget=280;
+  delay(200);
   e_reset();
   autodrive(-360*1.3);//reverses away from MB then stops
 }
@@ -249,6 +257,7 @@ e_reset();
 autodrive(360*.7);//drives past stationary
 gyroturn(-54);//90 degree turn right
 baseTarget=2000;//base lift down
+delay(400);
 e_reset();
 autodrive(360*.8);//drives into MB2
 baseTarget=180;//picks up MB2
