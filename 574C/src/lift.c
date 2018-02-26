@@ -11,9 +11,9 @@ void lift(int vel){
 //lift PID control
 void liftPID(int sp){
 
-  double kp = .1;
-  double ki = .000;
-  double kd = .1;
+  double kp = .2;
+  double ki = .001;
+  double kd = .18;
   double kc = 0;
 
   // define local  variables

@@ -10,43 +10,50 @@ int stackHeight = 0; // variable changed by the second controller to control sta
 bool stacking = false; // tracks current autostacker state
 int liftPos = LP_BOT;
 
-void stack(int vel){
-  arm(vel);
+void stack(){
+  arm(127);
   //lift control
   switch(stackHeight){
     case 0:
       liftPos = LP_LOW;
+      if(analogRead(ARMPOT) > AP_AS) lift(0);
       break;
     case 1:
       liftPos = LP_LMID;
       break;
     case 2:
       liftPos = LP_HMID;
+      armPID(AP_AUTO+50);
+      if(analogRead(LIFTPOT) < LP_LMID) arm(0);
       break;
     case 3:
-      if(analogRead(LIFTPOT) < LP_HMID) arm(0);
       liftPos = LP_HIGH;
+      armPID(AP_AUTO-50);
+      if(analogRead(LIFTPOT) < LP_LMID) arm(0);
   }
   liftPID(liftPos); // sets the lift target for PID
-
-  if(analogRead(ARMPOT) > AP_STACK) arm(0);
-  if(analogRead(ARMPOT) > AP_AS) lift(0);
+  if(analogRead(ARMPOT) > AP_STACK && stackHeight < 2) arm(25);
 }
 
 
 void retract(){
-  arm(-127);
+  if(stacking == false) arm(-127);
   lift(-10);
   if(analogRead(ARMPOT) < AP_MID){
     if(analogRead(LIFTPOT) > LP_BOT) lift(-127); // lower lift
-    arm(-10);
+    arm(-30);
   }else{
     gripSpeed = -127;
     if(analogRead(CLAWPOT) > CP_OPEN){
       arm(0);
       gripSpeed = -10000;
     }
-    if(stackHeight > 0) lift(127);
+    if(stackHeight == 1){
+      if(analogRead(LIFTPOT) > liftPos + 200) stacking = false; // raise lift to preven ripping cones off of the stack
+      lift(127);
+    }else{
+      stacking = false;
+    }
   }
 }
 
@@ -72,7 +79,7 @@ void autoStack(){
 
   if(buttonGetState(JOY1_5D)){
     stacking = true;
-    stack(127); // start the auto stacker if left trigger is pressed
+    stack(); // start the auto stacker if left trigger is pressed
   }else{
     retract(); // retract the lift if no button is pressed
   }

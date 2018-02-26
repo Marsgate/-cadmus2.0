@@ -14,13 +14,13 @@ void arm(int vel){
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
   //define coefficients
-  double kp = 0.1;
+  double kp = 0.2;
   double ki = 0.00;
-  double kd = 0.0;
+  double kd = 1;
   double kc = 0;
 
   // define local variables
-  int speed; // speed
+  int speed; // speed 
   int derivative; // derivative
 
   int sv = analogRead(ARMPOT); // get sensor value

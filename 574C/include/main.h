@@ -131,6 +131,7 @@ int mode;
 int auton;
 bool autoRight;
 bool pylon;
+int scoopTarget;
 
 // End C++ export structure
 #ifdef __cplusplus

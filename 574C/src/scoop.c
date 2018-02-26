@@ -19,9 +19,11 @@ void scoopOp(){
 void autoScoop(int target){
   //0 = down, 1 = up
   if(target == 0){
+    scoopTarget = 0;
     scoop(-127);
     while(analogRead(SCOOPPOT) > SP_BOT) delay(20);
   }else{
+    scoopTarget = 1;
     scoop(127);
     while(analogRead(SCOOPPOT) < SP_TOP) delay(20);
   }
@@ -29,7 +31,7 @@ void autoScoop(int target){
 }
 
 void manualDrop(){
-  scoop(-127);
+  scoop(127);
   delay(1000);
   scoop(0);
 }

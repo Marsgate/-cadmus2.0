@@ -26,17 +26,18 @@ void portTest(){
 }
 
 void operatorControl() {
-	//portTest();
-
 	// only run debug in non competition
 	lcdClear(uart1);
 	while(isOnline() == false){
+		float powerLevel = powerLevelMain()/1000;
+		lcdPrint(uart1, 2, "%0.01f volts", powerLevel);
 		lcdSetText(uart1, 1, "Op ------- Debug");
 		if(buttonIsNewPress(LCD_LEFT)) break;
 		if(buttonIsNewPress(LCD_RIGHT)){
-			mode = 3;
+			portTest();
 			break;
 		}
+		if(buttonGetState(JOY1_8R)) autonomous();
 		delay(20);
 	}
 
@@ -119,7 +120,7 @@ void operatorControl() {
 		}
 
 		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
-		//lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
+		lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
 		//lcdPrint(uart1, 2, "CP: %d", analogRead(CLAWPOT));
 		//lcdPrint(uart1, 2, "Motor: %d", motorGet(LIFT1));
 		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
@@ -129,7 +130,7 @@ void operatorControl() {
 		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));
 		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));
 		//lcdPrint(uart1, 1, "Mode: %d", mode);
-		lcdPrint(uart1, 2, "Lift: %d", motorGet(LIFT));
+		//lcdPrint(uart1, 2, "Lift: %d", motorGet(LIFT));
 
 		delay(20);
 	}
