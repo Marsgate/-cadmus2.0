@@ -44,7 +44,35 @@ void tankSigLPC(){
   rightD(right);
 }
 
+void slant(int vel){
+  if(autoRight == false){
+    rightD(-vel);
+  }else{
+    leftD(-vel);
+  }
+}
+
 // autonomous drive functions =============================================
+//drive until (for breaking up long drives into segments)
+void driveUntil(int sp){
+  encoderReset(driveEncLeft);
+  encoderReset(driveEncRight);
+
+  int dir = 1; //forward
+  if(sp < 0) dir = 0; //backward
+  int speed;
+  if(dir == 1) speed = 127;
+  if(dir == 0) speed = -127;
+  while(1){
+    int sv = (encoderGet(driveEncLeft)+encoderGet(driveEncRight))/2;
+    int error = sp-sv;
+    drive(speed);
+    if(dir == 0 && error > 0) break;
+    if(dir == 1 && error < 0) break;
+    delay(20);
+  }
+}
+
 // forward and backward
 void autoDrive(int sp){
   encoderReset(driveEncLeft);
@@ -60,7 +88,7 @@ void autoDrive(int sp){
   }
 
   while(1){
-    int sv = encoderGet(driveEncLeft);
+    int sv = (encoderGet(driveEncLeft)+encoderGet(driveEncRight))/2;
     int error = sp-sv;
     int speed = error*kp;
 
@@ -72,6 +100,7 @@ void autoDrive(int sp){
 
     if(dir == 0 && error > 0) break;
     if(dir == 1 && error < 0) break;
+    delay(20);
   }
   drive(-brake);
   delay(200);
@@ -97,7 +126,7 @@ void gyTurn(int sp){
   double kp = 3.5;
   if(abs(sp - gyroGet(gyro)) > 110) kp = 2;
   if(abs(sp - gyroGet(gyro)) > 150) kp = 1.4;
-  if(abs(sp - gyroGet(gyro)) > 180) kp = 1;
+  if(abs(sp - gyroGet(gyro)) > 180) kp = 1.2;
   int kc = 60;
   int brake = 60;
 

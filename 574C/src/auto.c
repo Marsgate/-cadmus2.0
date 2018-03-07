@@ -26,6 +26,13 @@ void scoopTask(){
   autoScoop(scoopTarget);
 }
 
+//task handles
+TaskHandle lHandle;
+TaskHandle aHandle;
+TaskHandle cHandle;
+TaskHandle scHandle;
+TaskHandle coneHandle;
+
 //drive to pylon program =======================================
 void pickUp(){
   clawTarget = 127; // close claw
@@ -39,19 +46,35 @@ void pickUp(){
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
 }
 
-void coneDrop(){
+void coneDropTask(void * parameter){
   //cone drop
-  liftTarget = LP_LOW;
-  armTarget = AP_FRONT; // drop arm to score cone
-  delay(300);
-  clawTarget = -127; // open claw
-  while(analogRead(CLAWPOT) > CP_OPEN) delay(20);
+  liftTarget = LP_BOT-100;
+  armTarget = AP_FRONT;
+  delay(400);
+  clawTarget = -127; // open clawk
+  delay(200);
   armTarget = AP_AUTO;
-  liftTarget = LP_BOT;
+  taskDelete(coneHandle);
+}
+void coneDrop(){
+   coneHandle = taskCreate(coneDropTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }
 
-// program 1 ===============================================================
-void pylon5() {
+// =====================================================================
+void pylon5(){
+  pickUp(); //drive to pylon
+  driveUntil(-500);
+  coneDrop();
+  autoDrive(-300);
+  gyTurn(-178);//face the zone
+  armTarget = AP_AUTO;
+  liftTarget = LP_BOT;
+  slant(45);
+  autoScoop(0);
+  autoDrive(-100); // reverse
+}
+
+void twoCone5() {
   pickUp(); //drive to pylon
   autoDrive(-730);
   coneDrop();
@@ -72,17 +95,19 @@ void pylon5() {
 }
 
 
-// program 2 ===============================================================
+// ======================================================================
 void pylon20(){
   pickUp(); //drive to pylon
 
-  autoDrive(-850);
+  driveUntil(-500);
+  coneDrop();
+  autoDrive(-350);
   gyTurn(-132);//face the zone
   autoDrive(210);
   gyTurn(-213);
 
-  coneDrop();
-
+  //drop
+  scoopTarget = 2;
   drive(127);
   scoop(-127);
   delay(1200);
@@ -95,6 +120,27 @@ void pylon20(){
   scoop(-60);
   gyTurn(-398);
 }
+
+// ======================================================================
+void doublePylon(){
+  pylon5();
+  gyroReset(gyro);
+  scoopTarget = 1;
+  gyTurn(137);
+  scoopTarget = 0;
+  autoDrive(770);
+  autoDrive(-50);
+  gyTurn(135);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  autoDrive(-400);
+  gyTurn(310);
+  scoopTarget = 0;
+  autoDrive(500);
+  autoDrive(-200);
+}
+
 
 void skills(){
   //1 /////////////////////////////////////////////////////
@@ -250,12 +296,13 @@ void ram(){
 void tower(){
   clawTarget = 127;
   armTarget = AP_AUTO;
-  delay(1000);
-  liftTarget = LP_LMID;
+  delay(700);
+  liftTarget = LP_HMID;
   delay(500);
   autoDrive(500);
   delay(1000);
   armTarget = AP_FRONT;
+  liftTarget = LP_LMID;
   delay(700);
   clawTarget = -127;
   delay(500);
@@ -270,13 +317,13 @@ void autonomous() {
   gyroReset(gyro);
   liftTarget = analogRead(LIFTPOT); // calibrate the PID starting values
   armTarget = analogRead(ARMPOT);
-  scoopTarget = 0;
+  scoopTarget = 2;
 
   //start all tasks
-  TaskHandle aHandle = taskRunLoop(armTask, 20); //start arm
-  TaskHandle lHandle = taskRunLoop(liftTask, 20); //start lift
-  TaskHandle cHandle = taskRunLoop(clawTask, 20); //start claw
-  TaskHandle scHandle = taskRunLoop(scoopTask, 20); //start claw
+  aHandle = taskRunLoop(armTask, 20); //start arm
+  lHandle = taskRunLoop(liftTask, 20); //start lift
+  cHandle = taskRunLoop(clawTask, 20); //start claw
+  scHandle = taskRunLoop(scoopTask, 20); //start claw
 
   switch(auton){
     case -1:
@@ -292,6 +339,12 @@ void autonomous() {
       pylon20();
       break;
     case 3:
+      twoCone5();
+      break;
+    case 4:
+      doublePylon();
+      break;
+    case 5:
       tower();
       break;
   }

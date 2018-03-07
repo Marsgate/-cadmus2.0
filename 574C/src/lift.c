@@ -1,7 +1,6 @@
 #include "main.h"
 
 //PID variables
-static int integral = 0;
 static int prevErr = 0;
 
 void lift(int vel){
@@ -12,9 +11,7 @@ void lift(int vel){
 void liftPID(int sp){
 
   double kp = .2;
-  double ki = .001;
-  double kd = .18;
-  double kc = 0;
+  double kd = .05;
 
   // define local  variables
   int speed; // speed
@@ -22,14 +19,11 @@ void liftPID(int sp){
 
   int sv = analogRead(LIFTPOT); // get sensor value
   int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
 
   derivative = error - prevErr; // calculate the derivative
   prevErr = error; // set current error to equal previous error
 
-  if(error > 100){integral = 0;} // only modify integral if close to target
-
-  speed = error*kp + integral*ki + derivative*kd + kc; // add the values to get the motor speed
+  speed = error*kp + derivative*kd; // add the values to get the motor speed
 
   lift(speed); // set the lift to the speed
 }

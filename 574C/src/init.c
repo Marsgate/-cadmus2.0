@@ -44,7 +44,7 @@ void initialize() {
       }else if(buttonIsNewPress(LCD_LEFT)){
         if(auton > -1)auton--;
       }else if(buttonIsNewPress(LCD_RIGHT)){
-        if(auton < 3)auton++;
+        if(auton < 5)auton++;
       }
 
       //display
@@ -62,6 +62,12 @@ void initialize() {
           lcdSetText(uart1, 1, "20pt");
           break;
         case 3:
+          lcdSetText(uart1, 1, "Two Cone 5");
+          break;
+        case 4:
+          lcdSetText(uart1, 1, "Double");
+          break;
+        case 5:
           lcdSetText(uart1, 1, "Tower");
           break;
       }

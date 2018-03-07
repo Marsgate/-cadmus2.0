@@ -22,15 +22,16 @@ void autoScoop(int target){
     scoopTarget = 0;
     scoop(-127);
     while(analogRead(SCOOPPOT) > SP_BOT) delay(20);
-  }else{
+  }else if(target == 1){
     scoopTarget = 1;
     scoop(127);
     while(analogRead(SCOOPPOT) < SP_TOP) delay(20);
   }
-  scoop(0);
+  if(scoopTarget < 2) scoop(0);
 }
 
 void manualDrop(){
+  scoopTarget = 2;
   scoop(127);
   delay(1000);
   scoop(0);
