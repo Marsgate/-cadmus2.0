@@ -29,8 +29,8 @@ void operatorControl() {
 	// only run debug in non competition
 	lcdClear(uart1);
 	while(isOnline() == false){
-		float powerLevel = powerLevelMain()/1000;
-		lcdPrint(uart1, 2, "%0.01f volts", powerLevel);
+		float powerLevel = powerLevelMain();
+		lcdPrint(uart1, 2, "%0.01f volts", powerLevel/1000);
 		lcdSetText(uart1, 1, "Op ------- Debug");
 		if(buttonIsNewPress(LCD_LEFT)) break;
 		if(buttonIsNewPress(LCD_RIGHT)){
@@ -104,13 +104,7 @@ void operatorControl() {
 					break;
 			}
 		}else{
-			//arm(127);
-			//gyTurn(90);
-			/*
-			for(int i=1; i<=10; i++){
-				ptest(i);
-			}
-			*/
+			liftPID(LP_LMID);
 
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);
