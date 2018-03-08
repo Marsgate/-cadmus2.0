@@ -46,16 +46,21 @@ void pickUp(){
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
 }
 
-void coneDropTask(void * parameter){
+void cd(){
   //cone drop
   liftTarget = LP_BOT-100;
   armTarget = AP_FRONT;
   delay(400);
-  clawTarget = -127; // open clawk
+  clawTarget = -127; // open claw
   delay(200);
   armTarget = AP_AUTO;
   taskDelete(coneHandle);
 }
+
+void coneDropTask(void * parameter){
+  cd();
+}
+
 void coneDrop(){
    coneHandle = taskCreate(coneDropTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }
@@ -74,21 +79,42 @@ void pylon5(){
   autoDrive(-100); // reverse
 }
 
-void twoCone5() {
+void multiCone() {
   pickUp(); //drive to pylon
-  autoDrive(-730);
+  driveUntil(-500);
   coneDrop();
+  autoDrive(-300);
+
+  //cone alignment
   gyTurn(-196);//face the zone
+  delay(200);
   armTarget = AP_BOT-200;
   liftTarget = LP_BOT-200;
-  delay(1000);
+  delay(800);
+  //cone grab
   autoDrive(-300);
   clawTarget = 127;
   delay(500);
+  //cone drop
+  liftTarget = LP_BOT-100;
   armTarget = AP_FRONT;
-  liftTarget = LP_BOT;
-  delay(800);
-  coneDrop();
+  delay(1100);
+  cd();
+  //cone alignment
+  gyTurn(-203);//face the zone
+  armTarget = AP_BOT-200;
+  liftTarget = LP_BOT-200;
+  delay(1000);
+  //cone grab
+  autoDrive(-300);
+  clawTarget = 127;
+  delay(500);
+  //cone drop
+  liftTarget = LP_BOT-100;
+  armTarget = AP_FRONT;
+  delay(1100);
+  cd();
+
   autoDrive(100);
   autoScoop(0);
   autoDrive(-400); // reverse
@@ -339,7 +365,7 @@ void autonomous() {
       pylon20();
       break;
     case 3:
-      twoCone5();
+      multiCone();
       break;
     case 4:
       doublePylon();

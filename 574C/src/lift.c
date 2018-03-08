@@ -10,8 +10,8 @@ void lift(int vel){
 //lift PID control
 void liftPID(int sp){
 
-  double kp = .2;
-  double kd = .05;
+  double kp = .24;
+  double kd = .08;
 
   // define local  variables
   int speed; // speed
