@@ -48,7 +48,7 @@ void pickUp(){
 
 void cd(){
   //cone drop
-  liftTarget = LP_BOT-100;
+  liftTarget = LP_BOT;
   armTarget = AP_FRONT;
   delay(400);
   clawTarget = -127; // open claw
@@ -56,11 +56,9 @@ void cd(){
   armTarget = AP_AUTO;
   taskDelete(coneHandle);
 }
-
 void coneDropTask(void * parameter){
   cd();
 }
-
 void coneDrop(){
    coneHandle = taskCreate(coneDropTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }
@@ -71,7 +69,7 @@ void pylon5(){
   driveUntil(-500);
   coneDrop();
   autoDrive(-300);
-  gyTurn(-178);//face the zone
+  gyTurn(-180);//face the zone
   armTarget = AP_AUTO;
   liftTarget = LP_BOT;
   slant(45);
@@ -90,21 +88,7 @@ void multiCone() {
   delay(200);
   armTarget = AP_BOT-200;
   liftTarget = LP_BOT-200;
-  delay(800);
-  //cone grab
-  autoDrive(-300);
-  clawTarget = 127;
-  delay(500);
-  //cone drop
-  liftTarget = LP_BOT-100;
-  armTarget = AP_FRONT;
-  delay(1100);
-  cd();
-  //cone alignment
-  gyTurn(-203);//face the zone
-  armTarget = AP_BOT-200;
-  liftTarget = LP_BOT-200;
-  delay(1000);
+  delay(1200);
   //cone grab
   autoDrive(-300);
   clawTarget = 127;
@@ -115,7 +99,9 @@ void multiCone() {
   delay(1100);
   cd();
 
-  autoDrive(100);
+  gyTurn(-205);
+  autoDrive(150);
+  slant(50);
   autoScoop(0);
   autoDrive(-400); // reverse
 }
@@ -125,11 +111,11 @@ void multiCone() {
 void pylon20(){
   pickUp(); //drive to pylon
 
-  driveUntil(-500);
+  driveUntil(-600);
   coneDrop();
-  autoDrive(-350);
-  gyTurn(-132);//face the zone
-  autoDrive(210);
+  autoDrive(-380);
+  gyTurn(-124);//face the zone
+  autoDrive(160);
   gyTurn(-213);
 
   //drop
@@ -151,12 +137,10 @@ void pylon20(){
 void doublePylon(){
   pylon5();
   gyroReset(gyro);
-  scoopTarget = 1;
-  gyTurn(137);
-  scoopTarget = 0;
+  gyTurn(140);
   autoDrive(770);
   autoDrive(-50);
-  gyTurn(135);
+  gyTurn(137);
   sonarDrive();
   scoopTarget = 1;
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
@@ -192,27 +176,25 @@ void skills(){
 
   //3 /////////////////////////////////////////////////////
   //grab
-  gyTurn(-162);
+  gyTurn(-160);
   autoScoop(0);
-  scoop(-20);
+  scoopTarget = 0;
   sonarDrive();
-  scoop(127);
+  scoopTarget = 1;
   //alignment
   autoDrive(1000);
   //drop
   leftD(-40);
   rightD(-10);
-  scoop(-127);
-  delay(1200);
-  scoop(0);
+  manualDrop();
   gyroReset(gyro);
   autoDrive(-150); //reverse
 
 
   //4 /////////////////////////////////////////////////////
   //grab
-  gyTurn(85);
-  autoDrive(130);
+  gyTurn(84);
+  autoDrive(170);
   gyTurn(115);
   sonarDrive();
   autoScoop(1);
@@ -224,32 +206,31 @@ void skills(){
   autoDrive(270);
   //drop
   drive(127);
-  scoop(-127);
+  scoopTarget = 0;
   delay(700);
   drive(60);
   delay(200);
-  scoop(0);
   gyroReset(gyro);
   autoDrive(-500);
 
   //5 //////////////////////////////////////////////////
   //grab
   autoScoop(0);
-  gyTurn(-90);
-  autoDrive(800);
-  gyTurn(-130);
+  gyTurn(-88);
+  autoDrive(820);
+  gyTurn(-128);
   sonarDrive();
   autoScoop(1);
   //alignment
-  autoDrive(-1000);
+  autoDrive(-880);
   gyTurn(-105);
   autoDrive(-300);
   gyTurn(-20);
   //drop
-  drive(30);
+  drive(40);
   manualDrop();
   gyroReset(gyro);
-  autoDrive(-150); //reverse
+  autoDrive(-120); //reverse
 
   //6 //////////////////////////////////////////////////
   //grab
@@ -271,11 +252,11 @@ void skills(){
 
   //7 /////////////////////////////////////////////////////////
   //grab
-  gyTurn(-165);
+  gyTurn(-157);
   autoScoop(0);
-  scoop(-20);
+  scoopTarget = 0;
   sonarDrive();
-  scoop(127);
+  scoopTarget = 1;
   //alignment
   autoDrive(1050);
   //drop
@@ -293,7 +274,7 @@ void skills(){
   sonarDrive();
   autoScoop(1);
   //alignment
-  autoDrive(-950);
+  autoDrive(-900);
   gyTurn(90);
   autoDrive(-360);
   gyTurn(0);

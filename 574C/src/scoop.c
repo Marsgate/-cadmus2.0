@@ -32,7 +32,7 @@ void autoScoop(int target){
 
 void manualDrop(){
   scoopTarget = 2;
-  scoop(127);
+  scoop(-127);
   delay(1000);
   scoop(0);
 }

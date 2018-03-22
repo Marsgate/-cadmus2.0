@@ -8,9 +8,11 @@
 
 //arm pot
 #define AP_BOT 30
+#define AP_HOVER 400
+#define AP_ML 700
 #define AP_STACK 1700
-#define AP_MID  1900
-#define AP_AUTO 2550
+#define AP_MID  2100
+#define AP_AUTO 2500
 #define AP_AS 3200
 #define AP_FRONT 3850
 

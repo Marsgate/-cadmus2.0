@@ -29,8 +29,9 @@ void operatorControl() {
 	// only run debug in non competition
 	lcdClear(uart1);
 	while(isOnline() == false){
-		float powerLevel = powerLevelMain();
-		lcdPrint(uart1, 2, "%0.01f volts", powerLevel/1000);
+		float p1 = powerLevelMain();
+		float p2 = analogRead(EXPANDER);
+		lcdPrint(uart1, 2, "1:%0.01f 2:%0.01f", p1/1000, p2/1000);
 		lcdSetText(uart1, 1, "Op ------- Debug");
 		if(buttonIsNewPress(LCD_LEFT)) break;
 		if(buttonIsNewPress(LCD_RIGHT)){
@@ -46,16 +47,6 @@ void operatorControl() {
 
 		// only run the bot when the joystick is connected
 		if(isJoystickConnected(1)){
-
-			//get the mode from 2nd joy
-			if(joystickGetDigital(2, 8, JOY_LEFT)){
-				mode = 0;
-			}else if(joystickGetDigital(2, 8, JOY_DOWN)){
-				mode = 1;
-			}else if(joystickGetDigital(2, 8, JOY_RIGHT)){
-				mode = 2;
-			}
-
 			//get the mode from 1st joy
 			if(joystickGetDigital(1, 8, JOY_LEFT)){
 				mode = 0;
@@ -76,6 +67,7 @@ void operatorControl() {
 					clawOp();
 					scoopOp();
 					autoStack();
+					armPID(AP_ML);
 					break;
 				case 2:
 					break;
@@ -104,7 +96,7 @@ void operatorControl() {
 					break;
 			}
 		}else{
-			liftPID(LP_LMID);
+			//liftPID(LP_LMID);
 
 			if(lcdReadButtons(uart1) == 1){
 				gyroReset(gyro);

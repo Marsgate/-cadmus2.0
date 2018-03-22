@@ -132,6 +132,7 @@ int auton;
 bool autoRight;
 bool pylon;
 int scoopTarget;
+bool stacking;
 
 // End C++ export structure
 #ifdef __cplusplus

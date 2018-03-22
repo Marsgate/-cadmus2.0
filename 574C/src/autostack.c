@@ -7,7 +7,6 @@
 #include "sensorTargets.h"
 
 int stackHeight = 0; // variable changed by the second controller to control stack height
-bool stacking = false; // tracks current autostacker state
 int liftPos = LP_BOT;
 
 void stack(){
@@ -37,24 +36,14 @@ void stack(){
 
 
 void retract(){
-  if(stacking == false) arm(-127);
-  lift(-10);
-  if(analogRead(ARMPOT) < AP_MID){
-    if(analogRead(LIFTPOT) > LP_BOT) lift(-127); // lower lift
-    arm(-30);
-  }else{
-    gripSpeed = -127;
-    if(analogRead(CLAWPOT) > CP_OPEN){
+  liftPID(LP_BOT);
+  arm(-127);
+  stacking = false;
+  if(analogRead(ARMPOT) < AP_AUTO){
       arm(0);
-      gripSpeed = -10000;
-    }
-    if(stackHeight == 1){
-      if(analogRead(LIFTPOT) > liftPos + 200) stacking = false; // raise lift to preven ripping cones off of the stack
-      lift(127);
-    }else{
-      stacking = false;
-    }
+      if(analogRead(LIFTPOT) > LP_BOT) lift(-127); // lower lift
   }
+  if(buttonGetState(JOY1_6D)) lift(-60);
 }
 
 void shSelector(){

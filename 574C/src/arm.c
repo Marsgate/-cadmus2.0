@@ -10,8 +10,8 @@ void arm(int vel){
 //arm PID control (basically copy pasted from liftPID)
 void armPID(int sp){
   //define coefficients
-  double kp = .09;
-  double kd = .04;
+  double kp = .1;
+  double kd = .07;
 
   // define variables
   int speed; // speed
