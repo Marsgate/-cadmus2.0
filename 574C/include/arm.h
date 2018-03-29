@@ -3,7 +3,6 @@
 
 
 void arm(int vel);
-void armPID(int sv);
 void armOp();
 
 #endif

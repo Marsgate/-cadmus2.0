@@ -1,25 +1,19 @@
 #include "main.h"
 
 //claw grip definitions and variables
-int gripSpeed = -127;
+int gripSpeed = 127;
 
 void claw(int vel){
   motorSet(CLAW, vel);
 }
 
-//state changer
-void clawGrip(int speed){
-  if(buttonGetState(JOY1_6D) == false) speed = speed/6;
-  claw(speed);
-}
-
 void clawOp(){
-  if(buttonIsNewPress(JOY1_6D)){
-    if(stacking == true){
+  claw(gripSpeed);
+  if(buttonGetState(JOY2_6U)){
       gripSpeed = 127;
-    }else{
+  }else if(buttonGetState(JOY2_6D)){
       gripSpeed = -127;
-    }
+  }else{
+    claw(gripSpeed/6);
   }
-  clawGrip(gripSpeed);
 }

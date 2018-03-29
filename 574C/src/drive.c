@@ -19,15 +19,9 @@ void drive(int vel){
 void tankSigLPC(){
   double left;
   double right;
-  double lJoy = joystickGetAnalog(1, 3);
-  double rJoy = joystickGetAnalog(1, 2);
+  double rJoy = -joystickGetAnalog(1, 3);
+  double lJoy = -joystickGetAnalog(1, 2);
   int deadzone = 8;
-
-  if(mode == 4){
-    int lnew = -lJoy;
-    lJoy = -rJoy;
-    rJoy = lnew;
-  }
 
   if(abs(lJoy) > deadzone){
     left = log(256/(lJoy+128)-1)/(-.025);

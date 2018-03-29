@@ -2,7 +2,6 @@
 #define _CLAW_H_
 
 void clawOp();
-void clawGrip(int speed);
 
 int gripSpeed;
 

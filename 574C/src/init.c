@@ -1,5 +1,5 @@
 #include "main.h"
-#include "ports.h"
+#include "lcd.h"
 
 void initializeIO() {
   //led port
@@ -34,56 +34,5 @@ void initialize() {
 		delay(500);
 	}
 
-  int selected = 0; //layered selection
-  while(selected < 2){
-    lcdSetText(uart1, 2, "");
-    while(selected < 1){
-      //logic
-      if(buttonIsNewPress(LCD_CENT)){
-        selected++;
-      }else if(buttonIsNewPress(LCD_LEFT)){
-        if(auton > -1)auton--;
-      }else if(buttonIsNewPress(LCD_RIGHT)){
-        if(auton < 5)auton++;
-      }
-
-      //display
-      switch(auton){
-        case -1:
-          lcdSetText(uart1, 1, "Skills");
-          break;
-        case 0:
-          lcdSetText(uart1, 1, "None");
-          break;
-        case 1:
-          lcdSetText(uart1, 1, "5pt");
-          break;
-        case 2:
-          lcdSetText(uart1, 1, "20pt");
-          break;
-        case 3:
-          lcdSetText(uart1, 1, "Multi Cone");
-          break;
-        case 4:
-          lcdSetText(uart1, 1, "Double");
-          break;
-        case 5:
-          lcdSetText(uart1, 1, "Tower");
-          break;
-      }
-      delay(20);
-    }
-    lcdSetText(uart1, 2, "Left ----- Right");
-    if(buttonIsNewPress(LCD_CENT)){
-      selected--;
-    }else if(buttonIsNewPress(LCD_LEFT)){
-      selected++;
-      lcdSetText(uart1, 2,"left selected");
-    }else if(buttonIsNewPress(LCD_RIGHT)){
-      selected++;
-      lcdSetText(uart1, 2,"right selected");
-      autoRight = true;
-    }
-    delay(20);
-  }
+  initializationLCD();
 }

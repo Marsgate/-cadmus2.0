@@ -7,9 +7,8 @@
 #define DRIVER1 2
 #define LIFT 3
 #define SCOOP1 4
-#define ARM1 5
 #define CLAW 6
-#define ARM2 7
+#define ARM1 7
 #define SCOOP2 8
 #define DRIVEL2 9
 #define DRIVER2 10
@@ -27,7 +26,6 @@
 #define EXPANDER 3
 #define SCOOPPOT 4
 #define GYRO 5
-#define CLAWPOT 8
 #define LIFTPOT 6
 #define ARMPOT 7
 
