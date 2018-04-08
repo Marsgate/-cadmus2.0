@@ -72,9 +72,13 @@ void autoDrive(int sp){
   encoderReset(driveEncLeft);
   encoderReset(driveEncRight);
 
-  double kp = 0.6;
-  int kc = 60;
-  int brake = -60;
+  //PD variables
+  double kp = 0.07;
+  double kd = 0;
+  int prevError = 0;
+
+  int kc = 0;
+  int brake = 0;
   int dir = 1; //forward
   if(sp < 0){ //backward
     dir = 0;
@@ -84,7 +88,9 @@ void autoDrive(int sp){
   while(1){
     int sv = (encoderGet(driveEncLeft)+encoderGet(driveEncRight))/2;
     int error = sp-sv;
-    int speed = error*kp;
+    int derivative = error-prevError;
+    int speed = error*kp + derivative*kd;
+    prevError = error;
 
     //speed normalization
     if(dir == 1 && speed < kc) speed = kc;
@@ -92,12 +98,13 @@ void autoDrive(int sp){
 
     drive(speed);
 
-    if(dir == 0 && error > 0) break;
-    if(dir == 1 && error < 0) break;
+    //if(dir == 0 && error > 0) break;
+    //if(dir == 1 && error < 0) break;
+    lcdPrint(uart1, 1, "encAvg: %d", sv);
     delay(20);
   }
   drive(-brake);
-  delay(200);
+  delay(50);
   drive(0); // stop drive
 }
 
@@ -109,19 +116,33 @@ void sonarDrive(){
     u = ultrasonicGet(sonar);
     delay(10);
   }while(u > 6 || u == 0); // detect pylon in a certain range
-  drive(0); // stop drive
+  drive(0);
 }
 
+void sonarDriveDistance(int sp){
+  double kp = 0.2;
+  int u; // initialize the container for gyro
+  do{
+    int sv = (encoderGet(driveEncLeft)+encoderGet(driveEncRight))/2;
+    int error = sp-sv;
+    int speed = error*kp;
+    drive(speed);
+    u = ultrasonicGet(sonar);
+    delay(10);
+  }while(u > 6 || u == 0); // detect pylon in a certain range
+  drive(0);
+}
+
+
 void gyTurn(int sp){
-  if(autoRight == true){
+  if(autoRight == false){
     sp = -sp; // inverted turn speed for right auton
-    sp -= 5;
   }
   double kp = 3.5;
   if(abs(sp - gyroGet(gyro)) > 110) kp = 2;
   if(abs(sp - gyroGet(gyro)) > 150) kp = 1.4;
   if(abs(sp - gyroGet(gyro)) > 180) kp = 1.2;
-  int kc = 60;
+  int kc = 50;
   int brake = 60;
 
   //set direction

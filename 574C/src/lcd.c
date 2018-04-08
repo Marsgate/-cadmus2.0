@@ -59,12 +59,9 @@ void initializationLCD(){
           lcdSetText(uart1, 1, "20pt");
           break;
         case 3:
-          lcdSetText(uart1, 1, "Multi Cone");
-          break;
-        case 4:
           lcdSetText(uart1, 1, "Double");
           break;
-        case 5:
+        case 4:
           lcdSetText(uart1, 1, "Tower");
           break;
       }

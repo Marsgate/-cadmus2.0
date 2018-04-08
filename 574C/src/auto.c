@@ -1,7 +1,6 @@
 #include "main.h"
 #include "roboControl.h"
-
-static int clawTarget = 127;
+#include "autoFunctions.h"
 
 void scoopTask(){
   autoScoop(scoopTarget);
@@ -9,104 +8,66 @@ void scoopTask(){
 
 //task handles
 TaskHandle scHandle;
-TaskHandle coneHandle;
 
 //drive to pylon program =======================================
 void pickUp(){
+  lift(70);
   scoopTarget = 0; // deploy scoop
   drive(127);
   autoScoop(0);
-  sonarDrive(); //go get pylon
+  sonarDriveDistance(1300); //go get pylon
+  lift(0);
   scoopTarget = 1; // raise scoop
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
 }
 
-/*
-void cd(){
-  //cone drop
-  liftTarget = LP_BOT;
-  armTarget = AP_FRONT;
-  delay(400);
-  clawTarget = -127; // open claw
-  delay(200);
-  armTarget = AP_AUTO;
-  taskDelete(coneHandle);
+void coneStack(){
+  while(analogRead(SCOOPPOT) < SP_INTAKE) delay(20);
+  preload();
+  autoDrive(150);
+  intake();
+  stack(2);
+  autoDrive(220);
+  intake();
+  stack(3);
+  lift(45); // hold lift up for rest of auton
 }
-void coneDropTask(void * parameter){
-  cd();
-}
-void coneDrop(){
-   coneHandle = taskCreate(coneDropTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-}*/
 
 // =====================================================================
 void pylon5(){
   pickUp(); //drive to pylon
-  driveUntil(-500);
-  //coneDrop();
-  autoDrive(-300);
+  coneStack();
+  autoDrive(-1100);
   gyTurn(-180);//face the zone
-  //armTarget = AP_AUTO;
-  //liftTarget = LP_BOT;
-  slant(45);
   autoScoop(0);
   autoDrive(-100); // reverse
-}
-
-void multiCone() {
-  pickUp(); //drive to pylon
-  driveUntil(-500);
-  //coneDrop();
-  autoDrive(-300);
-
-  //cone alignment
-  gyTurn(-196);//face the zone
-  delay(200);
-  //armTarget = AP_BOT-200;
-  //liftTarget = LP_BOT-200;
-  delay(1200);
-  //cone grab
-  autoDrive(-300);
-  clawTarget = 127;
-  delay(500);
-  //cone drop
-  //liftTarget = LP_BOT-100;
-  //armTarget = AP_FRONT;
-  delay(1100);
-  //cd();
-
-  gyTurn(-205);
-  autoDrive(150);
-  slant(50);
-  autoScoop(0);
-  autoDrive(-400); // reverse
 }
 
 
 // ======================================================================
 void pylon20(){
   pickUp(); //drive to pylon
+  coneStack();
 
-  driveUntil(-600);
-  //coneDrop();
-  autoDrive(-380);
-  gyTurn(-124);//face the zone
-  autoDrive(160);
-  gyTurn(-213);
+  autoDrive(-1600);
+  gyTurn(-125);//face the zone
+  autoDrive(200);
+  gyTurn(-205);
 
   //drop
   scoopTarget = 2;
+  claw(80);
   drive(127);
+  delay(800);
+  drive(40);
   scoop(-127);
-  delay(1200);
-  drive(20);
-  delay(200);
+  delay(400);
+  drive(0);
+  delay(500);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-500);
-  scoop(-60);
-  gyTurn(-398);
+  autoDrive(-650);
 }
 
 // ======================================================================
@@ -136,13 +97,16 @@ void skills(){
 
   //2 /////////////////////////////////////////////////////
   //grab
-  autoScoop(0);
+  scoop(-60);
+  gyTurn(-172);
+  scoopTarget = 0;
   sonarDrive();
-  autoScoop(1);
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-400);
+  autoDrive(-700);
   gyroReset(gyro);
-  gyTurn(152);
+  gyTurn(135);
   //drop
   drive(40);
   manualDrop();
@@ -152,117 +116,118 @@ void skills(){
 
   //3 /////////////////////////////////////////////////////
   //grab
-  gyTurn(-160);
+  gyTurn(-170);
   autoScoop(0);
   scoopTarget = 0;
   sonarDrive();
   scoopTarget = 1;
   //alignment
-  autoDrive(1000);
+  driveUntil(100);
+  scoopTarget = 0;
+  driveUntil(700);
+  drive(40);
   //drop
-  leftD(-40);
-  rightD(-10);
-  manualDrop();
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
   gyroReset(gyro);
-  autoDrive(-150); //reverse
+  autoDrive(-300); //reverse
 
 
   //4 /////////////////////////////////////////////////////
   //grab
-  gyTurn(84);
-  autoDrive(170);
-  gyTurn(115);
+  gyTurn(89);
+  driveUntil(220);
+  gyTurn(117);
   sonarDrive();
-  autoScoop(1);
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-950);
-  gyTurn(90);
-  autoDrive(-360);
-  gyTurn(0);
-  autoDrive(270);
+  autoDrive(-1200);
+  gyTurn(85);
+  autoDrive(-650);
+  gyTurn(-5);
   //drop
-  drive(127);
   scoopTarget = 0;
-  delay(700);
-  drive(60);
-  delay(200);
+  drive(127);
+  delay(1000);
+  drive(0);
   gyroReset(gyro);
-  autoDrive(-500);
+  autoDrive(-700);
 
   //5 //////////////////////////////////////////////////
   //grab
   autoScoop(0);
-  gyTurn(-88);
-  autoDrive(820);
-  gyTurn(-128);
+  gyTurn(-95);
+  driveUntil(800);
+  gyTurn(-132);
   sonarDrive();
-  autoScoop(1);
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-880);
-  gyTurn(-105);
-  autoDrive(-300);
+  driveUntil(-1100);
+  gyTurn(-320);
+  scoopTarget = 0;
+  autoDrive(300);
+  //drop
+  drive(30);
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyroReset(gyro);
+  autoDrive(-350); //reverse
+
+  //6 //////////////////////////////////////////////////
+  //grab
+  autoScoop(0);
+  gyTurn(-190);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-700);
   gyTurn(-20);
   //drop
   drive(40);
   manualDrop();
   gyroReset(gyro);
-  autoDrive(-120); //reverse
-
-  //6 //////////////////////////////////////////////////
-  //grab
-  gyroReset(gyro);
-  autoScoop(0);
-  gyTurn(-158);
-  sonarDrive();
-  autoScoop(1);
-  //alignment
-  autoDrive(-400);
-  gyroReset(gyro);
-  gyTurn(150);
-  //drop
-  drive(40);
-  manualDrop();
-  gyroReset(gyro);
-  autoDrive(-250);
+  autoDrive(-500);
 
 
   //7 /////////////////////////////////////////////////////////
   //grab
-  gyTurn(-157);
-  autoScoop(0);
+  gyTurn(-170);
   scoopTarget = 0;
   sonarDrive();
   scoopTarget = 1;
   //alignment
-  autoDrive(1050);
-  //drop
-  drive(50);
-  manualDrop();
   gyroReset(gyro);
-  autoDrive(-150); //reverse
+  driveUntil(600);
+  gyTurn(-20);
+  scoopTarget = 0;
+  autoDrive(850);
+  //drop
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  autoDrive(-300); //reverse
 
 
   //8 /////////////////////////////////////////////////////////
   //grab
   gyTurn(85);
-  autoDrive(230);
+  driveUntil(500);
   gyTurn(115);
   sonarDrive();
-  autoScoop(1);
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-900);
-  gyTurn(90);
-  autoDrive(-360);
-  gyTurn(0);
+  autoDrive(-1200);
+  gyTurn(-70);
+  scoopTarget = 0;
+  autoDrive(500);
   //drop
   drive(40);
   manualDrop();
   gyroReset(gyro);
-  autoDrive(-150); //reverse
+  autoDrive(-300); //reverse
 
   //park
-  gyTurn(100);
-  autoDrive(1000);
+  driveUntil(-1500);
 }
 
 // testing PID ===============================================================
@@ -278,9 +243,10 @@ void ram(){
 
 // control center ===============================================================
 void autonomous() {
+  //mutex initialization
+  stackMutexInit();
+
   gyroReset(gyro);
-  //liftTarget = analogRead(LIFTPOT); // calibrate the PID starting values
-  //armTarget = analogRead(ARMPOT);
   scoopTarget = 2;
 
   scHandle = taskRunLoop(scoopTask, 20); //start claw
@@ -291,6 +257,7 @@ void autonomous() {
       skills();
       break;
     case 0:
+      autoDrive(1000);
       break; //dont run auton
     case 1:
       pylon5();
@@ -299,12 +266,9 @@ void autonomous() {
       pylon20();
       break;
     case 3:
-      multiCone();
-      break;
-    case 4:
       doublePylon();
       break;
-    case 5:
+    case 4:
       //tower();
       break;
   }

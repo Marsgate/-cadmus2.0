@@ -2,5 +2,7 @@
 #define _LIFT_H_
 
 void liftOp();
+void liftPID(int sp);
+void lift(int vel);
 
 #endif

@@ -6,6 +6,7 @@ void autoDrive(int distance);
 void gyTurn(int distance);
 void sonarDrive();
 void driveUntil(int sp);
+void sonarDriveDistance(int sp);
 
 void leftD(int vel);
 void rightD(int vel);

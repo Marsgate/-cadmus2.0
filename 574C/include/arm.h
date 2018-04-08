@@ -4,5 +4,6 @@
 
 void arm(int vel);
 void armOp();
+void autoArm(int sp);
 
 #endif
