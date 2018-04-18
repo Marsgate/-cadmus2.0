@@ -23,9 +23,10 @@
 #define ULTRA_Y 7
 
 //analog
+#define GYRO1 1
 #define EXPANDER 3
 #define SCOOPPOT 4
-#define GYRO 5
+#define GYRO2 5
 #define LIFTPOT 6
 #define ARMPOT 7
 

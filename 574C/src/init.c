@@ -14,8 +14,10 @@ void initialize() {
   //setup sensors
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
-  gyro = gyroInit(GYRO, 0);
-  gyroReset(gyro);
+  gyro1 = gyroInit(GYRO1, 0);
+  gyro2 = gyroInit(GYRO2, 0);
+  gyroReset(gyro1);
+  gyroReset(gyro2);
   sonar = ultrasonicInit(ULTRA_Y, ULTRA_O);
 
   //lcd

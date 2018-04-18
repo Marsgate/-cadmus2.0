@@ -1,7 +1,7 @@
 #include "main.h"
 
 //claw grip definitions and variables
-int gripSpeed = 127;
+static int gripSpeed = 127;
 
 void claw(int vel){
   motorSet(CLAW, vel);

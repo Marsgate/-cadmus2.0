@@ -18,19 +18,20 @@ void scoopOp(){
 
 void autoScoop(int target){
   //0 = down, 1 = up
-  if(target == 0){
-    scoopTarget = 0;
-    scoop(-127);
-    while(analogRead(SCOOPPOT) > SP_BOT) delay(20);
-  }else if(target == 1){
-    scoopTarget = 1;
-    scoop(127);
-    while(analogRead(SCOOPPOT) < SP_TOP) delay(20);
-  }
   if(scoopTarget < 2) scoop(0);
+  if(target == 0){
+    hasPylon = false;
+    scoopTarget = 0;
+    if(analogRead(SCOOPPOT) > SP_BOT) scoop(-127);
+  }else if(target == 1){
+    hasPylon = true;
+    scoopTarget = 1;
+    if(analogRead(SCOOPPOT) < SP_TOP) scoop(127);
+  }
 }
 
 void manualDrop(){
+  hasPylon = false;
   scoopTarget = 2;
   scoop(-127);
   delay(1000);

@@ -17,16 +17,16 @@ void operatorControl() {
 		}else{
 			//liftPID(LP_LMID);
 			if(lcdReadButtons(uart1) == 1){
-				gyroReset(gyro);
+				gyReset();
 				encoderReset(driveEncLeft);
 				encoderReset(driveEncRight);
 			}
 		}
 
 
-		lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
+		//lcdPrint(uart1, 1, "LP: %d", analogRead(LIFTPOT));
 		//lcdPrint(uart1, 2, "AP: %d", analogRead(ARMPOT));
-		//lcdPrint(uart1, 1, "Gyro: %d", gyroGet(gyro));
+		lcdPrint(uart1, 1, "Gyro: %d", gyRead());
 		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
 		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));

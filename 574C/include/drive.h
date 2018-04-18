@@ -7,10 +7,11 @@ void gyTurn(int distance);
 void sonarDrive();
 void driveUntil(int sp);
 void sonarDriveDistance(int sp);
+void gyAlign(int sp);
 
 void leftD(int vel);
 void rightD(int vel);
 void drive(int vel);
-void slant(int vel);
+void slant(int vel, int right);
 
 #endif

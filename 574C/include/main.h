@@ -119,11 +119,13 @@ void operatorControl();
 #include "mtrmgr.h"
 #include "drive.h"
 #include "sensorTargets.h"
+#include "twoGyros.h"
 
 Encoder driveEncLeft;
 Encoder driveEncRight;
 
-Gyro gyro;
+Gyro gyro1;
+Gyro gyro2;
 
 Ultrasonic sonar;
 
@@ -133,6 +135,7 @@ bool autoRight;
 bool pylon;
 int scoopTarget;
 bool stacking;
+bool hasPylon;
 
 // End C++ export structure
 #ifdef __cplusplus

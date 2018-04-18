@@ -1,6 +1,8 @@
 #include "main.h"
 #include "ports.h"
 
+static int armSpeed = 127;
+
 // motion control for the arm
 void arm(int vel){
   motorSet(ARM1, vel);
@@ -16,11 +18,12 @@ void autoArm(int sp){
 }
 
 void armOp(){
+  arm(armSpeed);
   if(buttonGetState(JOY2_5U)){
-    arm(127);
+    armSpeed = 127;
   }else if(buttonGetState(JOY2_5D)){
-    arm(-127);
+    armSpeed = -127;
   }else{
-    arm(0);
+    arm(armSpeed/6);
   }
 }
