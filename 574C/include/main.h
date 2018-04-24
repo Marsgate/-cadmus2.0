@@ -120,6 +120,7 @@ void operatorControl();
 #include "drive.h"
 #include "sensorTargets.h"
 #include "twoGyros.h"
+#include "potFilter.h"
 
 Encoder driveEncLeft;
 Encoder driveEncRight;

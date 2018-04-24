@@ -24,10 +24,10 @@
 
 //analog
 #define GYRO1 1
-#define EXPANDER 3
-#define SCOOPPOT 4
-#define GYRO2 5
-#define LIFTPOT 6
-#define ARMPOT 7
+#define EXPANDER 2
+#define SCOOPPOT 3
+#define GYRO2 4
+#define LIFTPOT 5
+#define ARMPOT 6
 
 #endif

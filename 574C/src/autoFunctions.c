@@ -15,22 +15,27 @@ void intake(){
   autoArm(0);
   claw(127);
   arm(-50);
-  while(analogRead(LIFTPOT) > LP_BOT) lift(-127);
-  delay(450);
+  lift(-127);
+  while(liftRead() > LP_BOT) delay(20);
+  delay(300);
   claw(40);
   arm(0);
   mutexGive(stackMutex);
 }
 
-void preloadTask(void * parameter){
-  mutexTake(stackMutex, 999999);
+void preloadCode(){
   lift(-127);
-  delay(650);
+  delay(750);
   claw(-127);
   lift(127);
   delay(200);
   lift(0);
-  claw(-40);
+  claw(0);
+}
+
+void preloadTask(void * parameter){
+  mutexTake(stackMutex, 999999);
+  preloadCode();
   mutexGive(stackMutex);
   taskDelete(preloadHandle);
 }
@@ -41,11 +46,12 @@ void preload(){
 
 void stackTask(void * parameter){
   mutexTake(stackMutex, 999999);
-  int target = 200*cone + 600;
-  while(analogRead(LIFTPOT) < target-200) liftPID(target);
+  lift(127);
+  delay(70*cone + 450);
+  lift(0);
   autoArm(1);
   lift(-127);
-  delay(250);
+  delay(300);
   claw(-127);
   delay(150);
   lift(127);

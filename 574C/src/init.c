@@ -19,6 +19,7 @@ void initialize() {
   gyroReset(gyro1);
   gyroReset(gyro2);
   sonar = ultrasonicInit(ULTRA_Y, ULTRA_O);
+  filterInit();
 
   //lcd
   lcdInit(uart1);

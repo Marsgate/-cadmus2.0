@@ -76,7 +76,7 @@ void autoDrive(int sp){
 
   //PD variables
   double kp = 0.3;
-  double kd = 0.6;
+  double kd = 0.9;
 
   //kc control
   int kc = -.04*abs(sp) + 64;
@@ -151,14 +151,15 @@ void sonarDriveDistance(int sp){
 
 
 void gyTurn(int sp){
+  if(autoRight == true){
+    sp = -sp; // inverted turn speed for right auton
+  }
+
   int redux = 4;
   int error = sp - gyRead();
 
   if(error > 0) sp -= redux;
   if(error < 0) sp += redux;
-  if(autoRight == true){
-    sp = -sp; // inverted turn speed for right auton
-  }
   int prevError = 0;
 
   double kp = 2.4;
@@ -219,35 +220,45 @@ void gyTurn(int sp){
 
 void gyAlign(int sp){
   int integral = 0;
-  int kc = 30;
-  int kp = 1;
-  int ki = 1.8;
+  int prevError = 0;
 
-  if(hasPylon == true) kc += 15;
+  double kp = 3.5;
+  double kd = 15;
+  double ki = .05;
 
-  //set direction
-  int dir = 0; //left
-  if(sp - gyRead() < 0) dir = 1;
+  int exitCount = 0;
 
   while(1){
     int sv = gyRead(); // get sensor
-
-    //calculate speed
-    int error = sp-sv;
+    int error = sv-sp;
     integral = integral + error;
-    int speed = error*kp + integral*ki;
+    int derivative = error - prevError;
 
-    //kc enforcement
-    if(dir == 0 && speed < kc) speed = kc;
-    if(dir == 1 && speed > -kc) speed = -kc;
+    if(abs(error) < 30 && error !=0){
+      integral += error;
+    }else{
+      integral = 0;
+    }
 
-    //end loop check
-    if(dir == 0 && error <= 0) break;
-    if(dir == 1 && error >= 0) break;
+    int P = error*kp;
+    int I = integral*ki;
+    int D = derivative*kd;
 
-    leftD(-speed);
-    rightD(speed);
+    int speed = P + I + D;
 
+    prevError = error;
+
+    if(abs(error) < 3){
+      exitCount += 1;
+    }else{
+      exitCount = 0;
+    }
+    if(exitCount > 5) break;
+
+    leftD(speed);
+    rightD(-speed);
+
+    printf("P: %d, I:%d, D:%d\n",P,I,D);
     lcdPrint(uart1, 1, "gyro: %d", sv);
     delay(20);
   }

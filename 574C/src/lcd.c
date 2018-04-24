@@ -18,7 +18,7 @@ void operatorLCD(){
 	while(isOnline() == false){
 		float p1 = powerLevelMain();
 		float p2 = analogRead(EXPANDER);
-		lcdPrint(uart1, 2, "1:%0.01f 2:%0.01f", p1/1000, p2/1000);
+		lcdPrint(uart1, 2, "1:%0.2f 2:%0.2f", p1/1000, p2/1000);
 		lcdSetText(uart1, 1, "Op ------- Debug");
 		if(buttonIsNewPress(LCD_LEFT)) break;
 		if(buttonIsNewPress(LCD_RIGHT)){
@@ -56,10 +56,10 @@ void initializationLCD(){
           lcdSetText(uart1, 1, "5pt");
           break;
         case 2:
-          lcdSetText(uart1, 1, "20pt");
+          lcdSetText(uart1, 1, "10pt");
           break;
         case 3:
-          lcdSetText(uart1, 1, "Double");
+          lcdSetText(uart1, 1, "20pt");
           break;
         case 4:
           lcdSetText(uart1, 1, "Tower");

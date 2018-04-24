@@ -5,5 +5,6 @@ void intake();
 void stack(int sp);
 void preload();
 void stackMutexInit();
+void preloadCode();
 
 #endif

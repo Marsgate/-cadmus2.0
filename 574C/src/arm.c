@@ -10,20 +10,26 @@ void arm(int vel){
 
 void autoArm(int sp){
   if(sp == 0){
-    while(analogRead(ARMPOT) < AP_OUT) arm(-127);
+    while(armRead() < AP_OUT) arm(-127);
   }else{
-    while(analogRead(ARMPOT) > AP_IN) arm(127);
+    while(armRead() > AP_IN) arm(127);
   }
   arm(0);
 }
 
 void armOp(){
+  static int armTime = 0;
   arm(armSpeed);
   if(buttonGetState(JOY2_5U)){
     armSpeed = 127;
+    armTime = 0;
   }else if(buttonGetState(JOY2_5D)){
     armSpeed = -127;
+    armTime = 0;
   }else{
-    arm(armSpeed/6);
+    if(armTime > 140) arm(armSpeed/8);
+    armTime += 20;
   }
+  lcdPrint(uart1, 1, "arm power %d", motorGet(ARM1));
+  lcdPrint(uart1, 2, "arm time %d", armTime);
 }
