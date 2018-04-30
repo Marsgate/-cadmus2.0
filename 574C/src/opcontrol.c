@@ -27,10 +27,10 @@ void operatorControl() {
 		//lcdPrint(uart1, 1, "LPF: %d", liftRead());
 		//lcdPrint(uart1, 2, "AP: %d", armRead());
 		//lcdPrint(uart1, 1, "Gyro: %d", gyRead());
-		lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
-		lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
+		//lcdPrint(uart1, 1, "left: %d", encoderGet(driveEncLeft));
+		//lcdPrint(uart1, 2, "right: %d", encoderGet(driveEncRight));
 		//lcdPrint(uart1, 2, "Sonar: %d", ultrasonicGet(sonar));
-		//lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));
+		lcdPrint(uart1, 2, "Scoop: %d", analogRead(SCOOPPOT));
 
 		delay(20);
 	}

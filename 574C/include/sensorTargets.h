@@ -1,5 +1,5 @@
 //scoop pot
-#define SP_BOT 1300
+#define SP_BOT 1275
 #define SP_MID 1500
 #define SP_INTAKE 2000
 #define SP_TOP 3350

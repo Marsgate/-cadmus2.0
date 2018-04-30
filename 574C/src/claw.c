@@ -13,7 +13,7 @@ void clawOp(){
       gripSpeed = 127;
   }else if(buttonGetState(JOY2_6D)){
       gripSpeed = -127;
-  }else{
+  }else if(gripSpeed > 0){
     claw(gripSpeed/6);
   }
 }

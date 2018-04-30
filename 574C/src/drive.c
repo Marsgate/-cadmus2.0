@@ -15,6 +15,7 @@ void drive(int vel){
   leftD(-vel);
 }
 void slant(int vel, int right){
+  if(autoRight == true) right = !right;
   drive(127);
   if(right){
     leftD(-vel);
@@ -79,7 +80,7 @@ void autoDrive(int sp){
   double kd = 0.9;
 
   //kc control
-  int kc = -.04*abs(sp) + 64;
+  int kc = -.05*abs(sp) + 65;
   if(kc < 20) kc = 20;
   if(hasPylon) kc += 15;
 
@@ -121,18 +122,26 @@ void autoDrive(int sp){
 void sonarDrive(){
   drive(127); // start driving forward
   int u; // initialize the container for gyro
+  int zeroCount = 0;
   do{
     u = ultrasonicGet(sonar);
+    if(u == 0){
+      zeroCount++;
+    }else{
+      zeroCount = 0;
+    }
+    if(zeroCount > 15) break;
     delay(10);
   }while(u > 6 || u == 0); // detect pylon in a certain range
   drive(0);
 }
 
 void sonarDriveDistance(int sp){
-  double kp = 0.25;
-  int kc = 45;
+  double kp = 0.2;
+  int kc = 25;
   int brake = 50;
   int u; // initialize the container for gyro
+  int zeroCount = 0;
   do{
     int sv = (encoderGet(driveEncLeft)+encoderGet(driveEncRight))/2;
     int error = sp-sv;
@@ -141,6 +150,13 @@ void sonarDriveDistance(int sp){
     if(speed < kc) speed = kc;
     drive(speed);
     u = ultrasonicGet(sonar);
+    if(u == 0){
+      zeroCount++;
+    }else{
+      zeroCount = 0;
+    }
+    if(zeroCount > 15) break;
+    if(zeroCount > 15) break;
     delay(10);
   }while(u > 6 || u == 0); // detect pylon in a certain range
   delay(200);
@@ -218,12 +234,16 @@ void gyTurn(int sp){
   drive(0); // stop drive
 }
 
+void driveAlign(int sp){
+
+}
+
 void gyAlign(int sp){
   int integral = 0;
   int prevError = 0;
 
-  double kp = 3.5;
-  double kd = 15;
+  double kp = 3;
+  double kd = 17;
   double ki = .05;
 
   int exitCount = 0;

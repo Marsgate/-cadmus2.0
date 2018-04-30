@@ -16,8 +16,7 @@ void intake(){
   claw(127);
   arm(-50);
   lift(-127);
-  while(liftRead() > LP_BOT) delay(20);
-  delay(300);
+  delay(650);
   claw(40);
   arm(0);
   mutexGive(stackMutex);
@@ -47,11 +46,11 @@ void preload(){
 void stackTask(void * parameter){
   mutexTake(stackMutex, 999999);
   lift(127);
-  delay(70*cone + 450);
+  delay(50*cone + 300);
   lift(0);
   autoArm(1);
   lift(-127);
-  delay(300);
+  delay(330);
   claw(-127);
   delay(150);
   lift(127);

@@ -24,23 +24,18 @@ void pickUp(){
 void coneStack3(){
   while(analogRead(SCOOPPOT) < SP_INTAKE) delay(20);
   preloadCode();
-  autoDrive(150);
+  autoDrive(200);
   intake();
   stack(2);
+  if(autoRight == true) driveUntil(20);
   autoDrive(200);
   intake();
   stack(3);
 }
 
 void coneStack4(){
-  while(analogRead(SCOOPPOT) < SP_INTAKE) delay(20);
-  preloadCode();
-  autoDrive(150);
-  intake();
-  stack(2);
-  autoDrive(180);
-  intake();
-  stack(3);
+  coneStack3();
+  if(autoRight == true) driveUntil(20);
   autoDrive(170);
   intake();
   stack(4);
@@ -60,7 +55,7 @@ void pylon5(){
 void pylon10(){
   pickUp(); //drive to pylon
   coneStack4();
-  autoDrive(-1600);
+  autoDrive(-1700);
   gyTurn(-180);//face the zone
   scoopTarget = 0;
   slant(30, true);
@@ -75,9 +70,8 @@ void pylon20(){
   coneStack3();
 
   //alignment
-  autoDrive(-1500);
+  autoDrive(-1600);
   gyTurn(-134);//face the zone
-  if(autoRight == true) driveUntil(200); // small adjustment for right side auton
   autoDrive(500);
   gyTurn(-222);
 
@@ -106,52 +100,52 @@ void skills(){
   gyTurn(-134);//face the zone
   autoDrive(500);
   gyTurn(-222);
-  //fast drop
-  scoopTarget = 0;
+  //drop
+  scoopTarget = 2;
   drive(127);
-  delay(1000);
+  delay(800);
+  drive(40);
+  scoop(-127);
+  delay(400);
   drive(0);
-  delay(300);
-  scoopTarget = -1;
-  lift(5);
-  //reverse out of zone
-  autoDrive(-600);
+  delay(500);
   gyReset();
+  scoop(0);
+  autoDrive(-600);//reverse out of zone
+
+  lift(5);
 
   //2 /////////////////////////////////////////////////////
   //grab
   scoopTarget = 0;
-  gyTurn(-110);
-  slant(5, true);
-  while(gyRead() >  -167) delay(20);
-  sonarDriveDistance(300);
+  gyTurn(-100);
+  autoDrive(350);
+  gyTurn(-176);
+  sonarDrive();
   scoopTarget = 1;
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-550);
-  delay(200);
-  gyTurn(-44);
-  scoopTarget = 0;
-  slant(5, false);
-  while(gyRead() < -16) delay(20);
+  autoDrive(-700);
+  gyTurn(-8);
   //drop
-  drive(40);
+  scoopTarget = 0;
+  drive(35);
   while(analogRead(SCOOPPOT) > SP_MID) delay(20);
   gyReset();
-  autoDrive(-170); //reverse
+  autoDrive(-180); //reverse
 
   //3 /////////////////////////////////////////////////////
   //grab
-  gyAlign(-183);
+  gyAlign(-185);
   scoopTarget = 0;
   sonarDrive();
   scoopTarget = 1;
   //alignment
   gyReset();
   slant(30, true);
-  while(gyRead() > -15);
-  slant(25, false);
-  while(gyRead() < -3);
+  while(gyRead() > -20);
+  slant(20, false);
+  while(gyRead() < -5);
   scoopTarget = 0;
   drive(30);
   //drop
@@ -161,9 +155,9 @@ void skills(){
 
   //4 /////////////////////////////////////////////////////
   //grab
-  gyTurn(80);
-  autoDrive(170);
-  slant(20, false);
+  gyTurn(81);
+  autoDrive(150);
+  slant(22, false);
   while(gyRead() < 119) delay(20);
   sonarDrive();
   scoopTarget = 1;
@@ -189,7 +183,7 @@ void skills(){
   gyAlign(-113);
   autoDrive(790);
   slant(20, true);
-  while(gyRead() > -128);
+  while(gyRead() > -126);
   sonarDrive();
   scoopTarget = 1;
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
@@ -198,7 +192,7 @@ void skills(){
   delay(200);
   gyTurn(-95);
   autoDrive(-300);
-  gyTurn(0);
+  gyTurn(-10);
   //drop
   scoopTarget = 0;
   drive(30);
@@ -209,40 +203,36 @@ void skills(){
   //6 //////////////////////////////////////////////////
   //grab
   scoopTarget = 0;
-  gyTurn(-140);
-  slant(-10, true);
-  while(gyRead() >  -170) delay(20);
+  gyTurn(-115);
+  autoDrive(100);
+  gyTurn(-170);
   sonarDrive();
   scoopTarget = 1;
   while(analogRead(SCOOPPOT) < SP_MID) delay(20);
   //alignment
-  autoDrive(-550);
-  delay(200);
-  gyTurn(-48);
-  scoopTarget = 0;
-  slant(5, false);
-  while(gyRead() < -15) delay(20);
+  autoDrive(-750);
+  gyTurn(-5);
   //drop
-  drive(40);
+  scoopTarget = 0;
+  drive(30);
   while(analogRead(SCOOPPOT) > SP_MID) delay(20);
   gyReset();
-  autoDrive(-300); //reverse
+  autoDrive(-180); //reverse
 
   //7 /////////////////////////////////////////////////////////
   //grab
-  gyAlign(-183);
+  gyAlign(-187);
   scoopTarget = 0;
   sonarDrive();
   scoopTarget = 1;
   //alignment
   gyReset();
-  driveUntil(200);
-  slant(0, true);
-  while(gyRead() > -27);
+  slant(35, true);
+  while(gyRead() > -20);
+  slant(20, false);
+  while(gyRead() < -5);
   scoopTarget = 0;
-  slant(15, false);
-  while(gyRead() < -3);
-  drive(0);
+  drive(30);
   //drop
   while(analogRead(SCOOPPOT) > SP_MID) delay(20);
   gyReset();
@@ -305,6 +295,8 @@ void autonomous() {
       skills();
       break;
     case 0:
+      gyAlign(60);
+      digitalWrite(LED, LOW);
       break; //dont run auton
     case 1:
       pylon5();

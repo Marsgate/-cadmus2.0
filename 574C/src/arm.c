@@ -10,9 +10,13 @@ void arm(int vel){
 
 void autoArm(int sp){
   if(sp == 0){
-    while(armRead() < AP_OUT) arm(-127);
+    arm(-127);
+    delay(300);
+    arm(0);
   }else{
-    while(armRead() > AP_IN) arm(127);
+    arm(127);
+    delay(300);
+    arm(0);
   }
   arm(0);
 }
