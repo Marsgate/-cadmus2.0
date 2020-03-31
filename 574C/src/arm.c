@@ -1,43 +1,39 @@
 #include "main.h"
 #include "ports.h"
 
-//PID variables
-static int integral = 0;
-static int prevErr = 0;
+static int armSpeed = 127;
 
 // motion control for the arm
 void arm(int vel){
   motorSet(ARM1, vel);
-  motorSet(ARM2, vel);
 }
 
-//arm PID control (basically copy pasted from liftPID)
-void armPID(int sp){
-  //define coefficients
-  double kp = 0.17;
-  double ki = 0.0005;
-  double kd = 0.4;
-
-  // define local variables
-  int speed; // speed
-  int derivative; // derivative
-
-  int sv = analogRead(ARMPOT); // get sensor value
-  int error = sp - sv; // find error
-  integral = integral + error; // calculate integral
-
-  derivative = error - prevErr; // calculate the derivative
-  prevErr = error; // set current error to equal previous error
-
-  speed = error*kp + integral*ki + derivative*kd; // add the values to get the motor speed
-
-  arm(-speed); // set the lift to the speed
+void autoArm(int sp){
+  if(sp == 0){
+    arm(-127);
+    delay(300);
+    arm(0);
+  }else{
+    arm(127);
+    delay(300);
+    arm(0);
+  }
+  arm(0);
 }
 
 void armOp(){
-  if(joystickGetDigital(1, 6, JOY_UP)){
-    arm(127);
-  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    arm(-127);
+  static int armTime = 0;
+  arm(armSpeed);
+  if(buttonGetState(JOY2_5U)){
+    armSpeed = 127;
+    armTime = 0;
+  }else if(buttonGetState(JOY2_5D)){
+    armSpeed = -127;
+    armTime = 0;
+  }else{
+    if(armTime > 140) arm(armSpeed/8);
+    armTime += 20;
   }
+  lcdPrint(uart1, 1, "arm power %d", motorGet(ARM1));
+  lcdPrint(uart1, 2, "arm time %d", armTime);
 }

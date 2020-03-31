@@ -3,7 +3,7 @@
 
 
 void arm(int vel);
-void armTest();
-void armPID(int sv);
+void armOp();
+void autoArm(int sp);
 
 #endif

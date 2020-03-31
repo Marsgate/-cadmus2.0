@@ -1,148 +1,270 @@
 #include "main.h"
-#include "lift.h"
-#include "arm.h"
-#include "scoop.h"
-#include "drive.h"
-#include "claw.h"
-#include "ports.h"
-#include "sensorTargets.h"
+#include "roboControl.h"
+#include "autoFunctions.h"
 
-//PID targets
-static int liftTarget = 0;
-static int armTarget = 0;
-
-//PID tasks
-void liftTask(){
-  liftPID(liftTarget);
-}
-void armTask(){
-  armPID(armTarget);
+void scoopTask(){
+  autoScoop(scoopTarget);
 }
 
+//task handles
+TaskHandle scHandle;
 
 //drive to pylon program =======================================
-void conePush(){
-  autoDrive(550); // drive out from wall
-  delay(100);
-  gyTurn(33); // turn to face pylon
-  armTarget = AP_MID; // raise arm
-  claw(25); //hold preload
-  delay(350);
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  delay(100);
-  scoop(0);
-  delay(300); // wait for other tasks to reach their end point
-  autoDrive(1500); // drive to pylon
-
-  delay(100);
-  autoDrive(-400);
-  delay(100);
-  gyTurn(10);
-  autoDrive(480); // drive into pylon
-
-  liftTarget = 2200; // move lift to scoring height
-
-  scoop(127); //raise scoop
-  while(digitalRead(SCOOP_LIM_TOP) == HIGH){
-    delay(20);
-  }
-  scoop(0);
-
-  armTarget = AP_FRONT; // drop arm to score cone
-
-  gyTurn(-16);
+void pickUp(){
+  lift(70);
+  scoopTarget = 0; // deploy scoop
+  drive(127);
+  while(analogRead(SCOOPPOT) > SP_BOT) delay(20);
+  sonarDriveDistance(1000); //go get pylon
+  lift(0);
+  scoopTarget = 1; // raise scoop
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
 }
 
-//drive to pylon program =======================================
-void PyDrive(){
-  autoDrive(400); // drive out from wall
-  delay(200);
-  gyTurn(38); // turn to face pylon
-  armTarget = AP_MID; // raise arm
-  claw(40); //hold preload
-  delay(400);
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  delay(150);
-  scoop(0);
-  delay(400); // wait for other tasks to reach their end point
-  autoDrive(1600); // drive to pylon
+void coneStack3(){
+  while(analogRead(SCOOPPOT) < SP_INTAKE) delay(20);
+  preloadCode();
+  autoDrive(200);
+  intake();
+  stack(2);
+  if(autoRight == true) driveUntil(20);
+  autoDrive(200);
+  intake();
+  stack(3);
+}
 
-  liftTarget = 2200; // move lift to scoring height
+void coneStack4(){
+  coneStack3();
+  if(autoRight == true) driveUntil(20);
+  autoDrive(170);
+  intake();
+  stack(4);
+}
 
-  scoop(127); //raise scoop
-  while(digitalRead(SCOOP_LIM_TOP) == HIGH){
-    delay(20);
-  }
-  scoop(0);
+// =====================================================================
+void pylon5(){
+  pickUp(); //drive to pylon
+  coneStack4();
+  autoDrive(-1700);
+  gyTurn(-180);//face the zone
+  scoopTarget = 0;
+  while(analogRead(SCOOPPOT) > SP_BOT) delay(20);
+  autoDrive(-200); // reverse
+}
 
-  armTarget = AP_FRONT; // drop arm to score cone
-
-  gyTurn(-10);
+void pylon10(){
+  pickUp(); //drive to pylon
+  coneStack4();
+  autoDrive(-1700);
+  gyTurn(-180);//face the zone
+  scoopTarget = 0;
+  slant(30, true);
+  delay(1200);
+  autoDrive(-300); // reverse
 }
 
 
-// program 1 ===============================================================
-void pylon5() {
-
-  conePush(); //drive to pylon
-  autoDrive(-1353); //reverse to zone
-  gyTurn(140);//face the zone
-
-  //release the cone
-  claw(-127);
-  delay(300);
-  claw(-30);
-  armTarget = AP_BOT;
-  delay(300);
-
-  scoop(-127); //drop pylon scoop
-  // delay until scoop bottoms out
-  while(digitalRead(SCOOP_LIM_BOT) == HIGH){
-    delay(20); //delay to make room for the other tasks to run
-  }
-  delay(300);
-  scoop(0);
-
-  //reverse out of zone
-  autoDrive(-370);
-}
-
-
-// program 2 ===============================================================
+// ======================================================================
 void pylon20(){
-  conePush(); //drive to pylon
-  autoDrive(-1675); //reverse to zone
-  gyTurn(40);// parallel to the zone
-  autoDrive(-720); // center the robot
-  gyTurn(85); // face the zone
-  autoDrive(675); // drive in to the zone
-  drive(60);
-  delay(300);
+  pickUp(); //drive to pylon
+  coneStack3();
 
+  //alignment
+  autoDrive(-1600);
+  gyTurn(-134);//face the zone
+  autoDrive(500);
+  gyTurn(-222);
 
-  //release the cone
-  claw(-127);
-  delay(300);
-  claw(-30);
-  armTarget = AP_BOT;
-  delay(300);
-
-  scoop(-127); //drop pylon scoop
-  delay(1000);
+  scoopTarget = 2;
+  drive(127);
+  delay(800);
+  drive(40);
+  scoop(-127);
+  delay(400);
+  drive(0);
+  delay(500);
   scoop(0);
 
   //reverse out of zone
-  autoDrive(-985);
+  autoDrive(-600);
 }
 
+
+void skills(){
+  //1 /////////////////////////////////////////////////////
+  pickUp(); //drive to pylon
+  driveUntil(-400);
+  preload();
+  //alignment
+  autoDrive(-900);
+  gyTurn(-134);//face the zone
+  autoDrive(500);
+  gyTurn(-222);
+  //drop
+  scoopTarget = 2;
+  drive(127);
+  delay(800);
+  drive(40);
+  scoop(-127);
+  delay(400);
+  drive(0);
+  delay(500);
+  gyReset();
+  scoop(0);
+  autoDrive(-600);//reverse out of zone
+
+  lift(5);
+
+  //2 /////////////////////////////////////////////////////
+  //grab
+  scoopTarget = 0;
+  gyTurn(-100);
+  autoDrive(350);
+  gyTurn(-176);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-700);
+  gyTurn(-8);
+  //drop
+  scoopTarget = 0;
+  drive(35);
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyReset();
+  autoDrive(-180); //reverse
+
+  //3 /////////////////////////////////////////////////////
+  //grab
+  gyAlign(-185);
+  scoopTarget = 0;
+  sonarDrive();
+  scoopTarget = 1;
+  //alignment
+  gyReset();
+  slant(30, true);
+  while(gyRead() > -20);
+  slant(20, false);
+  while(gyRead() < -5);
+  scoopTarget = 0;
+  drive(30);
+  //drop
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyReset();
+  autoDrive(-300); //reverse
+
+  //4 /////////////////////////////////////////////////////
+  //grab
+  gyTurn(81);
+  autoDrive(150);
+  slant(22, false);
+  while(gyRead() < 119) delay(20);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-1250);
+  delay(200);
+  gyTurn(85);
+  autoDrive(-630);
+  gyTurn(-8);
+  driveUntil(100);
+  //drop
+  scoopTarget = 0;
+  drive(127);
+  delay(1000);
+  scoopTarget = -1;
+  gyReset();
+  autoDrive(-750);
+
+  //5 //////////////////////////////////////////////////
+  //grab
+  scoopTarget = 0;
+  gyAlign(-113);
+  autoDrive(790);
+  slant(20, true);
+  while(gyRead() > -126);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-1500);
+  delay(200);
+  gyTurn(-95);
+  autoDrive(-300);
+  gyTurn(-10);
+  //drop
+  scoopTarget = 0;
+  drive(30);
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyReset();
+  autoDrive(-250); //reverse
+
+  //6 //////////////////////////////////////////////////
+  //grab
+  scoopTarget = 0;
+  gyTurn(-115);
+  autoDrive(100);
+  gyTurn(-170);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-750);
+  gyTurn(-5);
+  //drop
+  scoopTarget = 0;
+  drive(30);
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyReset();
+  autoDrive(-180); //reverse
+
+  //7 /////////////////////////////////////////////////////////
+  //grab
+  gyAlign(-187);
+  scoopTarget = 0;
+  sonarDrive();
+  scoopTarget = 1;
+  //alignment
+  gyReset();
+  slant(35, true);
+  while(gyRead() > -20);
+  slant(20, false);
+  while(gyRead() < -5);
+  scoopTarget = 0;
+  drive(30);
+  //drop
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  gyReset();
+  autoDrive(-300); //reverse
+
+
+  //8 /////////////////////////////////////////////////////////
+  //grab
+  gyTurn(83);
+  autoDrive(200);
+  slant(10, false);
+  while(gyRead() < 116) delay(20);
+  sonarDrive();
+  scoopTarget = 1;
+  while(analogRead(SCOOPPOT) < SP_MID) delay(20);
+  //alignment
+  autoDrive(-1100);
+  delay(200);
+  gyTurn(-25);
+  scoopTarget = 0;
+  driveUntil(100);
+  //drop
+  drive(40);
+  while(analogRead(SCOOPPOT) > SP_MID) delay(20);
+  scoopTarget = -1;
+  gyReset();
+  autoDrive(-300); //reverse
+
+  //park
+  gyTurn(-33);
+  driveUntil(-1200);
+}
 
 // testing PID ===============================================================
 void driveTest(){
@@ -151,38 +273,45 @@ void driveTest(){
   lcdPrint(uart1, 2, "e %d %d", encoderGet(driveEncLeft), encoderGet(driveEncRight));
 }
 
+void ram(){
+  drive(127);
+  delay(5000);
+  drive(0);
+}
 
 // control center ===============================================================
 void autonomous() {
-  gyroReset(gyro);
-  liftTarget = analogRead(LIFTPOT); // calibrate the PID starting values
-  armTarget = analogRead(ARMPOT);
+  //mutex initialization
+  stackMutexInit();
 
-  //start all tasks
-  TaskHandle aHandle = taskRunLoop(armTask, 20); //start arm
-  TaskHandle lHandle = taskRunLoop(liftTask, 20); //start lift
+  gyReset();
+  scoopTarget = 2;
+  hasPylon = false;
+
+  scHandle = taskRunLoop(scoopTask, 20); //start claw
 
   switch(auton){
+    case -1:
+      skills();
+      break;
     case 0:
+      gyAlign(60);
+      digitalWrite(LED, LOW);
       break; //dont run auton
     case 1:
       pylon5();
       break;
     case 2:
-      pylon20();
+      pylon10();
       break;
     case 3:
-      autoRight = true;
-      pylon5();
+      pylon20();
       break;
     case 4:
-      autoRight = true;
-      pylon20();
       break;
   }
 
   //stop all tasks
-  taskDelete(lHandle);
-  taskDelete(aHandle);
+  taskDelete(scHandle);
   motorStopAll();
 }

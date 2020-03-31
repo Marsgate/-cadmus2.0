@@ -1,5 +1,5 @@
 #include "main.h"
-#include "ports.h"
+#include "lcd.h"
 
 void initializeIO() {
   //led port
@@ -11,78 +11,31 @@ void initialize() {
 
   setTeamName("574C Centurion");
 
+  //setup sensors
   driveEncLeft = encoderInit(D_ENC_L1, D_ENC_L2, false);
   driveEncRight = encoderInit(D_ENC_R1, D_ENC_R2, true);
-  gyro = gyroInit(GYRO, 0);
-  gyroReset(gyro);
+  gyro1 = gyroInit(GYRO1, 0);
+  gyro2 = gyroInit(GYRO2, 0);
+  gyroReset(gyro1);
+  gyroReset(gyro2);
+  sonar = ultrasonicInit(ULTRA_Y, ULTRA_O);
+  filterInit();
 
   //lcd
   lcdInit(uart1);
   lcdClear(uart1);
   lcdSetBacklight(uart1, true);
 
+  buttonInit();
+
   //expander light check
 	while(analogRead(EXPANDER) < 500){
+    lcdSetText(uart1, 1, "!Check Pwr Exp!");
 		digitalWrite(LED, LOW);
 		delay(500);
 		digitalWrite(LED, HIGH);
 		delay(500);
-    lcdPrint(uart1, 1, "!Check Pwr Exp!");
 	}
 
-  delay(200);
-
-  //mode selector from LCD
-  autoRight = false;
-  bool selected = false;
-  bool buttonDown = false;
-  while(selected == false){
-    lcdSetText(uart1, 1, "Autonomous");
-
-    int but = lcdReadButtons(uart1); // get the lcd button
-    if(but == 0){
-      buttonDown = false;
-    }else if(buttonDown == false){
-      buttonDown = true;
-      switch(but){
-        case 1:
-          auton--;
-          break;
-        case 2:
-          selected = true;
-          lcdSetText(uart1, 1, "Selected");
-          break;
-        case 4:
-          auton++;
-          break;
-      }
-    }
-
-    //display current selection
-    switch(auton){
-      case -1:
-        lcdSetText(uart1, 2, "Driver Skills");
-        mode = 4;
-        break;
-      case 0:
-        lcdSetText(uart1, 2, "None");
-        break;
-      case 1:
-        lcdSetText(uart1, 2, "Left 5pt");
-        break;
-      case 2:
-        lcdSetText(uart1, 2, "Left 20pt");
-        break;
-      case 3:
-        lcdSetText(uart1, 2, "Right 5pt");
-        break;
-      case 4:
-        lcdSetText(uart1, 2, "Right 20pt");
-        break;
-      default:
-        auton = 0;
-    }
-
-    delay(20); //space for lcd to update
-  }
+  initializationLCD();
 }

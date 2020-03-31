@@ -114,14 +114,29 @@ void initialize();
  */
 void operatorControl();
 
+#include "buttons.h"
+#include "ports.h"
+#include "mtrmgr.h"
+#include "drive.h"
+#include "sensorTargets.h"
+#include "twoGyros.h"
+#include "potFilter.h"
+
 Encoder driveEncLeft;
 Encoder driveEncRight;
 
-Gyro gyro;
+Gyro gyro1;
+Gyro gyro2;
+
+Ultrasonic sonar;
 
 int mode;
 int auton;
 bool autoRight;
+bool pylon;
+int scoopTarget;
+bool stacking;
+bool hasPylon;
 
 // End C++ export structure
 #ifdef __cplusplus

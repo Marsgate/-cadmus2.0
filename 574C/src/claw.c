@@ -1,24 +1,19 @@
-#include "ports.h"
-#include "API.h"
+#include "main.h"
 
-bool hold = false;
+//claw grip definitions and variables
+static int gripSpeed = 127;
 
 void claw(int vel){
   motorSet(CLAW, vel);
 }
 
 void clawOp(){
-  if(joystickGetDigital(1, 6, JOY_UP)){
-    claw(127);
-    hold = true;
-  }else if(joystickGetDigital(1, 6, JOY_DOWN)){
-    claw(-127);
-    hold = false;
-  }else{
-    if(hold == true){
-      claw(45);
-    }else{
-      claw(-30);
-    }
+  claw(gripSpeed);
+  if(buttonGetState(JOY2_6U)){
+      gripSpeed = 127;
+  }else if(buttonGetState(JOY2_6D)){
+      gripSpeed = -127;
+  }else if(gripSpeed > 0){
+    claw(gripSpeed/6);
   }
 }
